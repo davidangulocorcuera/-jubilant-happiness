@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/menuItemContainer"
+    android:orientation="vertical"
+              style="@style/Clickable"
+>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/space_medium_big"
+        android:layout_marginBottom="@dimen/space_medium_big"
+
+        >
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/roundImageContainer">
+
+            <ImageView
+                android:id="@+id/ivMenuCircle"
+                android:layout_marginStart="@dimen/space_medium"
+                android:layout_width="@dimen/small_icon"
+                android:layout_height="@dimen/small_icon"
+                android:src="@drawable/circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivDrawerIcon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignStart="@+id/ivMenuCircle"
+                android:layout_alignEnd="@+id/ivMenuCircle"
+                android:layout_alignBottom="@+id/ivMenuCircle"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvText"
+            style="@style/semi_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/space_medium"
+            android:text="Titulo" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/roundImageNotifications"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:id="@+id/ivNotificationsIcon"
+                android:layout_width="@dimen/smaller_circle_size"
+                android:layout_height="@dimen/smaller_circle_size"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/space_medium"
+                android:layout_marginTop="@dimen/space_small"
+                android:layout_marginEnd="19dp"
+                android:src="@drawable/circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDrawerIconNotifications"
+            android:textSize="@dimen/smaller_font"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@+id/ivNotificationsIcon"
+            android:layout_alignEnd="@+id/ivNotificationsIcon"
+            android:layout_alignBottom="@+id/ivNotificationsIcon"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
+            android:text="B"
+            android:gravity="center"
+            android:visibility="visible" />
+       </RelativeLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/drawerSeparator"
+        layout="@layout/view_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="visible"
+        android:layout_marginStart="@dimen/space_medium"
+        android:layout_marginEnd="@dimen/space_medium" />
+
+</LinearLayout>

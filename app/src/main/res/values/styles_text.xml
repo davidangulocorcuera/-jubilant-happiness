@@ -1,0 +1,141 @@
+<resources>
+
+    <style name="bold">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_blue</item>
+    </style>
+
+    <style name="medium">
+        <item name="android:textSize">@dimen/small_font</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="semi_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="regular">
+    </style>
+
+    <style name="title" parent="bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="title_medium" parent="medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="subtitle" parent="medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="big_title" parent="semi_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">@dimen/bigger_font</item>
+    </style>
+
+    <style name="medium_title" parent="big_title">
+        <item name="android:textSize">@dimen/medium_bigger_font</item>
+    </style>
+
+    <style name="welcome_title" parent="semi_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="edit" parent="medium">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:paddingLeft">@dimen/space_small</item>
+        <item name="android:textColor">@color/title</item>
+        <item name="android:background">@color/dark_white</item>
+        <item name="android:textSize">@dimen/medium_big_font</item>
+        <item name="android:textColorHint">@color/light_blue</item>
+    </style>
+
+    <style name="edit_validator" parent="edit">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="input" parent="regular">
+        <item name="android:paddingTop">@dimen/space_small</item>
+        <item name="android:paddingBottom">@dimen/space_small</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="text_regular" parent="text">
+        <item name="android:textColor">@color/dark_blue</item>
+    </style>
+
+    <style name="text" parent="medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/light_blue</item>
+        <item name="android:textSize">@dimen/medium_font</item>
+    </style>
+
+    <style name="text_blue" parent="text">
+        <item name="android:textColor">@color/dark_blue</item>
+    </style>
+
+    <style name="small_title" parent="text">
+        <item name="android:textColor">@color/title</item>
+    </style>
+
+    <style name="office_result_title" parent="semi_bold">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textSize">@dimen/medium_font</item>
+    </style>
+
+    <style name="office_result_subtitle" parent="office_result_title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/smaller_font</item>
+    </style>
+
+    <style name="card_title" parent="semi_bold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textSize">@dimen/small_font</item>
+    </style>
+
+    <style name="card_subtitle" parent="text">
+        <item name="android:textSize">@dimen/small_font</item>
+    </style>
+
+
+
+    <style name="HintError" parent="regular">
+        <item name="android:textColor">@color/editErrorHint</item>
+    </style>
+
+    <style name="HintNormal" parent="regular">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+
+</resources>
