@@ -65,10 +65,10 @@ class HomeActivity : BaseActivity() {
                     goToProfileDataScreen()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    goToHomeScreen()
+                    goToContentScreen()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
-
+                    goToLoginScreen()
                 }
             }
         }
@@ -84,11 +84,12 @@ class HomeActivity : BaseActivity() {
     private fun goToMapScreen() {
         navigator.navigateToMap()
     }
-    private fun goToHomeScreen(){
-        navigator.navigateToHome()
-    }
     private fun goToContentScreen(){
         navigator.navigateToContentFragment()
+    }
+    private fun goToLoginScreen(){
+        navigator.navigateToMain()
+
     }
 
 

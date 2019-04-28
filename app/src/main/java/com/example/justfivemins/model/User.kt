@@ -1,9 +1,19 @@
 package com.example.justfivemins.model
 
- class User(val name: String = "Jesus"
-            ,val surname: String = "Gómez"
-            ,val secondSurname: String = "Cebollo"
-            ,val age: Int = 27
-            ,val gender: String = "Male"
-            ,val phoneNumber: String = "638787465"
+import com.example.justfivemins.R
+
+class User (var name: String = "Jesus"
+            ,var surname: String = "Gómez"
+            ,var secondSurname: String = "Cebollo"
+            ,var age: Int = 27
+            ,var gender: String = "Male"
+            ,var phoneNumber: String = "638787465"
+            ,var locations: ArrayList<Location> = ArrayList()
+            ,var profileImage: Int = R.drawable.img_profile_example
+            ,var headerImage: Int = R.drawable.header_background
+            ,var images: ArrayList<Int> = ArrayList()
+            ,var friends: ArrayList<User> = ArrayList()
+            ,var numLikes: Int = 0
+            ,var universityName: String = ""
+            ,var jobName: String = ""
  )

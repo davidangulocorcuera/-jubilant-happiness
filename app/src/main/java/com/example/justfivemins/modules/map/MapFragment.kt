@@ -19,7 +19,6 @@ import com.example.justfivemins.modules.base.BaseActivity
 
 import com.example.justfivemins.modules.base.BaseFragment
 import com.google.android.gms.location.LocationResult
-import kotlinx.android.synthetic.main.fragment_map.*
 
 
 class MapFragment : BaseFragment(), OnMapReadyCallback {

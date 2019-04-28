@@ -13,5 +13,6 @@ class LoginFragmentPresenter(private val view: View) : MainMVP.Presenter {
     }
     interface View : MainMVP.View {
         fun goToHome()
+        fun gotToRegister()
     }
 }

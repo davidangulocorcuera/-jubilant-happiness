@@ -19,6 +19,7 @@ import com.example.justfivemins.modules.content.ContentFragment
 import com.example.justfivemins.modules.login.LoginFragment
 import com.example.justfivemins.modules.map.MapFragment
 import com.example.justfivemins.modules.profile_data.ProfileDataFragment
+import com.example.justfivemins.modules.register.RegisterFragment
 import java.io.Serializable
 
 
@@ -37,7 +38,7 @@ class Navigator {
     private var newTaskFlag = false
     private var targetFragment: BaseFragment? = null
     private var targetCode: Int = 0
-    private var containerId = R.id.fragment_home_layout
+    private var containerId = R.id.fragment_container
 
     constructor(baseActivity: BaseActivity) {
         intentToLaunch = Intent()
@@ -278,6 +279,9 @@ class Navigator {
     fun navigateToLogin() {
         navigate(activity, LoginFragment::class.java)
     }
+    fun navigateToRegister() {
+        navigate(activity, RegisterFragment::class.java)
+    }
 
 
     fun navigate(
@@ -346,7 +350,7 @@ class Navigator {
             clearBackStack()
         }
         setUpTransition(ft)
-        ft.replace(R.id.fragment_home_layout, f)
+        ft.replace(R.id.fragment_container, f)
         if (addBackStack) {
             ft.addToBackStack(null)
         }

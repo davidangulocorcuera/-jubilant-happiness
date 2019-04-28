@@ -6,6 +6,7 @@ import android.view.View
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.profile_data.data_list_adapter.ProfileDataListAdapter
 import kotlinx.android.synthetic.main.view_profile_data.*
 
 class ProfileDataFragment : BaseFragment() {
@@ -28,7 +29,8 @@ class ProfileDataFragment : BaseFragment() {
     private fun initList(recyclerView: RecyclerView) {
         val layoutManager = LinearLayoutManager(activity)
         recyclerView.layoutManager = layoutManager as RecyclerView.LayoutManager?
-        profileDataListAdapter = ProfileDataListAdapter(dataList)
+        profileDataListAdapter =
+            ProfileDataListAdapter(dataList)
         recyclerView.adapter = profileDataListAdapter
     }
 

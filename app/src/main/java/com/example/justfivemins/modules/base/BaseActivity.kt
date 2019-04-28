@@ -126,14 +126,12 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     fun willConsumeBackPressed(): Boolean {
         var willConsumeBackPressed = false
         val fragments = supportFragmentManager.fragments
-        if (fragments != null) {
-            for (i in fragments.indices) {
-                val fragment = fragments[i]
-                if (fragment is BaseFragment) {
-                    if (fragment.willConsumeBackPressed()) {
-                        willConsumeBackPressed = true
-                        break
-                    }
+        for (i in fragments.indices) {
+            val fragment = fragments[i]
+            if (fragment is BaseFragment) {
+                if (fragment.willConsumeBackPressed()) {
+                    willConsumeBackPressed = true
+                    break
                 }
             }
         }

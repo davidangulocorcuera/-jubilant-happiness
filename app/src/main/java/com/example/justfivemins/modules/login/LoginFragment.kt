@@ -7,6 +7,8 @@ import kotlinx.android.synthetic.main.fragment_login.*
 
 
 class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
+
+
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
     override fun onCreateViewId(): Int {
@@ -22,15 +24,19 @@ class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
             goToHome()
         }
         btnRegister.setOnClickListener {
-
+            gotToRegister()
         }
     }
 
     override fun goToHome() {
         navigator.let {
             it.finishCurrent(true)
-            it.navigateToHome()
+            it.addBackStack(true).navigateToHome()
         }
 
+    }
+
+    override fun gotToRegister() {
+        navigator.navigateToRegister()
     }
 }

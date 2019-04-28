@@ -1,4 +1,4 @@
-package com.example.justfivemins.modules.profile_data
+package com.example.justfivemins.modules.profile_data.data_list_adapter
 
 
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseRecyclerAdapter
+import com.example.justfivemins.modules.profile_data.DataListItem
 import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.item_profile_data.view.*
 
