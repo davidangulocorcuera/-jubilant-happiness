@@ -30,6 +30,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     var toolbar_title: TextView? = null
     var currentToolbar: Toolbar? = null
 
+    protected abstract fun viewCreated(view: View?)
     protected abstract fun onCreateViewId(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,4 +174,8 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             toolbar_title?.layoutParams?.width = LinearLayout.LayoutParams.WRAP_CONTENT
         }
     }
+    override fun goBack() {
+        navigator.goBack()
+    }
+
 }

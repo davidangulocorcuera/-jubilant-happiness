@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".modules.map.MapFragment">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".modules.map.MapFragment">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
@@ -12,5 +13,19 @@
               android:layout_height="match_parent"
               android:id="@+id/map"
               tools:context=".modules.map.MapsActivity"
-              android:name="com.google.android.gms.maps.SupportMapFragment"/>
-</FrameLayout>
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              map:layout_constraintTop_toTopOf="parent" map:layout_constraintStart_toStartOf="parent"
+              map:layout_constraintEnd_toEndOf="parent"
+              map:layout_constraintBottom_toBottomOf="parent"/>
+
+    <android.support.design.widget.FloatingActionButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/btn_search"
+            android:src="@drawable/places_ic_search"
+            android:tint="@android:color/white"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="40dp" android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

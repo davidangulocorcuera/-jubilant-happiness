@@ -12,11 +12,7 @@ class ProfileFragment : BaseFragment() {
     override fun viewCreated(view: View?) {
 
     }
-    companion object {
-        fun newInstance(): ProfileFragment {
-            return ProfileFragment()
-        }
-    }
+
 
 }
 

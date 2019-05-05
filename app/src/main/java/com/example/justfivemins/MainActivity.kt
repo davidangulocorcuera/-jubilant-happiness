@@ -2,11 +2,16 @@ package com.example.justfivemins
 
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import com.example.justfivemins.modules.base.BaseActivity
 
 
 class MainActivity : BaseActivity() {
+    override fun viewCreated(view: View?) {
+
+    }
+
     override fun onCreateViewId(): Int {
         return R.layout.activity_main
     }

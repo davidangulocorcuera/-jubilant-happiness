@@ -33,7 +33,7 @@ class ContentFragment : BaseFragment() {
             )
         )
         val configurator: Configurator? = null
-        setToolbarTitle(getString(R.string.profiles_title))
+        setToolbarTitle(getString(R.string.home).toUpperCase())
 
         configurator?.hasToolbar = true
         initList(recyclerViewContentList)

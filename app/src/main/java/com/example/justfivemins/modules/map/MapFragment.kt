@@ -2,6 +2,8 @@ package com.example.justfivemins.modules.map
 
 
 
+import android.app.Activity
+import android.content.Intent
 import android.view.View
 import com.example.justfivemins.R
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,10 +17,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.widget.Toast
 import com.example.justfivemins.modules.base.BaseActivity
 
 import com.example.justfivemins.modules.base.BaseFragment
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.places.ui.PlacePicker
+import kotlinx.android.synthetic.main.fragment_map.*
 
 
 class MapFragment : BaseFragment(), OnMapReadyCallback {
@@ -46,7 +51,13 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
             }
         })
 
+        btn_search.setOnClickListener {
+            val builder = PlacePicker.IntentBuilder()
+            startActivityForResult(builder.build(this.activity), PLACE_PICKER_REQUEST)
+        }
+
     }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         location?.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
@@ -66,10 +77,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     }
     companion object {
-        fun newInstance(): MapFragment {
-            return MapFragment()
-        }
+        const val PLACE_PICKER_REQUEST: Int = 1
     }
+
 
     private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor {
         val canvas = Canvas()
@@ -80,5 +90,20 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                data?.let {
+                    val place = PlacePicker.getPlace(activity, data)
+                    val toastMsg = String.format("Place: %s", place.name)
+                    Toast.makeText(activity, toastMsg, Toast.LENGTH_LONG).show()
+
+                    mMap.addMarker(MarkerOptions().position(place.latLng).title(place.name.toString()))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.latLng, 12f))
+
+                }
+            }
+        }
+    }
 
 }

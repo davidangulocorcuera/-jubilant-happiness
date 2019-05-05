@@ -2,7 +2,9 @@ package com.example.justfivemins.model
 
 import com.example.justfivemins.R
 
-class User (var name: String = "Jesus"
+class User (var email: String = "Jesus@bot.com"
+            ,var password: String = "erre"
+            ,var name: String = "Jesus"
             ,var surname: String = "Gómez"
             ,var secondSurname: String = "Cebollo"
             ,var age: Int = 27

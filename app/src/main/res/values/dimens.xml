@@ -63,5 +63,6 @@
     <dimen name="header_medium">140dp</dimen>
     <dimen name="smaller_circle_size">30dp</dimen>
     <dimen name="small_icon">25dp</dimen>
+    <dimen name="smallest_icon">15dp</dimen>
     <dimen name="header_big">200dp</dimen>
 </resources>

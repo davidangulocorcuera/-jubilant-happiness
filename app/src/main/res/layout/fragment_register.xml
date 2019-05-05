@@ -1,58 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".modules.register.RegisterFragment"
-             android:id="@+id/registerFragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              tools:context=".modules.register.RegisterFragment"
+              android:id="@+id/registerFragment"
+              android:background="@color/white"
+              android:orientation="vertical"
+
+
+>
+
+<ScrollView android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
 
 >
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:layout_margin="30dp"
-                  android:layout_gravity="center"
+                  android:layout_marginTop="@dimen/space_medium"
+                  android:padding="@dimen/space_medium"
     >
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/complete_the_form"
-                  android:textSize="25sp"
-        />
 
         <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                style="@style/input"
+                android:id="@+id/tiName"
         >
-            <EditText android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:id="@+id/etE-mail"
-                      android:hint="@string/e_mail"
+            <EditText
+                    android:id="@+id/etName"
+                    style="@style/edit_validator"
+                    android:hint="@string/name"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+                android:layout_margin="10dp"
+                style="@style/input"
+                android:id="@+id/tiSurname"
+        >
+            <EditText
+                    android:id="@+id/etSurname"
+                    style="@style/edit_validator"
+                    android:hint="@string/surname"
+            />
+        </android.support.design.widget.TextInputLayout>
+
+
+
+        <android.support.design.widget.TextInputLayout
+                android:layout_margin="10dp"
+                style="@style/input"
+                android:id="@+id/tiEmail"
+        >
+            <EditText
+                    android:id="@+id/etEmail"
+                    style="@style/edit_validator"
+                    android:hint="@string/e_mail"
             />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tiPassword"
                 android:layout_margin="10dp"
-
+                style="@style/input"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimary"
         >
-            <EditText android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:id="@+id/etPassword"
-                      android:hint="@string/password"
+            <EditText
+                    android:id="@+id/etPassword"
+                    style="@style/edit_validator"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
             />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/tiPasswordRepeat"
                 android:layout_margin="10dp"
-
+                style="@style/input"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/colorPrimary"
         >
-            <EditText android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:id="@+id/etPasswordRepeat"
-                      android:hint="@string/validate_password"
+            <EditText
+                    android:id="@+id/etPasswordRepeat"
+                    style="@style/edit_validator"
+                    android:hint="@string/validate_password"
+                    android:inputType="textPassword"
             />
         </android.support.design.widget.TextInputLayout>
         <LinearLayout android:layout_width="wrap_content"
@@ -64,16 +98,23 @@
 
             <Button android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/transparent_button"
+                    android:id="@+id/btnBack"
                     android:layout_margin="10dp"
-                    android:text="@string/next"
-           />
+                    android:text="@string/back"
+                    android:textColor="@color/red"
+            />
 
             <Button android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    style="@style/roundButton"
+                    android:id="@+id/btnNext"
+                    android:enabled="false"
                     android:layout_margin="10dp"
-                    android:text="@string/back"
+                    android:text="@string/next"
 
             />
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</ScrollView>
+</LinearLayout>

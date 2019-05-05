@@ -1,5 +1,7 @@
 package com.example.justfivemins.home
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -10,25 +12,31 @@ import com.example.justfivemins.R
 import com.example.justfivemins.home.home_drawer.DrawerItem
 import com.example.justfivemins.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.home.home_drawer.DrawerViewModel
+import com.example.justfivemins.home.home_drawer.HomePresenter
 import com.example.justfivemins.modules.base.BaseActivity
 import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class HomeActivity : BaseActivity() {
-
+class HomeActivity : BaseActivity(), HomePresenter.View {
 
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
+    private val presenter: HomePresenter by lazy { HomePresenter(this) }
 
+    override fun onCreateViewId(): Int {
+        return R.layout.drawer_menu
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        goToContentScreen()
+        presenter.init(intent)
+        navigator.navigateToContentFragment()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
     }
+
 
     private fun setDrawerMenu() {
         toggleHome = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
@@ -36,6 +44,7 @@ class HomeActivity : BaseActivity() {
                 super.onDrawerOpened(drawerView)
                 toggleHome.syncState()
             }
+
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
                 toggleHome.syncState()
@@ -59,49 +68,26 @@ class HomeActivity : BaseActivity() {
                 DrawerViewModel.MenuItemType.MESSAGE -> {
                 }
                 DrawerViewModel.MenuItemType.MAP -> {
-                    goToMapScreen()
+                    navigator.navigateToMap()
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
-                    goToProfileDataScreen()
+                    navigator.navigateToProfileData()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    goToContentScreen()
+                    navigator.navigateToContentFragment()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
-                    goToLoginScreen()
+                    navigator.navigateToMain()
                 }
             }
         }
     }
 
 
-    override fun onCreateViewId(): Int {
-        return  R.layout.drawer_menu
-    }
-    private fun goToProfileDataScreen() {
-        navigator.navigateToProfileData()
-    }
-    private fun goToMapScreen() {
-        navigator.navigateToMap()
-    }
-    private fun goToContentScreen(){
-        navigator.navigateToContentFragment()
-    }
-    private fun goToLoginScreen(){
-        navigator.navigateToMain()
-
-    }
+    override fun showError(error: String) {}
+    override fun showMessage(message: String) {}
+    override fun showProgress(show: Boolean, hasShade: Boolean) {}
+    override fun viewCreated(view: View?) {}
 
 
-    override fun showProgress(show: Boolean, hasShade: Boolean) {
-    }
-
-    override fun showMessage(message: String) {
-    }
-
-    override fun showError(error: String) {
-    }
-
-    override fun goBack() {
-    }
 }

@@ -34,4 +34,5 @@
     <string name="profiles_title">PROFILES</string>
     <string name="map_title">MAP</string>
     <string name="my_data_title">MY DATA</string>
+    <string name="home">home</string>
 </resources>

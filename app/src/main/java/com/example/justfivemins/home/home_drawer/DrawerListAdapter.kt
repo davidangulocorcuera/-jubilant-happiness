@@ -49,18 +49,16 @@ class DrawerListAdapter(val items: ArrayList<DrawerItem>, var onMenuItemClick: (
                 DrawerViewModel.MenuItemType.HOME -> {view.ivDrawerCircle.tint(R.color.colorAccent)}
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {view.ivDrawerCircle.tint(R.color.colorPrimary)}
                 DrawerViewModel.MenuItemType.MAP -> { view.ivDrawerCircle.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.MESSAGE -> { view.ivNotificationsIcon.tint(R.color.green_notification)}
+                DrawerViewModel.MenuItemType.MESSAGE -> {  view.ivDrawerCircle.tint(R.color.colorPrimary)}
                 DrawerViewModel.MenuItemType.LOG_OUT -> { view.ivDrawerCircle.tint(R.color.colorPrimaryDark)}
+                DrawerViewModel.MenuItemType.FRIENDS -> { view.ivDrawerCircle.tint(R.color.colorPrimary)}
+                DrawerViewModel.MenuItemType.MY_PICTURES -> { view.ivDrawerCircle.tint(R.color.colorPrimary)}
             }
 
         }
 
         private fun hideAndShowElements() {
             view.drawerSeparator.setVisible(current.isSeparator)
-            view.tvDrawerIconNotifications.setVisible(!current.isClickable)
-            if (current.notifications > 0) {
-                view.roundImageNotifications.setVisible(true)
-            }
         }
 
         private fun setValues() {
@@ -68,8 +66,6 @@ class DrawerListAdapter(val items: ArrayList<DrawerItem>, var onMenuItemClick: (
 
             view.ivDrawerIcon.setImageResource(current.icon)
             view.tvText.text = current.text
-            view.tvDrawerIconNotifications.text = current.notifications.toString()
-            view.tvDrawerIconNotifications.text = current.text
 
         }
 

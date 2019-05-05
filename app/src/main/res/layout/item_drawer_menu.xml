@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/menuItemContainer"
-    android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/menuItemContainer"
+              android:orientation="vertical"
               style="@style/Clickable"
 >
 
@@ -24,7 +24,7 @@
             android:id="@+id/roundImageContainer">
 
             <ImageView
-                android:id="@+id/ivMenuCircle"
+                android:id="@+id/ivDrawerCircle"
                 android:layout_marginStart="@dimen/space_medium"
                 android:layout_width="@dimen/small_icon"
                 android:layout_height="@dimen/small_icon"
@@ -36,14 +36,14 @@
                 android:id="@+id/ivDrawerIcon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignStart="@+id/ivMenuCircle"
-                android:layout_alignEnd="@+id/ivMenuCircle"
-                android:layout_alignBottom="@+id/ivMenuCircle"
+                android:layout_alignStart="@+id/ivDrawerCircle"
+                android:layout_alignEnd="@+id/ivDrawerCircle"
+                android:layout_alignBottom="@+id/ivDrawerCircle"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="6dp"
                 android:gravity="center"
                 android:visibility="visible" />
 
@@ -51,51 +51,12 @@
 
         <TextView
             android:id="@+id/tvText"
-            style="@style/semi_bold"
+            style="@style/Base.TextAppearance.AppCompat.Menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/space_medium"
             android:text="Titulo" />
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/roundImageNotifications"
-            android:visibility="gone"
-            >
-
-            <ImageView
-                android:id="@+id/ivNotificationsIcon"
-                android:layout_width="@dimen/smaller_circle_size"
-                android:layout_height="@dimen/smaller_circle_size"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/space_medium"
-                android:layout_marginTop="@dimen/space_small"
-                android:layout_marginEnd="19dp"
-                android:src="@drawable/circle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvDrawerIconNotifications"
-            android:textSize="@dimen/smaller_font"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignStart="@+id/ivNotificationsIcon"
-            android:layout_alignEnd="@+id/ivNotificationsIcon"
-            android:layout_alignBottom="@+id/ivNotificationsIcon"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:textColor="@color/white"
-            android:text="B"
-            android:gravity="center"
-            android:visibility="visible" />
-       </RelativeLayout>
     </LinearLayout>
 
     <include
