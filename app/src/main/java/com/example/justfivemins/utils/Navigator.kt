@@ -16,8 +16,11 @@ import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
 import com.example.justfivemins.modules.content.ContentFragment
+import com.example.justfivemins.modules.friends.FriendsFragment
+import com.example.justfivemins.modules.gallery.GalleryFragment
 import com.example.justfivemins.modules.login.LoginFragment
 import com.example.justfivemins.modules.map.MapFragment
+import com.example.justfivemins.modules.messages.MessagesFragment
 import com.example.justfivemins.modules.profile_data.ProfileDataFragment
 import com.example.justfivemins.modules.register.RegisterFragment
 import java.io.Serializable
@@ -270,6 +273,15 @@ class Navigator {
 
     fun navigateToProfileData() {
         navigate(activity, ProfileDataFragment::class.java)
+    }
+    fun navigateToMessages() {
+        navigate(activity, MessagesFragment::class.java)
+    }
+    fun navigateToGallery() {
+        navigate(activity, GalleryFragment::class.java)
+    }
+    fun navigateToFriends() {
+        navigate(activity, FriendsFragment::class.java)
     }
 
     fun navigateToMap() {

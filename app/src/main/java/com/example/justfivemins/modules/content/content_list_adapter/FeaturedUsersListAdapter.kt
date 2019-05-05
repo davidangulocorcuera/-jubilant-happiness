@@ -6,16 +6,15 @@ import android.view.ViewGroup
 import com.example.justfivemins.R
 
 
-import com.example.justfivemins.model.CellItem
+import com.example.justfivemins.model.CardItem
 import com.example.justfivemins.modules.base.BaseRecyclerAdapter
-import com.example.justfivemins.utils.setVisible
-import kotlinx.android.synthetic.main.item_content_card_layout.view.*
+import kotlinx.android.synthetic.main.item_users_card_layout.view.*
 
 
-class ContentListAdapter(val items: ArrayList<CellItem>) : BaseRecyclerAdapter<CellItem, ContentListAdapter.ViewHolder>() {
+class FeaturedUsersListAdapter(val items: ArrayList<CardItem>) : BaseRecyclerAdapter<CardItem, FeaturedUsersListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_content_card_layout, parent, false)
+            .inflate(R.layout.item_users_card_layout, parent, false)
 
         return ViewHolder(v)
     }
@@ -26,7 +25,7 @@ class ContentListAdapter(val items: ArrayList<CellItem>) : BaseRecyclerAdapter<C
 
 
     inner class ViewHolder(var view: View) : BaseRecyclerAdapter.ViewHolder(view) {
-        private lateinit var current: CellItem
+        private lateinit var current: CardItem
 
 
         override fun bind(position: Int) {
@@ -36,11 +35,9 @@ class ContentListAdapter(val items: ArrayList<CellItem>) : BaseRecyclerAdapter<C
         }
 
         fun setValues() {
-            view.textViewName.text = current.title
-            view.textViewDescription.text = current.description
-            view.imageView_cellImage.setImageResource(R.drawable.img_profile_example)
-            view.textViewPlace.text = "madrid"
-
+            view.textViewName.text = current.cardTitle
+            view.textViewAge.text = current.cardDescription
+           //view.imageView_cellImage.setImageResource(current.cardImage)
 
         }
 

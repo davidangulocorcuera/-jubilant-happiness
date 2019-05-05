@@ -1,23 +1,26 @@
 package com.example.justfivemins.modules.content
 
 
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
 import com.example.justfivemins.R.layout.fragment_content
-import com.example.justfivemins.model.Article
-import com.example.justfivemins.model.CellItem
+import com.example.justfivemins.model.CardItem
+import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
-import com.example.justfivemins.modules.content.content_list_adapter.ContentListAdapter
-import com.example.justfivemins.modules.profile_data.data_list_adapter.ProfileDataListAdapter
+import com.example.justfivemins.modules.content.content_list_adapter.FeaturedUsersListAdapter
+import com.example.justfivemins.modules.content.content_list_adapter.UsersListAdapter
 import kotlinx.android.synthetic.main.fragment_content.*
-import kotlinx.android.synthetic.main.item_content_card_layout.*
+import kotlinx.android.synthetic.main.item_users_card_layout.*
 
 class ContentFragment : BaseFragment() {
-    private var cards: ArrayList<CellItem> = ArrayList()
-    private lateinit var contentListAdapter: ContentListAdapter
+    private var cards: ArrayList<CardItem> = ArrayList()
+    private lateinit var featuredUsersListAdapter: FeaturedUsersListAdapter
+    private lateinit var usersListAdapter: UsersListAdapter
+
 
     override fun onCreateViewId(): Int {
         return fragment_content
@@ -26,27 +29,40 @@ class ContentFragment : BaseFragment() {
     override fun viewCreated(view: View?) {
         cards.addAll(
             arrayOf(
-                Article("Jesus Cebollo", "Clásica persona humana",1),
-                Article("Cebollo Rodriguez", "No clásica persona humana",1),
-                Article("Jesus Cebollo", "Clásica persona humana",1),
-                Article("Cebollo Rodriguez", "No clásica persona humana",1)
+                User(cardTitle = "Jesus Ortera", cardDescription = "18",cardImage = 1),
+                User(cardTitle = "Carlos Cebollo", cardDescription = "38",cardImage = 1),
+                User(cardTitle = "Jorge Persiana", cardDescription = "19",cardImage = 1),
+                User(cardTitle = "Maria Verdura", cardDescription = "22",cardImage = 1),
+                User(cardTitle = "Jesus Ortera", cardDescription = "18",cardImage = 1),
+                User(cardTitle = "Carlos Cebollo", cardDescription = "38",cardImage = 1),
+                User(cardTitle = "Jorge Persiana", cardDescription = "19",cardImage = 1),
+                User(cardTitle = "Maria Verdura", cardDescription = "22",cardImage = 1)
             )
         )
         val configurator: Configurator? = null
         setToolbarTitle(getString(R.string.home).toUpperCase())
 
         configurator?.hasToolbar = true
-        initList(recyclerViewContentList)
+        initFeaturedList()
+        initUsersList()
+
     }
-    private fun initList(recyclerView: RecyclerView) {
+    private fun initFeaturedList() {
         val layoutManager = LinearLayoutManager(activity,0,false)
-        recyclerView.layoutManager = layoutManager as RecyclerView.LayoutManager?
-        contentListAdapter =
-            ContentListAdapter(cards)
-        recyclerViewContentList.adapter = contentListAdapter
+        recyclerViewFeaturedUsersList.layoutManager = layoutManager as RecyclerView.LayoutManager?
+        featuredUsersListAdapter =
+            FeaturedUsersListAdapter(cards)
+        recyclerViewFeaturedUsersList.adapter = featuredUsersListAdapter
+    }
+    private fun initUsersList() {
+        val layoutManager = GridLayoutManager(activity,2)
+        recyclerViewUsersList.layoutManager = layoutManager as RecyclerView.LayoutManager?
+        usersListAdapter =
+            UsersListAdapter(cards)
+        recyclerViewUsersList.adapter = usersListAdapter
     }
     fun setButtonListener(){
-        btn_location.setOnClickListener {
+        btnViewProfile.setOnClickListener {
         }
     }
 

@@ -13,7 +13,7 @@
         android:contentInsetEnd="0dp"
         android:contentInsetRight="0dp"
         android:paddingEnd="72dp"
-        android:elevation="0dp"
+        android:elevation="@dimen/space_small"
         android:paddingStart="0dp"
         android:paddingTop="5dp"
         android:theme="@style/ToolbarTheme"
@@ -23,9 +23,8 @@
         app:contentInsetStart="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:titleTextColor="@color/white"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         tools:ignore="RtlSymmetry">
-
     <TextView
             android:id="@+id/toolbar_title"
             style="@style/title_medium"
@@ -35,9 +34,6 @@
             tools:text="THE TITLE"
             android:gravity="center_horizontal"
             tools:visibility="visible"/>
-    <View android:layout_width="match_parent"
-          android:layout_height="2dp"
-          android:background="@color/colorPrimary"
-    />
+
 
 </android.support.v7.widget.Toolbar>

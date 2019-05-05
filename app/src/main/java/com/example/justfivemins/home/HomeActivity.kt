@@ -66,6 +66,8 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
             drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.type) {
                 DrawerViewModel.MenuItemType.MESSAGE -> {
+                    navigator.navigateToMessages()
+
                 }
                 DrawerViewModel.MenuItemType.MAP -> {
                     navigator.navigateToMap()
@@ -78,6 +80,14 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
                     navigator.navigateToMain()
+                }
+                DrawerViewModel.MenuItemType.FRIENDS -> {
+                    navigator.navigateToFriends()
+                }
+                DrawerViewModel.MenuItemType.MY_PICTURES -> {
+                    navigator.navigateToGallery()
+                }
+                DrawerViewModel.MenuItemType.CONTACT -> {
                 }
             }
         }

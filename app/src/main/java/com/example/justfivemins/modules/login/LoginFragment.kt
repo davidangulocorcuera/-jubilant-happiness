@@ -37,6 +37,6 @@ class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
     }
 
     override fun gotToRegister() {
-        navigator.navigateToRegister()
+        navigator.addBackStack(true).navigateToRegister()
     }
 }
