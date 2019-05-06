@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/friendImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                style="@style/Clickable"
+                android:src="@drawable/no_profile_image"
+                android:layout_marginStart="@dimen/space_biggest"
+                android:layout_marginBottom="@dimen/space_medium"
+                android:layout_marginTop="@dimen/space_medium"
+        />
+        <TextView android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/tvFriendUsername"
+                  android:text="@string/username"
+                  android:layout_gravity="center_vertical"
+                  android:layout_marginStart="@dimen/space_big"
+                  android:layout_weight="0.1"
+
+        />
+        <ImageButton android:layout_width="@dimen/small_icon"
+                     android:layout_height="wrap_content"
+                     android:src="@drawable/ic_menu_vertical"
+                     android:tint="@color/colorPrimary"
+                     android:background="@color/transparent"
+                     android:layout_gravity="center_vertical"
+                     android:layout_marginEnd="@dimen/space_big"
+                     style="@style/Clickable"
+
+
+        />
+    </LinearLayout>
+    <include
+            android:id="@+id/friendSeparator"
+            layout="@layout/view_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/space_medium"
+            android:layout_marginEnd="@dimen/space_medium" />
+
+</LinearLayout>
