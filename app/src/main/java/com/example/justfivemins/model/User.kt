@@ -1,11 +1,13 @@
 package com.example.justfivemins.model
 
 import com.example.justfivemins.R
+import java.io.Serializable
 
 class User(
     var email: String = "Jesus@bot.com"
     , var password: String = "erre"
     , var name: String = "Jesus"
+    , var description: String = "Este soy yo"
     , var surname: String = "Gómez"
     , var secondSurname: String = "Cebollo"
     , var age: Int = 27
@@ -19,8 +21,5 @@ class User(
     , var numLikes: Int = 0
     , var universityName: String = ""
     , var jobName: String = "",
-    var currentLocation: Location = Location(),
-    override var cardTitle: String = "",
-    override var cardDescription: String = "",
-    override var cardImage: Int = 3
-) : CardItem
+    var currentLocation: Location = Location()
+) : Serializable

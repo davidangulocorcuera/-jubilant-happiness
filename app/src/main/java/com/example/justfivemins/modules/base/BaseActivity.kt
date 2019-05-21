@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.justfivemins.R
+import com.example.justfivemins.home.home_drawer.DrawerLocker
 import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.color
 import kotlinx.android.synthetic.main.activity_home.*
@@ -30,7 +31,6 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     var toolbar_title: TextView? = null
     var currentToolbar: Toolbar? = null
 
-    protected abstract fun viewCreated(view: View?)
     protected abstract fun onCreateViewId(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -176,6 +176,25 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     }
     override fun goBack() {
         navigator.goBack()
+    }
+    fun enableDrawerMenu(enable: Boolean) {
+        (this as? DrawerLocker)?.setDrawerEnabled(enable)
+        addMarginToToolbarTitle(enable)
+    }
+    private fun addMarginToToolbarTitle(enable: Boolean) {
+        val params = toolbar_title?.layoutParams as? RelativeLayout.LayoutParams
+        if (enable) {
+            params?.marginEnd = getActionBarHeight()
+            if (params != null) {
+                toolbar_title?.post {
+                    if (toolbar_title != null)
+                        toolbar_title?.layoutParams = params
+                }
+            }
+        } else {
+            params?.marginEnd = 0
+            params?.marginStart = 0
+        }
     }
 
 }

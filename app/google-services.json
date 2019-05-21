@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "473317142296",
+    "firebase_url": "https://tron-f0eb1.firebaseio.com",
+    "project_id": "tron-f0eb1",
+    "storage_bucket": "tron-f0eb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473317142296:android:3509f48a16ef7504",
+        "android_client_info": {
+          "package_name": "com.example.justfivemins"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473317142296-516d40olr2n786jtrav0pjpamb5fs9td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAohKe45uasEtugZ2Zqx9AmeJFTaicvZGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473317142296-516d40olr2n786jtrav0pjpamb5fs9td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

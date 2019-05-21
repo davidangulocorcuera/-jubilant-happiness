@@ -1,10 +1,13 @@
 package com.example.justfivemins.modules.register
 
+import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import com.example.justfivemins.R
+import com.example.justfivemins.firebase.Api
+import com.example.justfivemins.firebase.FirebaseApiManager
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -13,6 +16,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     companion object {
         var registerRequest: RegisterRequest = RegisterRequest()
     }
+    private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
 
     override fun onCreateViewId(): Int {
@@ -57,6 +61,20 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     }
 
+    private fun registerUser(data: RegisterRequest){
+        val firebaseApiManager = FirebaseApiManager()
+        registerRequest.let {
+            data.email?.let { email -> data.password?.let { password ->
+                activity?.let { activity ->
+                    firebaseApiManager.createUser(email,
+                        password, activity
+                    )
+                }
+            } }
+        }
+
+    }
+
     private fun retrieveRegisterData(): RegisterRequest {
         val register = RegisterRequest()
         register.email = etEmail?.text.toString()
@@ -69,6 +87,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     fun setListeners() {
         btnNext.setOnClickListener {
+            registerUser(retrieveRegisterData())
             goToNextScreen()
         }
         btnBack.setOnClickListener {
@@ -76,9 +95,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
         }
     }
 
+
     fun goToNextScreen() {
         navigator.navigateToHome()
-
     }
 
     fun backToLogin() {

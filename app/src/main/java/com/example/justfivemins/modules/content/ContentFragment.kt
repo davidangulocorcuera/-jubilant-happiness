@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
 import com.example.justfivemins.R.layout.fragment_content
-import com.example.justfivemins.model.CardItem
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_content.*
 import kotlinx.android.synthetic.main.item_users_card_layout.*
 
 class ContentFragment : BaseFragment() {
-    private var cards: ArrayList<CardItem> = ArrayList()
+    private var users: ArrayList<User> = ArrayList()
     private lateinit var featuredUsersListAdapter: FeaturedUsersListAdapter
     private lateinit var usersListAdapter: UsersListAdapter
 
@@ -27,17 +26,16 @@ class ContentFragment : BaseFragment() {
     }
 
     override fun viewCreated(view: View?) {
-        cards.addAll(
+        users.addAll(
             arrayOf(
-                User(cardTitle = "Jesus Ortera", cardDescription = "18",cardImage = 1),
-                User(cardTitle = "Carlos Cebollo", cardDescription = "38",cardImage = 1),
-                User(cardTitle = "Jorge Persiana", cardDescription = "19",cardImage = 1),
-                User(cardTitle = "Maria Verdura", cardDescription = "22",cardImage = 1),
-                User(cardTitle = "Jesus Ortera", cardDescription = "18",cardImage = 1),
-                User(cardTitle = "Carlos Cebollo", cardDescription = "38",cardImage = 1),
-                User(cardTitle = "Jorge Persiana", cardDescription = "19",cardImage = 1),
-                User(cardTitle = "Maria Verdura", cardDescription = "22",cardImage = 1)
-            )
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1),
+                User(name = "Jesus Ortera", description = "18",profileImage = 1)
+                )
         )
         val configurator: Configurator? = null
         setToolbarTitle(getString(R.string.home).toUpperCase())
@@ -51,14 +49,14 @@ class ContentFragment : BaseFragment() {
         val layoutManager = LinearLayoutManager(activity,0,false)
         recyclerViewFeaturedUsersList.layoutManager = layoutManager as RecyclerView.LayoutManager?
         featuredUsersListAdapter =
-            FeaturedUsersListAdapter(cards)
+            FeaturedUsersListAdapter(users)
         recyclerViewFeaturedUsersList.adapter = featuredUsersListAdapter
     }
     private fun initUsersList() {
         val layoutManager = GridLayoutManager(activity,2)
         recyclerViewUsersList.layoutManager = layoutManager as RecyclerView.LayoutManager?
         usersListAdapter =
-            UsersListAdapter(cards)
+            UsersListAdapter(users)
         recyclerViewUsersList.adapter = usersListAdapter
     }
     fun setButtonListener(){

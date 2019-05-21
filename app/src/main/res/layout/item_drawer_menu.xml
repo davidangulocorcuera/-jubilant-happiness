@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/menuItemContainer"
@@ -9,63 +8,43 @@
 >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/space_medium_big"
-        android:layout_marginBottom="@dimen/space_medium_big"
-
-        >
-
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/roundImageContainer">
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/space_medium_big"
+            android:layout_marginBottom="@dimen/space_medium_big"
 
-            <ImageView
-                android:id="@+id/ivDrawerCircle"
-                android:layout_marginStart="@dimen/space_medium"
-                android:layout_width="@dimen/small_icon"
-                android:layout_height="@dimen/small_icon"
-                android:src="@drawable/circle"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    >
 
-            <ImageView
+
+        <ImageView
                 android:id="@+id/ivDrawerIcon"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignStart="@+id/ivDrawerCircle"
-                android:layout_alignEnd="@+id/ivDrawerCircle"
-                android:layout_alignBottom="@+id/ivDrawerCircle"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="6dp"
-                android:layout_marginBottom="6dp"
-                android:gravity="center"
-                android:visibility="visible" />
-
-        </RelativeLayout>
+                android:layout_width="@dimen/ic_drawer"
+                android:src="@drawable/ic_location"
+                android:layout_height="@dimen/ic_drawer"
+                android:layout_marginStart="@dimen/space_medium"
+                android:layout_marginEnd="@dimen/space_small"
+                android:layout_gravity="center_vertical
+" android:visibility="visible"/>
 
         <TextView
-            android:id="@+id/tvText"
-            style="@style/Base.TextAppearance.AppCompat.Menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/space_medium"
-            android:text="Titulo" />
+                android:id="@+id/tvText"
+                style="@style/semi_bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/title"/>
     </LinearLayout>
 
     <include
-        android:id="@+id/drawerSeparator"
-        layout="@layout/view_separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:visibility="visible"
-        android:layout_marginStart="@dimen/space_medium"
-        android:layout_marginEnd="@dimen/space_medium" />
+            android:id="@+id/drawerSeparator"
+            layout="@layout/view_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/space_medium"
+            android:layout_marginEnd="@dimen/space_medium"
+    />
 
 </LinearLayout>

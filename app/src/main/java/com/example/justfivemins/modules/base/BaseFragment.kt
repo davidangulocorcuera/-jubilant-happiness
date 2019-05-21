@@ -85,22 +85,6 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
     }
 
 
-    override fun showError(error: String) {
-        baseActivity?.showError(error)
-    }
-
-
-    override fun showMessage(message: String) {
-        baseActivity?.showMessage(message)
-    }
-
-
-
-
-    override fun showProgress(show: Boolean, hasShade: Boolean) {
-        baseActivity?.showProgress(show, hasShade)
-    }
-
     override fun hideKeyboard() {
         baseActivity?.hideKeyboard()
     }
