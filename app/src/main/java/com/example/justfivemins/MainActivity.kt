@@ -14,16 +14,10 @@ class MainActivity : BaseActivity() {
         return R.layout.activity_main
     }
 
-
-    override fun goBack() {
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         navigator.navigateToLogin()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
-
     }
 
 

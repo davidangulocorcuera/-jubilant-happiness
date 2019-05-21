@@ -1,4 +1,4 @@
-package com.example.justfivemins.home
+package com.example.justfivemins.modules.home
 
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
@@ -7,9 +7,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
-import com.example.justfivemins.home.home_drawer.DrawerItem
-import com.example.justfivemins.home.home_drawer.DrawerListAdapter
-import com.example.justfivemins.home.home_drawer.DrawerViewModel
+import com.example.justfivemins.modules.home.home_drawer.DrawerItem
+import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
+import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import com.example.justfivemins.modules.base.BaseActivity
 import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -27,7 +27,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.init(intent)
+        presenter.init()
         navigator.navigateToContentFragment()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)

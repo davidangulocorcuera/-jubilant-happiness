@@ -1,4 +1,4 @@
-package com.example.justfivemins.modules.register
+package com.example.justfivemins.requests
 
 import com.example.justfivemins.modules.login.LoginRequest
 

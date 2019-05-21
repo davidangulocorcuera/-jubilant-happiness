@@ -2,13 +2,17 @@ package com.example.justfivemins.firebase
 
 import android.app.Activity
 import android.util.Log
-import com.example.justfivemins.modules.register.RegisterRequest
+import com.example.justfivemins.model.User
+import com.example.justfivemins.modules.responses.UserResponse
+import com.example.justfivemins.requests.RegisterRequest
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class FirebaseApiManager : Api {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
     var db = FirebaseFirestore.getInstance()
 
 
@@ -18,26 +22,34 @@ class FirebaseApiManager : Api {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     if (user != null) {
-
                         db.collection("users").document(user.uid)
                             .set(Mapper.registerRequestMapper(registerRequest))
-                            .addOnSuccessListener {
-                                Log.v("taag", "goood")
-                            }
                             .addOnFailureListener { e ->
                                 Log.v("taag", e.toString())
                             }
                     }
                 } else {
-                    Log.v("FirebaseApiManager", task.exception.toString())
+                    Log.v("taag", task.exception.toString())
                 }
             }
 
 
     }
-
-
-    companion object {
-        fun authInstance(): FirebaseAuth = FirebaseAuth.getInstance()
+    override fun getUserData(currentUser: FirebaseUser): UserResponse {
+        val docRef = db.collection("users").document(currentUser.uid)
+        var user: UserResponse =    UserResponse()
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                   user = Mapper.userResponseMapper(document)
+                } else {
+                    Log.d("taag", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("taag", "get failed with ", exception)
+            }
+        return user
     }
+
 }

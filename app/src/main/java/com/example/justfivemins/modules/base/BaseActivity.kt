@@ -14,7 +14,7 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.justfivemins.R
-import com.example.justfivemins.home.home_drawer.DrawerLocker
+import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.color
 import com.example.justfivemins.utils.setVisible

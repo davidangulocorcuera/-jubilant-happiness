@@ -1,4 +1,4 @@
-package com.example.justfivemins.home.home_drawer
+package com.example.justfivemins.modules.home.home_drawer
 
 import com.example.justfivemins.R
 

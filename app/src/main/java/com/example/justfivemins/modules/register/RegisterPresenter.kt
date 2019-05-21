@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.register
 
 import android.os.Bundle
 import com.example.justfivemins.modules.base.MainMVP
+import com.example.justfivemins.requests.RegisterRequest
 import com.example.justfivemins.utils.Valid
 
 class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Presenter {

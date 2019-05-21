@@ -5,7 +5,6 @@ import java.io.Serializable
 
 class User(
     var email: String = "Jesus@bot.com"
-    , var password: String = "erre"
     , var name: String = "Jesus"
     , var description: String = "Este soy yo"
     , var surname: String = "Gómez"

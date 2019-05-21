@@ -1,4 +1,4 @@
-package com.example.justfivemins.home.home_drawer
+package com.example.justfivemins.modules.home.home_drawer
 
 import android.view.LayoutInflater
 import android.view.View

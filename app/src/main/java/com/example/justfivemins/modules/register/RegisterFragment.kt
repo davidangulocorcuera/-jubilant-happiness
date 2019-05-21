@@ -8,12 +8,14 @@ import com.example.justfivemins.R
 import com.example.justfivemins.firebase.Api
 import com.example.justfivemins.firebase.FirebaseApiManager
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.requests.RegisterRequest
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     companion object {
-        var registerRequest: RegisterRequest = RegisterRequest()
+        var registerRequest: RegisterRequest =
+            RegisterRequest()
     }
 
     private lateinit var api: Api
@@ -86,6 +88,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     }
 
+
     private fun retrieveRegisterData(): RegisterRequest {
         val register = RegisterRequest()
         register.email = etEmail?.text.toString()
@@ -122,9 +125,14 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        showProgress(show = false, hasShade = false)
+    }
+
 
     fun goToNextScreen() {
-        navigator.addBackStack(false).navigateToHome()
+        navigator.navigateToHome()
     }
 
     fun backToLogin() {

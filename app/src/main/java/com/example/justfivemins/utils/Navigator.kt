@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
-import com.example.justfivemins.home.HomeActivity
+import com.example.justfivemins.modules.home.HomeActivity
 import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
