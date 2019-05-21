@@ -10,12 +10,14 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.justfivemins.R
 import com.example.justfivemins.home.home_drawer.DrawerLocker
 import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.color
+import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -165,6 +167,12 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             toolbar_title?.visibility = View.VISIBLE
             toolbar_title?.text = title
         }
+    }
+    fun showProgress(show: Boolean, hasShade: Boolean) {
+        val progress = findViewById<ProgressBar>(R.id.progress)
+        val progressContainer = findViewById<View>(R.id.progressContainer)
+        progressContainer?.setVisible(show && hasShade)
+        progress?.setVisible(show)
     }
 
     fun centerToolbarText(center: Boolean) {

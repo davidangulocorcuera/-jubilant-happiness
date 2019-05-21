@@ -7,7 +7,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class FirebaseApiManager : Api {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-
     override fun createUser(email: String, password: String, activity: Activity) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(activity) { task ->
@@ -15,11 +14,10 @@ class FirebaseApiManager : Api {
                     val user = auth.currentUser
                     Log.v("FirebaseApiManager", user?.uid.toString())
                 } else {
-                    Log.v("FirebaseApiManager",task.exception.toString())
-
+                    Log.v("FirebaseApiManager", task.exception.toString())
                 }
-
             }
+
     }
 
 

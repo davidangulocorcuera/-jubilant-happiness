@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
+import com.example.justfivemins.R
 import com.example.justfivemins.utils.Navigator
+import com.example.justfivemins.utils.setVisible
 
 
 abstract class BaseFragment : Fragment(), MainMVP.View {
@@ -29,7 +32,9 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
     ) {
         viewCreated(view)
     }
-
+    fun showProgress(show: Boolean, hasShade: Boolean) {
+        baseActivity?.showProgress(show, hasShade)
+    }
     fun setToolbarTitle(title: String?) {
         baseActivity?.setToolbarText(title)
     }

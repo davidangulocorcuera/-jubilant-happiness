@@ -1,6 +1,5 @@
 package com.example.justfivemins.modules.register
 
-import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -16,6 +15,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     companion object {
         var registerRequest: RegisterRequest = RegisterRequest()
     }
+
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
 
@@ -24,6 +24,10 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     }
 
     override fun viewCreated(view: View?) {
+        tiName.setOnLongClickListener {
+            autoFill()
+            true
+        }
         setToolbarTitle(getString(R.string.register))
         setListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat)
@@ -61,17 +65,24 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     }
 
-    private fun registerUser(data: RegisterRequest){
+    private fun registerUser(data: RegisterRequest) {
         val firebaseApiManager = FirebaseApiManager()
-        registerRequest.let {
-            data.email?.let { email -> data.password?.let { password ->
-                activity?.let { activity ->
-                    firebaseApiManager.createUser(email,
-                        password, activity
-                    )
-                }
-            } }
-        }
+        return firebaseApiManager.createUser(
+            data.email!!,
+            data.password!!,
+            activity!!
+        )
+
+
+        /*  registerRequest.let {
+              data.email?.let { email -> data.password?.let { password ->
+                  activity?.let { activity ->
+                      firebaseApiManager.createUser(email,
+                          password, activity
+                      )
+                  }
+              } }
+          }*/
 
     }
 
@@ -85,24 +96,41 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
         return register
     }
 
-    fun setListeners() {
+    private fun autoFill() {
+        etEmail?.setText("ce@g.com")
+        etPassword.setText("Berlinwood1")
+        etPasswordRepeat.setText("Berlinwood1")
+        etName.setText("dvd")
+        etSurname.setText("cebollo")
+    }
+
+    private fun setListeners() {
         btnNext.setOnClickListener {
+            showProgress(show = true, hasShade = true)
             registerUser(retrieveRegisterData())
             goToNextScreen()
+
         }
         btnBack.setOnClickListener {
             backToLogin()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        showProgress(show = false, hasShade = false)
+
+    }
+
 
     fun goToNextScreen() {
-        navigator.navigateToHome()
+        navigator.addBackStack(false).navigateToHome()
     }
 
     fun backToLogin() {
         navigator.navigateToLogin()
     }
+
     override fun hideInputErrors() {
         tiEmail.isErrorEnabled = false
         tiPassword.isErrorEnabled = false
@@ -138,6 +166,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
         }
         tiPasswordRepeat.showError(error)
     }
+
     override fun showSurnameError(error: Boolean) {
         if (error) {
             tiName.error = "Invalid name or empty"
@@ -145,6 +174,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
         tiName.showError(error)
     }
+
     override fun showNameError(error: Boolean) {
         if (error) {
             tiSurname.error = "Invalid surname or empty"

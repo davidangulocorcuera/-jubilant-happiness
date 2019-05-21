@@ -19,9 +19,9 @@
 
         <ImageView
                 android:id="@+id/ivDrawerIcon"
-                android:layout_width="@dimen/ic_drawer"
+                android:layout_width="wrap_content"
                 android:src="@drawable/ic_location"
-                android:layout_height="@dimen/ic_drawer"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_medium"
                 android:layout_marginEnd="@dimen/space_small"
                 android:layout_gravity="center_vertical
@@ -30,7 +30,6 @@
         <TextView
                 android:id="@+id/tvText"
                 style="@style/semi_bold"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
