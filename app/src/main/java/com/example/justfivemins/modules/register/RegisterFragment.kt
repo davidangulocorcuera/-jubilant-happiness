@@ -74,18 +74,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
             data.password,
             activity!!
         )
-
-
-        /*  registerRequest.let {
-              data.email?.let { email -> data.password?.let { password ->
-                  activity?.let { activity ->
-                      firebaseApiManager.createUser(email,
-                          password, activity
-                      )
-                  }
-              } }
-          }*/
-
     }
 
 

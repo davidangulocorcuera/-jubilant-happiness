@@ -9,7 +9,7 @@ class HomePresenter(private val view: View): MainMVP.Presenter {
     private lateinit var userResponse: UserResponse
 
     fun init() {
-       userResponse =  firebaseApiManager.getUserData(firebaseApiManager.auth.currentUser!!)
+       //userResponse =  firebaseApiManager.getUserData(CurrentUser.user!!)
     }
 
     interface View : MainMVP.View {

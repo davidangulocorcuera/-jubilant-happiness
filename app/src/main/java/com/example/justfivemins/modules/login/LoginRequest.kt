@@ -7,8 +7,8 @@ class LoginRequest() {
     var token: String? = null
     @Transient
     var type: LoginType = LoginType.NORMAL
-    var email: String? = null
-    var password: String? = null
+    var email: String = ""
+    var password: String = ""
 
     enum class LoginType {
         NORMAL,
