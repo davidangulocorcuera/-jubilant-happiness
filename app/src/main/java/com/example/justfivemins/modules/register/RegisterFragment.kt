@@ -68,8 +68,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     private fun registerUser(data: RegisterRequest) {
         val firebaseApiManager = FirebaseApiManager()
         return firebaseApiManager.createUser(
-            data.email!!,
-            data.password!!,
+            data,
+            data.password,
             activity!!
         )
 
