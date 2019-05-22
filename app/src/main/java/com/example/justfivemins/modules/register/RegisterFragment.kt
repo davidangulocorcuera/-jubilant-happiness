@@ -4,15 +4,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.example.justfivemins.R
-import com.example.justfivemins.firebase.Api
-import com.example.justfivemins.firebase.FirebaseApiManager
+import com.example.justfivemins.api.Api
+import com.example.justfivemins.api.firebase.FirebaseApiManager
+import com.example.justfivemins.api.firebase.FirebaseListener
+import com.example.justfivemins.api.requests.RegisterRequest
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
-import com.example.justfivemins.requests.RegisterRequest
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment : BaseFragment(), RegisterPresenter.View {
+class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListener.RegisterListener {
+
     companion object {
         var registerRequest: RegisterRequest =
             RegisterRequest()
@@ -20,6 +24,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
 
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
+    private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this) }
+
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_register
@@ -68,7 +74,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
     }
 
     private fun registerUser(data: RegisterRequest) {
-        val firebaseApiManager = FirebaseApiManager()
         return firebaseApiManager.createUser(
             data,
             data.password,
@@ -99,23 +104,10 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
         btnNext.setOnClickListener {
             showProgress(show = true, hasShade = true)
             registerUser(retrieveRegisterData())
-            goToNextScreen()
-
         }
         btnBack.setOnClickListener {
             backToLogin()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showProgress(show = false, hasShade = false)
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        showProgress(show = false, hasShade = false)
     }
 
 
@@ -177,6 +169,18 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View {
         }
 
         tiSurname.showError(error)
+    }
+
+    override fun isRegisterOk(success: Boolean) {
+        showProgress(show = false, hasShade = false)
+        if (success) {
+            goToNextScreen()
+        } else {
+            Toast.makeText(
+                activity?.applicationContext, "Register failed.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 

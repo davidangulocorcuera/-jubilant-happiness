@@ -1,6 +1,6 @@
 package com.example.justfivemins.utils
 
-import com.example.justfivemins.modules.login.LoginRequest
+import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.register.RegisterFragment
 import java.util.*
 import java.util.regex.Pattern

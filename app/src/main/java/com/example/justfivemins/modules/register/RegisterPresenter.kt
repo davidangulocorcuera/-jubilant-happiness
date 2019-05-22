@@ -2,7 +2,7 @@ package com.example.justfivemins.modules.register
 
 import android.os.Bundle
 import com.example.justfivemins.modules.base.MainMVP
-import com.example.justfivemins.requests.RegisterRequest
+import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.utils.Valid
 
 class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Presenter {
@@ -54,17 +54,17 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         if (showError)
             view.showSurnameError(!Valid.isNotNullOrEmpty(registerRequest.surname))
 
-        if (!Valid.isEmailValid(registerRequest.email!!)) {
+        if (!Valid.isEmailValid(registerRequest.email)) {
             error = true
         }
         if (showError)
             view.showEmailError(!Valid.isNotNullOrEmpty(registerRequest.email))
 
-        if (!Valid.isPasswordValid(registerRequest.password!!, registerRequest.confirmPassword!!)) {
+        if (!Valid.isPasswordValid(registerRequest.password, registerRequest.confirmPassword)) {
             error = true
         }
         if (showError)
-            view.showPasswordError(!Valid.isPasswordValid(registerRequest.password!!, registerRequest.confirmPassword!!))
+            view.showPasswordError(!Valid.isPasswordValid(registerRequest.password, registerRequest.confirmPassword))
 
 
         return error

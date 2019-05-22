@@ -7,15 +7,25 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
+import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import com.example.justfivemins.modules.base.BaseActivity
 import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 class HomeActivity : BaseActivity(), HomePresenter.View {
+    override fun setUserData(user: User): User {
+        return user
+    }
 
+    override fun showProgress(enable: Boolean) {
+        showProgress(enable, enable)
+    }
+
+    private var user: User = User()
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
@@ -23,6 +33,10 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     override fun onCreateViewId(): Int {
         return R.layout.drawer_menu
+    }
+
+    fun setMenuData(){
+        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

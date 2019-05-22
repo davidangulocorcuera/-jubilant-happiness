@@ -1,24 +1,30 @@
-package com.example.justfivemins.firebase
+package com.example.justfivemins.api.firebase
 
 import android.app.Activity
 import android.util.Log
-import android.widget.Toast
+import com.example.justfivemins.api.Api
+import com.example.justfivemins.api.Mapper
+import com.example.justfivemins.api.requests.LoginRequest
+import com.example.justfivemins.api.requests.RegisterRequest
+import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
-import com.example.justfivemins.modules.login.LoginRequest
-import com.example.justfivemins.modules.responses.UserResponse
-import com.example.justfivemins.requests.RegisterRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class FirebaseApiManager : Api, FirebaseListener {
+class FirebaseApiManager(
+    private val loginListener: FirebaseListener.LoginListener? = null
+    , private val registerListener: FirebaseListener.RegisterListener? = null
+    , private val userDataListener: FirebaseListener.UserDataListener? = null
+) : Api {
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     var db = FirebaseFirestore.getInstance()
 
 
     override fun createUser(registerRequest: RegisterRequest, password: String, activity: Activity) {
+
         auth.createUserWithEmailAndPassword(registerRequest.email, password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
@@ -28,30 +34,38 @@ class FirebaseApiManager : Api, FirebaseListener {
                         db.collection("users").document(user.uid)
                             .set(Mapper.registerRequestMapper(registerRequest))
                             .addOnFailureListener { e ->
+                                registerListener?.isRegisterOk(false)
                                 Log.v("taag", e.toString())
                             }
+                        registerListener?.isRegisterOk(true)
+
+
                     }
+
                 } else {
                     Log.v("taag", task.exception.toString())
+                    registerListener?.isRegisterOk(false)
+
                 }
             }
-
-
     }
 
     override fun getUserData(currentUser: FirebaseUser): UserResponse {
         val docRef = db.collection("users").document(currentUser.uid)
-        var user: UserResponse = UserResponse()
+        var user = UserResponse()
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
                     user = Mapper.userResponseMapper(document)
+
                 } else {
                     Log.d("taag", "No such document")
+
                 }
             }
             .addOnFailureListener { exception ->
                 Log.d("taag", "get failed with ", exception)
+
             }
         return user
     }
@@ -62,16 +76,12 @@ class FirebaseApiManager : Api, FirebaseListener {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     CurrentUser.user = user
-
+                    loginListener?.isLoginOk(true)
                 } else {
-                    Toast.makeText(
-                        activity.applicationContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    loginListener?.isLoginOk(false)
                 }
 
             }
     }
-
 
 }

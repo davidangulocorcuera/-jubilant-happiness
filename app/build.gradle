@@ -46,6 +46,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
     implementation 'com.google.firebase:firebase-auth:17.0.0'
+    //anko
+    implementation "org.jetbrains.anko:anko:0.10.8"
+
+
 
 
 }

@@ -1,6 +1,6 @@
-package com.example.justfivemins.modules.login
+package com.example.justfivemins.api.requests
 
-import com.example.justfivemins.modules.login.LoginRequest.LoginType.NORMAL
+import com.example.justfivemins.api.requests.LoginRequest.LoginType.NORMAL
 
 
 class LoginRequest() {

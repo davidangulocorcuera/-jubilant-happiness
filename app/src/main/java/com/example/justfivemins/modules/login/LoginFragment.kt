@@ -4,17 +4,33 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.example.justfivemins.R
-import com.example.justfivemins.firebase.FirebaseApiManager
+import com.example.justfivemins.api.firebase.FirebaseApiManager
+import com.example.justfivemins.api.firebase.FirebaseListener
+import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_login.*
 
 
-class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
-
-
+class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, FirebaseListener.LoginListener {
+    private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this) }
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
+
+
+    override fun isLoginOk(success: Boolean) {
+        showProgress(show = false, hasShade = false)
+        if(success){
+            goToHome()
+        }
+        else{
+            Toast.makeText(
+                activity?.applicationContext, "Authentication failed.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_login
@@ -53,25 +69,28 @@ class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
             })
         }
     }
-    private fun retrieveLoginData(): LoginRequest{
+
+    private fun retrieveLoginData(): LoginRequest {
         val login = LoginRequest()
         login.email = etEmail?.text.toString()
         login.password = etPassword?.text.toString()
         return login
 
     }
-    private fun setButtonsListeners(){
+
+    private fun setButtonsListeners() {
         btnLogin.setOnClickListener {
             showProgress(show = true, hasShade = true)
             signUser(retrieveLoginData())
-            goToHome()
+
+
         }
         btnRegister.setOnClickListener {
             gotToRegister()
         }
     }
-    private fun signUser(data: LoginRequest) {
-        val firebaseApiManager = FirebaseApiManager()
+
+    private  fun signUser(data: LoginRequest) {
         return firebaseApiManager.loginUser(
             data, activity!!
         )
@@ -88,6 +107,7 @@ class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
     override fun gotToRegister() {
         navigator.addBackStack(true).navigateToRegister()
     }
+
     override fun showEmailError(error: Boolean) {
         if (error) {
             tiEmail.error = "Invalid e-mail or empty"
@@ -106,19 +126,11 @@ class LoginFragment : BaseFragment(),LoginFragmentPresenter.View {
     override fun enableRegister(enable: Boolean) {
         btnLogin.isEnabled = enable
     }
+
     override fun hideInputErrors() {
         tiEmail.isErrorEnabled = false
         tiPassword.isErrorEnabled = false
 
     }
-    override fun onResume() {
-        super.onResume()
-        showProgress(show = false, hasShade = false)
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        showProgress(show = false, hasShade = false)
-    }
 }

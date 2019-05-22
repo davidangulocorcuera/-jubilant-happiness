@@ -1,6 +1,4 @@
-package com.example.justfivemins.requests
-
-import com.example.justfivemins.modules.login.LoginRequest
+package com.example.justfivemins.api.requests
 
 
 class RegisterRequest {

@@ -1,7 +1,7 @@
 package com.example.justfivemins.modules.login
 
 
-import android.os.Bundle
+import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.MainMVP
 import com.example.justfivemins.utils.Valid
 
