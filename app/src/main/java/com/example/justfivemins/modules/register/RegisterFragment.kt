@@ -10,7 +10,6 @@ import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.firebase.FirebaseListener
 import com.example.justfivemins.api.requests.RegisterRequest
-import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -32,7 +31,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListene
     }
 
     override fun viewCreated(view: View?) {
-        tiName.setOnLongClickListener {
+        btnPrivacyTerms.setOnClickListener {
+        }
+        etName.setOnLongClickListener {
             autoFill()
             true
         }
@@ -111,11 +112,11 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListene
     }
 
 
-    fun goToNextScreen() {
+    private fun goToNextScreen() {
         navigator.navigateToHome()
     }
 
-    fun backToLogin() {
+    private fun backToLogin() {
         navigator.navigateToLogin()
     }
 

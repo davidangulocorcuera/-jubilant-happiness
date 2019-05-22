@@ -17,9 +17,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 class HomeActivity : BaseActivity(), HomePresenter.View {
-    override fun setUserData(user: User): User {
-        return user
-    }
 
     override fun showProgress(enable: Boolean) {
         showProgress(enable, enable)
@@ -35,7 +32,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         return R.layout.drawer_menu
     }
 
-    fun setMenuData(){
+   override fun setMenuData(user: User){
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name
     }
 

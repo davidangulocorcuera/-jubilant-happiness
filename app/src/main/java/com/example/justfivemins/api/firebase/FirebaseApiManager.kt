@@ -8,6 +8,7 @@ import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
+import com.example.justfivemins.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -57,14 +58,17 @@ class FirebaseApiManager(
             .addOnSuccessListener { document ->
                 if (document != null) {
                     user = Mapper.userResponseMapper(document)
+                    userDataListener?.isUserDataOk(true,user)
 
                 } else {
                     Log.d("taag", "No such document")
+                    userDataListener?.isUserDataOk(false, UserResponse())
 
                 }
             }
             .addOnFailureListener { exception ->
                 Log.d("taag", "get failed with ", exception)
+                userDataListener?.isUserDataOk(false ,UserResponse())
 
             }
         return user

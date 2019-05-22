@@ -106,7 +106,12 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:tint">@color/white</item>
     </style>
-
+    <style name="transparent_button_regular" parent="button">
+        <item name="android:textSize">@dimen/medium_font</item>
+        <item name="android:background">@drawable/selector_row</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 
     <style name="error">
         <item name="android:layout_width">match_parent</item>

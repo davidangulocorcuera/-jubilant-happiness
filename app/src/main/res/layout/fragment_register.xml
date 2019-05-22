@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent" android:layout_height="match_parent"
               tools:context=".modules.register.RegisterFragment"
               android:id="@+id/registerFragment"
               android:background="@color/white"
@@ -11,110 +11,139 @@
 
 >
 
-<ScrollView android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparent"
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
 
->
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_marginTop="@dimen/space_medium"
-                  android:padding="@dimen/space_medium"
     >
 
-        <android.support.design.widget.TextInputLayout
-                android:layout_margin="10dp"
-                style="@style/input"
-                android:id="@+id/tiName"
-        >
-            <EditText
-                    android:id="@+id/etName"
-                    style="@style/edit_validator"
-                    android:hint="@string/name"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-                android:layout_margin="10dp"
-                style="@style/input"
-                android:id="@+id/tiSurname"
-        >
-            <EditText
-                    android:id="@+id/etSurname"
-                    style="@style/edit_validator"
-                    android:hint="@string/surname"
-            />
-        </android.support.design.widget.TextInputLayout>
-
-
-
-        <android.support.design.widget.TextInputLayout
-                android:layout_margin="10dp"
-                style="@style/input"
-                android:id="@+id/tiEmail"
-        >
-            <EditText
-                    android:id="@+id/etEmail"
-                    style="@style/edit_validator"
-                    android:hint="@string/e_mail"
-            />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-                android:id="@+id/tiPassword"
-                android:layout_margin="10dp"
-                style="@style/input"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorPrimary"
-        >
-            <EditText
-                    android:id="@+id/etPassword"
-                    style="@style/edit_validator"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-            />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-                android:id="@+id/tiPasswordRepeat"
-                android:layout_margin="10dp"
-                style="@style/input"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/colorPrimary"
-        >
-            <EditText
-                    android:id="@+id/etPasswordRepeat"
-                    style="@style/edit_validator"
-                    android:hint="@string/validate_password"
-                    android:inputType="textPassword"
-            />
-        </android.support.design.widget.TextInputLayout>
-        <LinearLayout android:layout_width="wrap_content"
+        <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:layout_gravity="center"
-                      android:layout_marginTop="30dp"
+                      android:orientation="vertical"
+                      android:layout_marginTop="@dimen/space_medium"
+                      android:padding="@dimen/space_medium"
         >
 
-            <Button android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/transparent_button"
-                    android:id="@+id/btnBack"
+            <android.support.design.widget.TextInputLayout
                     android:layout_margin="10dp"
-                    android:text="@string/back"
-                    android:textColor="@color/red"
-            />
+                    style="@style/input"
+                    android:id="@+id/tiName"
+            >
+                <EditText
+                        android:id="@+id/etName"
+                        style="@style/edit_validator"
+                        android:hint="@string/name"
+                />
+            </android.support.design.widget.TextInputLayout>
 
-            <Button android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/roundButton"
-                    android:id="@+id/btnNext"
-                    android:enabled="false"
+            <android.support.design.widget.TextInputLayout
                     android:layout_margin="10dp"
-                    android:text="@string/next"
+                    style="@style/input"
+                    android:id="@+id/tiSurname"
+            >
+                <EditText
+                        android:id="@+id/etSurname"
+                        style="@style/edit_validator"
+                        android:hint="@string/surname"
+                />
+            </android.support.design.widget.TextInputLayout>
 
-            />
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_margin="10dp"
+                    style="@style/input"
+                    android:id="@+id/tiEmail"
+            >
+                <EditText
+                        android:id="@+id/etEmail"
+                        style="@style/edit_validator"
+                        android:hint="@string/e_mail"
+                />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tiPassword"
+                    android:layout_margin="10dp"
+                    style="@style/input"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
+            >
+                <EditText
+                        android:id="@+id/etPassword"
+                        style="@style/edit_validator"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tiPasswordRepeat"
+                    android:layout_margin="10dp"
+                    style="@style/input"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
+            >
+                <EditText
+                        android:id="@+id/etPasswordRepeat"
+                        style="@style/edit_validator"
+                        android:hint="@string/validate_password"
+                        android:inputType="textPassword"
+                />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+
+            >
+                <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:id="@+id/cbPrivacyEdit"
+                        android:text="@string/terms_text"
+                        style="@style/semi_bold"
+                        android:textSize="@dimen/medium_font"
+                                   />
+                <Button
+                        android:id="@+id/btnPrivacyTerms"
+                        style="@style/transparent_button_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/space_smaller"
+                        android:paddingRight="@dimen/space_smaller"
+                        android:text="@string/terms_of_use"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_gravity="center"
+                          android:layout_margin="@dimen/space_medium"
+                          android:padding="@dimen/space_big"
+            >
+
+                <Button android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/transparent_button"
+                        android:id="@+id/btnBack"
+                        android:layout_margin="10dp"
+                        android:text="@string/back"
+                        android:textColor="@color/red"
+                />
+
+                <Button android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/roundButton"
+                        android:id="@+id/btnNext"
+                        android:enabled="false"
+                        android:layout_margin="10dp"
+                        android:text="@string/next"
+
+                />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 </LinearLayout>
