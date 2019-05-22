@@ -1,5 +1,6 @@
 package com.example.justfivemins.modules.map
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
@@ -67,6 +68,8 @@ class Location (var activity: BaseActivity, locationListener: LocationListener){
             }
         }
     }
+
+
     fun stopUpdateLocation(){
         this.fusedLocationClient?.removeLocationUpdates(callbabck)
     }

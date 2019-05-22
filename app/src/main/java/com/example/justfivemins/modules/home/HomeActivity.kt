@@ -22,7 +22,6 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         showProgress(enable, enable)
     }
 
-    private var user: User = User()
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
@@ -38,6 +37,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        navigator.clearBackStack()
         presenter.init()
         navigator.navigateToContentFragment()
         setDrawerMenu()

@@ -7,19 +7,20 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.firebase.FirebaseApiManager
-import com.example.justfivemins.api.firebase.FirebaseListener
+import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_login.*
 
 
-class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, FirebaseListener.LoginListener {
+class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener {
+
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this) }
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
 
-    override fun isLoginOk(success: Boolean) {
+    override fun isLogin(success: Boolean) {
         showProgress(show = false, hasShade = false)
         if(success){
             goToHome()

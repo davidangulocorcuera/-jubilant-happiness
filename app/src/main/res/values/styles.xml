@@ -113,6 +113,14 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="register_button" parent="button">
+        <item name="android:layout_height">60dp</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintLeft_toLeftOf">parent</item>
+        <item name="layout_constraintRight_toRightOf">parent</item>
+        <item name="android:background">@drawable/normal_button</item>
+    </style>
+
     <style name="error">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

@@ -1,5 +1,6 @@
 package com.example.justfivemins.api
 
+import com.example.justfivemins.api.requests.LocationRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.google.firebase.firestore.DocumentSnapshot
@@ -23,5 +24,16 @@ object Mapper {
             userResponse.email = it?.get("email") as String
         }
         return userResponse
+    }
+    fun locationRequestMapper(locationRequest: LocationRequest) : Map<String, Any> {
+        val data = HashMap<String, Any>()
+        locationRequest.run {
+            data["city"] = city
+            data["country"] = country
+            data["postalCode"] = postalCode
+            data["lat"] = lat
+            data["lng"] = lng
+            return data
+        }
     }
 }

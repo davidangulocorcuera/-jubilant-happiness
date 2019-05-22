@@ -24,13 +24,13 @@
             android:background="@color/transparentBlack"
             android:gravity="center"
             android:visibility="gone"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
         <ProgressBar
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                tools:visibility="visible" />
+                tools:visibility="gone" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

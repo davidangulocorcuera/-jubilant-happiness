@@ -8,13 +8,13 @@ import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.firebase.FirebaseApiManager
-import com.example.justfivemins.api.firebase.FirebaseListener
+import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListener.RegisterListener {
+class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListeners.RegisterListener {
 
     companion object {
         var registerRequest: RegisterRequest =
@@ -113,7 +113,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListene
 
 
     private fun goToNextScreen() {
-        navigator.navigateToHome()
+        navigator.navigateToRequestLocationDialog()
     }
 
     private fun backToLogin() {
@@ -172,7 +172,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, FirebaseListene
         tiSurname.showError(error)
     }
 
-    override fun isRegisterOk(success: Boolean) {
+    override fun isRegister(success: Boolean) {
         showProgress(show = false, hasShade = false)
         if (success) {
             goToNextScreen()

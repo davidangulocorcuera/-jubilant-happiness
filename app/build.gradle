@@ -50,6 +50,4 @@ dependencies {
     implementation "org.jetbrains.anko:anko:0.10.8"
 
 
-
-
 }

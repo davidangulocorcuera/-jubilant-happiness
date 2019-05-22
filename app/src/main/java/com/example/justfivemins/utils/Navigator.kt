@@ -19,6 +19,7 @@ import com.example.justfivemins.modules.content.ContentFragment
 import com.example.justfivemins.modules.friends.FriendsFragment
 import com.example.justfivemins.modules.gallery.GalleryFragment
 import com.example.justfivemins.modules.login.LoginFragment
+import com.example.justfivemins.modules.map.LocationFragment
 import com.example.justfivemins.modules.map.MapFragment
 import com.example.justfivemins.modules.messages.MessagesFragment
 import com.example.justfivemins.modules.profile_data.ProfileDataFragment
@@ -273,6 +274,9 @@ class Navigator {
 
     fun navigateToProfileData() {
         navigate(activity, ProfileDataFragment::class.java)
+    }
+    fun navigateToRequestLocationDialog(){
+        navigate(activity, LocationFragment::class.java)
     }
     fun navigateToMessages() {
         navigate(activity, MessagesFragment::class.java)
