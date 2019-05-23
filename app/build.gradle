@@ -48,6 +48,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     //anko
     implementation "org.jetbrains.anko:anko:0.10.8"
+    //drexter
+    implementation "com.karumi:dexter:4.2.0"
+
 
 
 }

@@ -20,6 +20,7 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.color
 import com.example.justfivemins.utils.setVisible
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -187,6 +188,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     override fun goBack() {
         navigator.goBack()
     }
+
     fun enableDrawerMenu(enable: Boolean) {
         (this as? DrawerLocker)?.setDrawerEnabled(enable)
         addMarginToToolbarTitle(enable)
@@ -206,6 +208,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             params?.marginStart = 0
         }
     }
+
 
 
 }

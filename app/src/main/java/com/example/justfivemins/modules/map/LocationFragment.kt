@@ -1,33 +1,37 @@
 package com.example.justfivemins.modules.map
 
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.support.v4.app.ActivityCompat
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
-import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_location_dialog.*
-import org.jetbrains.anko.find
 import java.util.*
 
 
-class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener, PermissionsListener.LocationListener{
-
-
-    override fun onLocationPermissionResponse(isAccepted: Boolean){
-        val btn: Button = view!!.findViewById(R.id.btnNext)
-        btn.isEnabled = isAccepted
-    }
-
+class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener {
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(locationUpdateListener = this) }
+
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val permissionFineLocation = android.Manifest.permission.ACCESS_FINE_LOCATION
+    private val permissionCoarseLocation = android.Manifest.permission.ACCESS_COARSE_LOCATION
+    private val REQUEST_CODE_LOCATION = 100
 
 
     override fun onCreateViewId(): Int {
@@ -37,24 +41,21 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     @SuppressLint("MissingPermission")
     override fun viewCreated(view: View?) {
-        val permissionListener: MainActivity  = MainActivity(fragment = this)
-
-        if (permissionListener.validatePermissionsLocation()) {
-            btnNext.isEnabled = true
-        } else {
-            permissionListener.permissionRequest()
-        }
-
         btnNext.setOnClickListener {
-            showProgress(show = true, hasShade = true)
-            fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
-            fusedLocationClient.lastLocation.addOnSuccessListener {
-                updateLocation(getLocationFromCoordinates(it.latitude, it.longitude))
+            if (validatePermissionsLocation()) {
+                getLocation()
+            } else {
+                requestPermissions()
             }
         }
+
+
     }
 
-    private fun getLocationFromCoordinates(lat: Double, lng: Double): com.example.justfivemins.api.requests.LocationRequest {
+    private fun getLocationFromCoordinates(
+        lat: Double,
+        lng: Double
+    ): com.example.justfivemins.api.requests.LocationRequest {
         val location: com.example.justfivemins.api.requests.LocationRequest =
             com.example.justfivemins.api.requests.LocationRequest()
         val geoCoder = Geocoder(context, Locale.getDefault())
@@ -76,6 +77,48 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             CurrentUser.firebaseUser!!
         )
 
+    fun validatePermissionsLocation(): Boolean {
+        val fineLocationAvailable =
+            ActivityCompat.checkSelfPermission(
+                context!!,
+                permissionFineLocation
+            ) == PackageManager.PERMISSION_GRANTED
+        val coarseLocationAvailable =
+            ActivityCompat.checkSelfPermission(
+                context!!,
+                permissionCoarseLocation
+            ) == PackageManager.PERMISSION_GRANTED
+        return fineLocationAvailable && coarseLocationAvailable
+    }
+
+
+    fun requestPermissions() {
+
+        Dexter.withActivity(activity)
+            .withPermissions(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            .withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                    if (report.areAllPermissionsGranted()) {
+                        getLocation()
+                    }
+                    if (report.isAnyPermissionPermanentlyDenied) {
+                        // permission is denied permenantly, navigate user to app settings
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: List<PermissionRequest>,
+                    token: PermissionToken
+                ) {
+                    token.continuePermissionRequest()
+                }
+            })
+            .onSameThread()
+            .check()
+    }
 
 
     override fun isLocationUpdated(success: Boolean) {
@@ -87,6 +130,15 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                 activity?.applicationContext, "update failed.",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getLocation() {
+        showProgress(show = true, hasShade = true)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
+        fusedLocationClient.lastLocation.addOnSuccessListener {
+            updateLocation(getLocationFromCoordinates(it.latitude, it.longitude))
         }
     }
 

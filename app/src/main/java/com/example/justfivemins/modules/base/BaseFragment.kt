@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.example.justfivemins.utils.Navigator
+import com.karumi.dexter.listener.PermissionGrantedResponse
 
 
 abstract class BaseFragment : Fragment(), MainMVP.View {
@@ -24,14 +25,16 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
 
 
     override fun onViewCreated(
-            view: View,
-            savedInstanceState: Bundle?
+        view: View,
+        savedInstanceState: Bundle?
     ) {
         viewCreated(view)
     }
+
     fun showProgress(show: Boolean, hasShade: Boolean) {
         baseActivity?.showProgress(show, hasShade)
     }
+
     fun setToolbarTitle(title: String?) {
         baseActivity?.setToolbarText(title)
     }
@@ -69,9 +72,9 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         return inflater.inflate(onCreateViewId(), container, false)
@@ -94,12 +97,17 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
 
     fun openKeyboard(view: View) {
         val inputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.toggleSoftInputFromWindow(view.applicationWindowToken,
-                InputMethodManager.SHOW_FORCED, 0)
+        inputMethodManager.toggleSoftInputFromWindow(
+            view.applicationWindowToken,
+            InputMethodManager.SHOW_FORCED, 0
+        )
     }
 
     override fun goBack() {
         baseActivity?.goBack()
 
     }
+
+
+
 }
