@@ -33,7 +33,9 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
    override fun setMenuData(user: User){
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name
-    }
+       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation.city
+
+   }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

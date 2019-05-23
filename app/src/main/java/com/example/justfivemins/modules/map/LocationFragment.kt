@@ -2,8 +2,6 @@ package com.example.justfivemins.modules.map
 
 
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.view.View
 import android.widget.Toast
@@ -14,12 +12,11 @@ import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.base.BaseFragment
 import com.google.android.gms.location.LocationResult
-import kotlinx.android.synthetic.main.fragment_location_dialog.*
 import java.util.*
 
 
 class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener {
-    private val REQUEST_CODE_LOCATION=100
+
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(locationUpdateListener = this) }
     var location: Location? = null
 
@@ -30,15 +27,15 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     override fun viewCreated(view: View?) {
         showProgress(show = true, hasShade = true)
-
         location = Location(this.activity as BaseActivity, object : LocationListener {
             override fun locationResponse(locationResult: LocationResult) {
-                val location = com.example.justfivemins.model.Location()
-                updateLocation(getLocationFromCoordinates(location.lat, location.lng))
+                updateLocation(getLocationFromCoordinates(locationResult.lastLocation.latitude,locationResult.lastLocation.longitude))
             }
         })
-
     }
+
+
+
 
 
     fun getLocationFromCoordinates(lat: Double, lng: Double): com.example.justfivemins.api.requests.LocationRequest {
@@ -75,7 +72,10 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         location?.stopUpdateLocation()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        location?.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
+    }
 
     override fun isLocationUpdated(success: Boolean) {
         showProgress(show = false, hasShade = false)

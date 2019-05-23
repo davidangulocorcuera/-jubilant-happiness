@@ -26,6 +26,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
         user.name = userResponse.name
         user.email = userResponse.email
         user.surname = userResponse.surname
+        user.currentLocation = userResponse.location
         view.setMenuData(user)
     }
 

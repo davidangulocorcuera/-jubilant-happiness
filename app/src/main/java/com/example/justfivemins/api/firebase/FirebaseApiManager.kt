@@ -102,7 +102,6 @@ class FirebaseApiManager(
             }
             .addOnFailureListener {
                 locationUpdateListener?.isLocationUpdated(false)
-
             }
 
     }
