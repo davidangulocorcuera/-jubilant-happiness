@@ -50,6 +50,12 @@
         To relate to people close to you we need your location, any user can see your location.
     </string>
     <string name="accept_permissions">Accept Permissions</string>
+    <string name="filter_by">Filter By</string>
+    <string name="country">Country</string>
+    <string name="choose_an_option">Choose an option</string>
+    <string name="postal_code">Postal code</string>
+    <string name="city">City</string>
+    <string name="random_users">Random users</string>
 
 
 </resources>

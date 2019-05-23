@@ -10,9 +10,9 @@
     <color name="lightPrimary">#412196F3</color>
 
 
+    <color name="lightBlack">#41000000</color>
 
 
-    <color name="lightBlack">#3E000000</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
     <color name="red">#c1595a</color>

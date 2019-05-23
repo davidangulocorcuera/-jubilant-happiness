@@ -15,30 +15,8 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                         android:orientation="vertical"
+                      android:layout_marginTop="@dimen/space_big"
         >
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:textColor="@color/colorAccent"
-                      android:layout_margin="@dimen/space_medium"
-                      style="@style/title"
-                        android:text="@string/featured_profiles"
-            />
-
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                  android:background="@color/lightPrimary"
-                  android:layout_margin="@dimen/space_small"
-                  app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
-            <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerViewFeaturedUsersList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="horizontal"
-                     android:scrollbarTrackHorizontal="@color/colorPrimary"
-                    android:scrollbarSize="2dp"
-                    android:layout_marginTop="@dimen/space_medium"
-                    android:layout_marginBottom="@dimen/space_medium"
-            >
-            </android.support.v7.widget.RecyclerView>
 
 
             <LinearLayout android:layout_width="wrap_content"
