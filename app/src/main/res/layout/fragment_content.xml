@@ -40,29 +40,40 @@
             >
             </android.support.v7.widget.RecyclerView>
 
-            <TextView android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:textColor="@color/colorAccent"
-                      android:layout_margin="@dimen/space_medium"
-                      style="@style/title"
-                      android:text="@string/recommended_profiles"
-            />
 
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                  android:background="@color/lightPrimary"
-                  android:layout_margin="@dimen/space_small"
-                  app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_gravity="center"
+            >
+                <include
+                        layout="@layout/item_filter_people"
+                        android:id="@+id/filterByCountryContainer"
+                />
+                <include
+                        layout="@layout/item_filter_people"
+                        android:id="@+id/filterByCityContainer"
+                />
 
-            <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerViewUsersList"
-                    android:scrollbars="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:scrollbarTrackVertical="@color/colorPrimary"
-                    android:scrollbarSize="2dp"
-                    android:layout_marginTop="@dimen/space_medium"
-                    android:layout_marginBottom="@dimen/space_medium"            >
-            </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal"
+                          android:layout_gravity="center"
+            >
+                <include
+                        layout="@layout/item_filter_people"
+                        android:id="@+id/filterByPostalCodeContainer"
+                />
+                <include
+                        layout="@layout/item_filter_people"
+                        android:id="@+id/randomContainer"
+                />
+
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -32,16 +32,15 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
     }
 
    override fun setMenuData(user: User){
-        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name
-       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation.city
+       menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
+       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation.city.capitalize()
 
    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navigator.clearBackStack()
         presenter.init()
-        navigator.navigateToContentFragment()
+        navigator.addBackStack(false).navigateToContentFragment()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()

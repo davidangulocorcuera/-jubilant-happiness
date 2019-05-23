@@ -46,7 +46,8 @@
     <string name="terms_text">I accept the</string>
     <string name="terms_of_use">terms of use</string>
     <string name="location_title">We need your location</string>
-    <string name="location_subtitle">Mauris ut ultrices eros. Sed porttitor arcu augue, et laoreet dolor luctus quis.
+    <string name="location_subtitle">
+        To relate to people close to you we need your location, any user can see your location.
     </string>
     <string name="accept_permissions">Accept Permissions</string>
 

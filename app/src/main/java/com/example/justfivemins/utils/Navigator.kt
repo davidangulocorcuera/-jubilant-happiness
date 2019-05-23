@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import android.transition.Transition
 import android.util.Log
 import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
@@ -28,6 +29,7 @@ import java.io.Serializable
 
 
 class Navigator {
+
 
     private val LOG_TAG = Navigator::class.java.simpleName
     private var intentToLaunch: Intent? = null
@@ -260,6 +262,7 @@ class Navigator {
         this.hasTransition = hasTransition
         return this
     }
+
 
     fun navigateToHome() {
         navigate(activity, HomeActivity::class.java)

@@ -42,11 +42,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
     @SuppressLint("MissingPermission")
     override fun viewCreated(view: View?) {
         btnNext.setOnClickListener {
-            if (validatePermissionsLocation()) {
-                getLocation()
-            } else {
-                requestPermissions()
-            }
+            requestPermissions()
         }
 
 
@@ -77,23 +73,8 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             CurrentUser.firebaseUser!!
         )
 
-    fun validatePermissionsLocation(): Boolean {
-        val fineLocationAvailable =
-            ActivityCompat.checkSelfPermission(
-                context!!,
-                permissionFineLocation
-            ) == PackageManager.PERMISSION_GRANTED
-        val coarseLocationAvailable =
-            ActivityCompat.checkSelfPermission(
-                context!!,
-                permissionCoarseLocation
-            ) == PackageManager.PERMISSION_GRANTED
-        return fineLocationAvailable && coarseLocationAvailable
-    }
-
 
     fun requestPermissions() {
-
         Dexter.withActivity(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -108,7 +89,6 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                         // permission is denied permenantly, navigate user to app settings
                     }
                 }
-
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: List<PermissionRequest>,
                     token: PermissionToken

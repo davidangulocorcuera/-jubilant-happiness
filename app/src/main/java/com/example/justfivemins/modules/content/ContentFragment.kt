@@ -11,14 +11,12 @@ import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
 import com.example.justfivemins.modules.content.content_list_adapter.FeaturedUsersListAdapter
-import com.example.justfivemins.modules.content.content_list_adapter.UsersListAdapter
 import kotlinx.android.synthetic.main.fragment_content.*
 import kotlinx.android.synthetic.main.item_users_card_layout.*
 
 class ContentFragment : BaseFragment() {
     private var users: ArrayList<User> = ArrayList()
     private lateinit var featuredUsersListAdapter: FeaturedUsersListAdapter
-    private lateinit var usersListAdapter: UsersListAdapter
 
 
     override fun onCreateViewId(): Int {
@@ -42,7 +40,6 @@ class ContentFragment : BaseFragment() {
 
         configurator?.hasToolbar = true
         initFeaturedList()
-        initUsersList()
 
     }
     private fun initFeaturedList() {
@@ -52,13 +49,7 @@ class ContentFragment : BaseFragment() {
             FeaturedUsersListAdapter(users)
         recyclerViewFeaturedUsersList.adapter = featuredUsersListAdapter
     }
-    private fun initUsersList() {
-        val layoutManager = GridLayoutManager(activity,2)
-        recyclerViewUsersList.layoutManager = layoutManager as RecyclerView.LayoutManager?
-        usersListAdapter =
-            UsersListAdapter(users)
-        recyclerViewUsersList.adapter = usersListAdapter
-    }
+
     fun setButtonListener(){
         btnViewProfile.setOnClickListener {
         }

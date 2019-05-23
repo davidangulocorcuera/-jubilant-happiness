@@ -88,7 +88,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         register.email = etEmail?.text.toString()
         register.password = etPassword?.text.toString()
         register.confirmPassword = etPasswordRepeat?.text.toString()
-        register.name = etSurname?.text.toString()
+        register.name = etName?.text.toString()
         register.surname = etSurname?.text.toString()
         return register
     }
@@ -113,7 +113,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
     private fun goToNextScreen() {
-        navigator.navigateToRequestLocationDialog()
+        navigator.addBackStack(false).navigateToRequestLocationDialog()
     }
 
     private fun backToLogin() {

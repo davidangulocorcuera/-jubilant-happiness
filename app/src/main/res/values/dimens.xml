@@ -66,4 +66,5 @@
     <dimen name="smallest_icon">15dp</dimen>
     <dimen name="header_big">200dp</dimen>
     <dimen name="ic_drawer">28dp</dimen>
+    <dimen name="biggest_circle_size">140dp</dimen>
 </resources>

@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import com.example.justfivemins.utils.Navigator
-import com.karumi.dexter.listener.PermissionGrantedResponse
+
 
 
 abstract class BaseFragment : Fragment(), MainMVP.View {
     val LOG_TAG = this::class.java.simpleName
+
+
 
     protected abstract fun onCreateViewId(): Int
     protected abstract fun viewCreated(view: View?)
@@ -107,6 +109,7 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         baseActivity?.goBack()
 
     }
+
 
 
 

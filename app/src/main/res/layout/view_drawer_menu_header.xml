@@ -60,7 +60,7 @@
                 android:id="@+id/tvMenuUsername"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/username"
+                tools:text="@string/username"
                 android:textColor="@color/white"
                 style="@style/title"
 
@@ -68,7 +68,7 @@
         <TextView android:layout_width="match_parent"
                   android:id="@+id/tvLocation"
                   android:layout_height="wrap_content"
-                  android:text="@string/location"
+                  tools:text="@string/location"
                   style="@style/regular"
                   android:textColor="@color/white"
                   android:layout_gravity="center_vertical"
