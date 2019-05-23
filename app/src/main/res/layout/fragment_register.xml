@@ -65,7 +65,7 @@
                     android:layout_margin="10dp"
                     style="@style/input"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
+                    app:passwordToggleTint="@color/grey"
             >
                 <EditText
                         android:id="@+id/etPassword"
@@ -79,7 +79,7 @@
                     android:layout_margin="10dp"
                     style="@style/input"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
+                    app:passwordToggleTint="@color/grey"
             >
                 <EditText
                         android:id="@+id/etPasswordRepeat"

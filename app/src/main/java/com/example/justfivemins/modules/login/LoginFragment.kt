@@ -33,6 +33,8 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
+
+
     override fun onCreateViewId(): Int {
         return R.layout.fragment_login
     }
