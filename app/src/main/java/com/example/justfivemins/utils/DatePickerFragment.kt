@@ -5,12 +5,13 @@ import android.app.Dialog
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.widget.DatePicker
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
-    private lateinit var onDateSelected: (date: Date) -> Unit
+    private lateinit var onDateSelected: (calendar: Calendar) -> Unit
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        // Use the current date as the default date in the picker
+
         var c = arguments?.getSerializable("date") as? Calendar
 
         if (c == null) {
@@ -25,15 +26,16 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         return DatePickerDialog(activity!!, this, year, month, day)
     }
 
-    fun onDateSelected(onDateSet: (date: Date) -> Unit) {
+    fun onDateSelected(onDateSet: (calendar: Calendar) -> Unit) {
         this.onDateSelected = onDateSet
     }
+
 
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.DAY_OF_MONTH, day)
         calendar.set(Calendar.MONTH, month)
-        onDateSelected(calendar.time)
+        onDateSelected(calendar)
     }
 }

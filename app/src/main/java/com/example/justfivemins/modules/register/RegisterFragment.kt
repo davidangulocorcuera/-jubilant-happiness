@@ -1,15 +1,17 @@
 package com.example.justfivemins.modules.register
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.Api
-import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.ApiEventsListeners
+import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.DatePickerFragment
@@ -17,6 +19,8 @@ import com.example.justfivemins.utils.DateUtils
 import com.example.justfivemins.utils.DateUtils.DATE_FORMAT_USER
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
+import java.util.*
+
 
 class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListeners.RegisterListener {
 
@@ -25,6 +29,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             RegisterRequest()
     }
 
+    private var age: Int = 0
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this) }
@@ -46,7 +51,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         }
         setToolbarTitle(getString(R.string.register))
         setListeners()
-        val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat,etName,etBirthday)
+        val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat, etName, etBirthday)
 
         fields.forEach {
             it.addTextChangedListener(object : TextWatcher {
@@ -102,6 +107,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         register.confirmPassword = etPasswordRepeat?.text.toString()
         register.name = etName.text.toString()
         register.birthday = etBirthday.text.toString()
+        register.age = age
         return register
     }
 
@@ -115,19 +121,43 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private fun setListeners() {
         btnNext.setOnClickListener {
             showProgress(show = true, hasShade = true)
+            disableScreenOnRegister(false)
             registerUser(retrieveRegisterData())
         }
         btnBack.setOnClickListener {
             backToLogin()
         }
     }
-    fun showDatePickerDialog() {
+
+    @SuppressLint("SetTextI18n")
+    private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment()
         newFragment.arguments = Bundle()
         newFragment.onDateSelected {
+        age = getAge(it.get(Calendar.YEAR),it.get(Calendar.MONTH),it.get(Calendar.DAY_OF_MONTH))
             etBirthday.setText(DateUtils.formatTarget(DATE_FORMAT_USER).formatDate(it))
         }
         newFragment.show(this.activity?.supportFragmentManager, "")
+
+    }
+
+    private fun getAge(year: Int, month: Int, day: Int): Int {
+        var age = Calendar.getInstance().get(Calendar.YEAR) - year
+        if((Calendar.getInstance().get(Calendar.MONTH) < month) ||
+            (Calendar.getInstance().get(Calendar.MONTH) == month && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < day
+                    )) age--
+        return age
+    }
+
+
+    private fun disableScreenOnRegister(enable: Boolean) {
+        tiName.isEnabled = enable
+        tiBirthday.isEnabled = enable
+        tiPasswordRepeat.isEnabled = enable
+        tiPassword.isEnabled = enable
+        tiEmail.isEnabled = enable
+        btnNext.isEnabled = enable
+        btnBack.isEnabled = enable
     }
 
     private fun goToNextScreen() {
@@ -183,12 +213,14 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
     override fun showBirthdayError(error: Boolean) {
-        if (error) tiBirthday.error = "Invalid date or empty"
+        if (error && age < 18) tiBirthday.error = "Invalid date or empty"
         tiBirthday.showError(error)
     }
 
     override fun isRegister(success: Boolean) {
         showProgress(show = false, hasShade = false)
+        disableScreenOnRegister(true)
+
         if (success) {
             goToNextScreen()
         } else {

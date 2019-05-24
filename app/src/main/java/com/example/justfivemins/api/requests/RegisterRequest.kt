@@ -8,5 +8,6 @@ class RegisterRequest {
     var confirmPassword: String = ""
     var type: LoginRequest.LoginType = LoginRequest.LoginType.NORMAL
     var birthday: String = ""
+    var age: Int = 0
 
 }

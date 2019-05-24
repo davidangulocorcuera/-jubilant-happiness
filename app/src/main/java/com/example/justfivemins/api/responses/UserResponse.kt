@@ -2,4 +2,4 @@ package com.example.justfivemins.api.responses
 
 import com.example.justfivemins.model.Location
 
-class UserResponse (var name: String = "",  var email: String = "", var location: Location? = null,var birthday: String = "")
+class UserResponse (var name: String = "",  var email: String = "", var location: Location? = null,var birthday: String = "", var age: Int = 0)

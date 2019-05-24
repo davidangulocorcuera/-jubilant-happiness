@@ -14,6 +14,7 @@ object Mapper {
             data["name"] = name
             data["birthday"] = birthday
             data["email"] = email
+            data["age"] = age
             return data
         }
     }
@@ -27,6 +28,7 @@ object Mapper {
             userResponse.name = it?.get("name") as String
             userResponse.birthday = it?.get("birthday") as String
             userResponse.email = it?.get("email") as String
+            userResponse.age = Integer.parseInt(it?.get("age").toString())
 
             if(documentSnapshot.get("location") !=  null){
                 val locationMap: HashMap<String, Any> = documentSnapshot.get("location") as HashMap<String, Any>

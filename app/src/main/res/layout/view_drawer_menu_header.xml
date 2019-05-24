@@ -56,6 +56,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView" app:layout_constraintStart_toEndOf="@+id/profile_image"
             android:layout_marginStart="@dimen/space_small" app:layout_constraintHorizontal_bias="0.056"
             app:layout_constraintVertical_bias="0.466">
+
         <TextView
                 android:id="@+id/tvMenuUsername"
                 android:layout_width="match_parent"
@@ -73,6 +74,14 @@
                   android:textColor="@color/white"
                   android:layout_gravity="center_vertical"
 
+        />
+        <TextView
+                android:id="@+id/menuAge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/age"
+                android:textColor="@color/white"
+                style="@style/regular"
         />
 
     </LinearLayout>

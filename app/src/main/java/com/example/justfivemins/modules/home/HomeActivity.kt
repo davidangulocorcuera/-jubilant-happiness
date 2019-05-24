@@ -1,5 +1,6 @@
 package com.example.justfivemins.modules.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -28,9 +29,11 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         return R.layout.drawer_menu
     }
 
+   @SuppressLint("SetTextI18n")
    override fun setMenuData(user: User){
        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
+       menuNavigation.getHeaderView(0).menuAge.text = user.age.toString() + " " + getString(R.string.years)
 
    }
 

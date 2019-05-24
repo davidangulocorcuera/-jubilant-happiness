@@ -9,7 +9,6 @@ import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LoginRequest
-import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_login.*

@@ -1,11 +1,12 @@
 package com.example.justfivemins.utils
 
+import android.util.Log
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
+import java.util.*
 import kotlin.collections.ArrayList
+
+
 
 object DateUtils {
     val DATE_FORMAT_SERVER = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -34,37 +35,26 @@ object DateUtils {
         return this
     }
 
-    fun formatDate(date: Date?): String? {
+    fun formatDate(calendar: Calendar?): String? {
         var dateFormatted: String? = null
-        if (date != null) {
+        if (calendar != null) {
             try {
                 val formatter = SimpleDateFormat(formatTarget, Locale.getDefault())
-                dateFormatted = formatter.format(date)
-            } catch (e: Exception) {
+                calendar.add(Calendar.DATE, 1)
+                dateFormatted = formatter.format(calendar.time)
+                Log.v("taag",dateFormatted)
+
+
+            }
+            catch (e: Exception) {
                 e.printStackTrace()
             }
         }
         return dateFormatted
     }
 
-    fun formatDate(dateStr: String?): Date? {
-        val dateFormat = SimpleDateFormat(formatOrigin)
-        var date: Date? = null
-        if (!dateStr.isNullOrEmpty()) {
-            try {
-                date = dateFormat.parse(dateStr)
-            } catch (e: ParseException) {
-                e.printStackTrace()
-                return null
-            }
-        }
-        return date
-    }
 
-    fun formatString(dateStr: String?): String? {
 
-        return formatDate(formatDate(dateStr))
-    }
 
     fun getDates(dateStart: String, dateEnd: String): List<Date> {
         val dates = ArrayList<Date>()
