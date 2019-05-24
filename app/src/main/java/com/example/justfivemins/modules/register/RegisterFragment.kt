@@ -12,6 +12,7 @@ import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.RegisterRequest
+import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.DatePickerFragment
 import com.example.justfivemins.utils.DateUtils
@@ -19,6 +20,8 @@ import com.example.justfivemins.utils.DateUtils.DATE_FORMAT_USER
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
 import java.util.*
+
+
 
 
 class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListeners.RegisterListener {
@@ -32,22 +35,31 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this) }
-
+    private var gender: User.Gender= User.Gender.FEMALE
 
     override fun onCreateViewId(): Int {
-        return R.layout.fragment_register
+        return com.example.justfivemins.R.layout.fragment_register
     }
 
+
     override fun viewCreated(view: View?) {
-        ivOpenCalendar.setOnClickListener {
+        etBirthday.setOnClickListener{
             showDatePickerDialog()
         }
+        rgGender.setOnCheckedChangeListener { group, checkedId ->
+            when {
+                rbFemale.isChecked -> gender = User.Gender.FEMALE
+                rbMale.isChecked -> gender = User.Gender.MALE
+                else -> gender = User.Gender.OTHER
+            }
+
+        }
+
         etName.setOnLongClickListener {
             autoFill()
             true
         }
-        showToolbar()
-        setToolbarTitle(getString(R.string.register))
+        setToolbarTitle(getString(R.string.home).toUpperCase())
         setListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat, etName, etBirthday)
 
@@ -90,6 +102,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     }
 
+
+
     private fun registerUser(data: RegisterRequest) {
         return firebaseApiManager.createUser(
             data,
@@ -107,8 +121,12 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         register.name = etName.text.toString()
         register.birthday = etBirthday.text.toString()
         register.age = age
+        register.gender = gender
+
+
         return register
     }
+
 
     private fun autoFill() {
         etEmail?.setText("ce@g.com")
@@ -128,12 +146,13 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         }
     }
 
+
     @SuppressLint("SetTextI18n")
     private fun showDatePickerDialog() {
         val newFragment = DatePickerFragment()
         newFragment.arguments = Bundle()
         newFragment.onDateSelected {
-        age = getAge(it.get(Calendar.YEAR),it.get(Calendar.MONTH),it.get(Calendar.DAY_OF_MONTH))
+            age = getAge(it.get(Calendar.YEAR), it.get(Calendar.MONTH), it.get(Calendar.DAY_OF_MONTH))
             etBirthday.setText(DateUtils.formatTarget(DATE_FORMAT_USER).formatDate(it))
         }
         newFragment.show(this.activity?.supportFragmentManager, "")
@@ -142,9 +161,10 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     private fun getAge(year: Int, month: Int, day: Int): Int {
         var age = Calendar.getInstance().get(Calendar.YEAR) - year
-        if((Calendar.getInstance().get(Calendar.MONTH) < month) ||
+        if ((Calendar.getInstance().get(Calendar.MONTH) < month) ||
             (Calendar.getInstance().get(Calendar.MONTH) == month && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) < day
-                    )) age--
+                    )
+        ) age--
         return age
     }
 
@@ -160,11 +180,11 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
     private fun goToNextScreen() {
-        navigator.addBackStack(false).navigateToRequestLocationDialog()
+        navigator.finishCurrent(true).navigateToRequestLocationDialog()
     }
 
     private fun backToLogin() {
-        navigator.navigateToLogin()
+        navigator.finishCurrent(true).navigateToLogin()
     }
 
     override fun hideInputErrors() {

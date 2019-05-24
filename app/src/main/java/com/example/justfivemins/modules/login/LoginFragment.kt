@@ -23,7 +23,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     override fun isLogin(success: Boolean){
         showProgress(show = false, hasShade = false)
         if (success) {
-                navigator.addBackStack(false).navigateToRequestLocationDialog()
+                navigator.finishCurrent(true).navigateToRequestLocationDialog()
         } else {
             Toast.makeText(
                 activity?.applicationContext, "Authentication failed.",
@@ -38,6 +38,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     }
 
     override fun viewCreated(view: View?) {
+        configurator?.hasToolbar = false
         presenter.init()
         setButtonsListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword)

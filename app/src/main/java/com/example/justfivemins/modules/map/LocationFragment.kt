@@ -97,7 +97,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
     override fun isLocationUpdated(success: Boolean) {
         showProgress(show = false, hasShade = false)
         if (success) {
-            navigator.addBackStack(false).navigateToHome()
+            navigator.finishCurrent(true).navigateToHome()
         } else {
             Toast.makeText(
                 activity?.applicationContext, "update failed.",

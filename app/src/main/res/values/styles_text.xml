@@ -59,29 +59,6 @@
         <item name="android:textSize">17sp</item>
     </style>
 
-    <style name="edit" parent="medium">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">55dp</item>
-        <item name="android:paddingLeft">@dimen/space_small</item>
-        <item name="android:textColor">@color/title</item>
-        <item name="android:background">@color/dark_white</item>
-        <item name="android:textSize">@dimen/medium_big_font</item>
-        <item name="android:textColorHint">@color/light_blue</item>
-    </style>
-
-    <style name="edit_validator" parent="edit">
-        <item name="android:layout_height">40dp</item>
-        <item name="android:background">@null</item>
-    </style>
-
-    <style name="input" parent="regular">
-        <item name="android:paddingTop">@dimen/space_small</item>
-        <item name="android:paddingBottom">@dimen/space_small</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/edit_selector</item>
-    </style>
-
     <style name="text_regular" parent="text">
         <item name="android:textColor">@color/dark_blue</item>
     </style>

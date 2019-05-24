@@ -13,98 +13,107 @@
 
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/transparent"
+                android:background="@color/white"
                 android:fadeScrollbars="false"
     >
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
-                      android:layout_marginTop="@dimen/space_big"
                       android:padding="@dimen/space_medium"
-                      android:layout_gravity="center"
         >
+
 
             <android.support.design.widget.TextInputLayout
                     android:layout_margin="10dp"
-                    style="@style/input"
                     android:id="@+id/tiName"
-            >
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
                 <EditText
                         android:id="@+id/etName"
-                        style="@style/edit_validator"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
                         android:hint="@string/name"
-                />
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:inputType="date"/>
+
+
             </android.support.design.widget.TextInputLayout>
 
-            <RelativeLayout
-                    android:layout_margin="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_big">
-
                 <android.support.design.widget.TextInputLayout
+                        android:layout_margin="10dp"
                         android:id="@+id/tiBirthday"
-                        style="@style/input">
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent">
 
                     <EditText
                             android:id="@+id/etBirthday"
-                            android:enabled="false"
-                            style="@style/edit_validator"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
                             android:hint="@string/birthday"
+                            android:focusable="false"
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:inputType="date"/>
 
 
                 </android.support.design.widget.TextInputLayout>
 
-                <ImageView
-                        android:id="@+id/ivOpenCalendar"
-                        android:layout_width="wrap_content"
-                        style="@style/Clickable"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/space_small"
-                        android:src="@drawable/ic_calendar"
-                        android:tint="@color/grey"/>
-            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                     android:layout_margin="10dp"
-                    style="@style/input"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:id="@+id/tiEmail"
             >
                 <EditText
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:id="@+id/etEmail"
-                        style="@style/edit_validator"
-                        android:hint="@string/e_mail"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"                        android:hint="@string/e_mail"
                 />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tiPassword"
                     android:layout_margin="10dp"
-                    style="@style/input"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/grey"
+                    app:passwordToggleTint="@color/colorPrimary"
+
+
             >
                 <EditText
                         android:id="@+id/etPassword"
-                        style="@style/edit_validator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/password"
                         android:inputType="textPassword"
                 />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tiPasswordRepeat"
                     android:layout_margin="10dp"
-                    style="@style/input"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/grey"
+                    app:passwordToggleTint="@color/colorPrimary"
+
+
             >
                 <EditText
                         android:id="@+id/etPasswordRepeat"
-                        style="@style/edit_validator"
-                        android:hint="@string/validate_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:hint="@string/password"
                         android:inputType="textPassword"
                 />
             </android.support.design.widget.TextInputLayout>
@@ -131,20 +140,22 @@
                         android:layout_height="wrap_content">
 
                     <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbFemale"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:text="@string/female"
+                            android:checked="true"
+                    />
+
+                    <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/rbMale"
                             style="@style/semi_bold"
                             android:textColor="@color/colorPrimary"
                             android:text="@string/male"/>
 
                     <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/rbFemale"
-                            style="@style/semi_bold"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginStart="@dimen/space_small"
-                            android:text="@string/female"/>
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/rbNone"
+                            android:id="@+id/rbOther"
                             style="@style/semi_bold"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginStart="@dimen/space_small"

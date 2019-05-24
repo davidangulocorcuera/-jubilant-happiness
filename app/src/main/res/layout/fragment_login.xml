@@ -2,9 +2,9 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".modules.login.LoginFragment"
         android:id="@+id/loginFragment"
         android:orientation="vertical"
@@ -32,8 +32,10 @@
 
             />
             <android.support.design.widget.TextInputLayout
-                    style="@style/input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:id="@+id/tiEmail"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     android:layout_marginStart="@dimen/space_big"
                     android:layout_marginEnd="@dimen/space_big"
                     android:layout_marginBottom="@dimen/space_big"
@@ -41,16 +43,19 @@
             >
                 <EditText
                         android:id="@+id/etEmail"
-                        style="@style/edit_validator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/e_mail"
                 />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                    style="@style/input"
-                    android:id="@+id/tiPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"                    android:id="@+id/tiPassword"
                     android:layout_marginBottom="@dimen/space_biggest"
                     android:layout_marginStart="@dimen/space_big"
                     android:layout_marginEnd="@dimen/space_big"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     app:passwordToggleEnabled="true"
                     app:passwordToggleTint="@color/colorPrimary"
 
@@ -58,7 +63,9 @@
             >
                 <EditText
                         android:id="@+id/etPassword"
-                        style="@style/edit_validator"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/password"
                         android:inputType="textPassword"
                 />

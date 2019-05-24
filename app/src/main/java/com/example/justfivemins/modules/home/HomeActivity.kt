@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.WindowManager
 import com.example.justfivemins.R
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
@@ -44,6 +45,8 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
     }
 
     private fun setDrawerMenu() {

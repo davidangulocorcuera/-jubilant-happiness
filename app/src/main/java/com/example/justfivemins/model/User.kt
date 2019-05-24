@@ -22,4 +22,10 @@ class User(
     , var universityName: String = ""
     , var jobName: String = "",
     var currentLocation: Location? = null
-) : Serializable
+) : Serializable{
+    enum class Gender {
+       MALE,
+        FEMALE,
+        OTHER
+    }
+}

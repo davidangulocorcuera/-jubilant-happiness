@@ -27,10 +27,7 @@ class FilterFragment : BaseFragment() {
         randomContainer.tvFilterName.text = getString(R.string.random_users)
         randomContainer.ivBackgrounnd.setImageResource(R.drawable.random_image)
         filterByCityContainer.tvFilterName.text = getString(R.string.city)
-
-        val configurator: Configurator? = null
         setToolbarTitle(getString(R.string.home).toUpperCase())
-
         configurator?.hasToolbar = true
 
     }

@@ -43,7 +43,7 @@ class Navigator {
     private var newTaskFlag = false
     private var targetFragment: BaseFragment? = null
     private var targetCode: Int = 0
-    private var containerId = R.id.fragment_container
+    private var containerId = R.id.fragment_container_home
 
     constructor(baseActivity: BaseActivity) {
         intentToLaunch = Intent()
@@ -368,7 +368,7 @@ class Navigator {
             clearBackStack()
         }
         setUpTransition(ft)
-        ft.replace(R.id.fragment_container, f)
+        ft.replace(R.id.fragment_container_home, f)
         if (addBackStack) {
             ft.addToBackStack(null)
         }

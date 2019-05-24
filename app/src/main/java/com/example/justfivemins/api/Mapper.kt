@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.Location
+import com.example.justfivemins.model.User
 import com.google.firebase.firestore.DocumentSnapshot
 
 
@@ -15,6 +16,7 @@ object Mapper {
             data["birthday"] = birthday
             data["email"] = email
             data["age"] = age
+            data["gender"] = gender
             return data
         }
     }
@@ -29,6 +31,10 @@ object Mapper {
             userResponse.birthday = it?.get("birthday") as String
             userResponse.email = it?.get("email") as String
             userResponse.age = Integer.parseInt(it?.get("age").toString())
+            userResponse.gender = User.Gender.valueOf( it["gender"].toString())
+            Log.v("taag", userResponse.gender.toString())
+
+
 
             if(documentSnapshot.get("location") !=  null){
                 val locationMap: HashMap<String, Any> = documentSnapshot.get("location") as HashMap<String, Any>

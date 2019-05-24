@@ -59,13 +59,7 @@ fun TextInputLayout.showError(hasError: Boolean) {
     this.isErrorEnabled = hasError
     if (hasError) {
         this.setHintTextAppearance(R.style.HintError)
-        this.setBackgroundColor(context!!.color(R.color.editError))
-    } else {
-        this.setHintTextAppearance(R.style.HintNormal)
-        this.background = context!!.drawable(R.drawable.edit_selector)
-    }
-    val padding = resources.getDimension(R.dimen.space_small).toInt()
-    this.setPadding(0, padding, 0, padding)
+   }
 }
 
 
