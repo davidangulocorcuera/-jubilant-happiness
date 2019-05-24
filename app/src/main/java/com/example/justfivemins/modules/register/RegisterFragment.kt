@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -40,8 +39,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
     override fun viewCreated(view: View?) {
-        btnPrivacyTerms.setOnClickListener {
-        }
         ivOpenCalendar.setOnClickListener {
             showDatePickerDialog()
         }
@@ -49,6 +46,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             autoFill()
             true
         }
+        showToolbar()
         setToolbarTitle(getString(R.string.register))
         setListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat, etName, etBirthday)
@@ -72,8 +70,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
                         if (it == etPasswordRepeat) {
                             presenter.isValidPassword(etPassword.text.toString(), p0.toString())
                         }
+
                         if (it == etBirthday) {
-                            presenter.isValidBirthday(p0.toString())
+                            presenter.isValidBirthday(p0.toString(), age)
                         }
 
                         presenter.onChange(retrieveRegisterData())
@@ -213,7 +212,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
     override fun showBirthdayError(error: Boolean) {
-        if (error && age < 18) tiBirthday.error = "Invalid date or empty"
+        if (error) tiBirthday.error = "sorry this app is only for adults, go play to the park"
         tiBirthday.showError(error)
     }
 

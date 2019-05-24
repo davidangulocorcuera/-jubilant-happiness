@@ -26,8 +26,11 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         view.showNameError(!Valid.isNotNullOrEmpty(text))
     }
 
-    fun isValidBirthday(text: String) {
+    fun isValidBirthday(text: String, age: Int) {
         view.showBirthdayError(!Valid.isNotNullOrEmpty(text))
+        if(age < 18){
+            view.showBirthdayError(true)
+        }
     }
 
     fun isValidEmail(text: String) {
@@ -60,7 +63,7 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         if (showError)
             view.showPasswordError(!Valid.isPasswordValid(registerRequest.password, registerRequest.confirmPassword))
 
-        if (!Valid.isNotNullOrEmpty(registerRequest.birthday)) {
+        if (!Valid.isNotNullOrEmpty(registerRequest.birthday) || registerRequest.age < 18) {
             error = true
         }
         if (showError) {

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">JustFiveMins</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">DrawerOpen</string>
     <string name="close">DraweClose</string>
     <string name="e_mail">E-mail</string>
@@ -17,7 +16,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="register">Complete the form</string>
     <string name="location">Location</string>
     <string name="add_address">Add Address</string>
     <string name="Address">Address</string>
@@ -28,7 +27,6 @@
     <string name="surname">Surname</string>
     <string name="second_surname">Second surname</string>
     <string name="user_age">Age</string>
-    <string name="gender">Gender</string>
     <string name="madrid">Madrid</string>
     <string name="phone_number">Phone Number</string>
     <string name="profiles_title">PROFILES</string>
@@ -58,6 +56,10 @@
     <string name="random_users">Random users</string>
     <string name="birthday">Birthday</string>
     <string name="years">Years</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="other">Other</string>
+    <string name="gender">Gender</string>
 
 
 </resources>

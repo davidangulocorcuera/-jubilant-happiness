@@ -14,14 +14,15 @@
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
-
+                android:fadeScrollbars="false"
     >
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
-                      android:layout_marginTop="@dimen/space_medium"
+                      android:layout_marginTop="@dimen/space_big"
                       android:padding="@dimen/space_medium"
+                      android:layout_gravity="center"
         >
 
             <android.support.design.widget.TextInputLayout
@@ -51,7 +52,7 @@
                             android:enabled="false"
                             style="@style/edit_validator"
                             android:hint="@string/birthday"
-                            android:inputType="date" />
+                            android:inputType="date"/>
 
 
                 </android.support.design.widget.TextInputLayout>
@@ -65,7 +66,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/space_small"
                         android:src="@drawable/ic_calendar"
-                        android:tint="@color/grey" />
+                        android:tint="@color/grey"/>
             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -107,40 +108,56 @@
                         android:inputType="textPassword"
                 />
             </android.support.design.widget.TextInputLayout>
-
-
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center"
-
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:padding="@dimen/space_small"
+                          android:layout_margin="@dimen/space_medium"
             >
-                <CheckBox
+                <TextView
+                        android:id="@+id/tvSexTitle"
+                        style="@style/title"
+                        android:layout_marginStart="@dimen/space_medium"
+                        android:textColor="@color/colorAccent"
+                        android:text="@string/gender"
+                />
+
+                <RadioGroup
+                        android:id="@+id/rgGender"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/space_big"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="false"
-                        android:id="@+id/cbPrivacyEdit"
-                        android:text="@string/terms_text"
-                        style="@style/semi_bold"
-                        android:textSize="@dimen/medium_font"
-                                   />
-                <Button
-                        android:id="@+id/btnPrivacyTerms"
-                        style="@style/transparent_button_regular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/space_smaller"
-                        android:paddingRight="@dimen/space_smaller"
-                        android:text="@string/terms_of_use"/>
+                        android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbMale"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/male"/>
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbFemale"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:text="@string/female"/>
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbNone"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:text="@string/other"/>
+                </RadioGroup>
+
             </LinearLayout>
 
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_gravity="center"
-                          android:layout_margin="@dimen/space_medium"
-                          android:padding="@dimen/space_big"
+                          android:layout_marginBottom="@dimen/space_medium" android:padding="@dimen/space_small"
             >
 
                 <Button android:layout_width="match_parent"
