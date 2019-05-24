@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import android.transition.Transition
 import android.util.Log
 import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
@@ -16,7 +15,7 @@ import com.example.justfivemins.modules.home.HomeActivity
 import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
-import com.example.justfivemins.modules.content.ContentFragment
+import com.example.justfivemins.modules.filter.FilterFragment
 import com.example.justfivemins.modules.friends.FriendsFragment
 import com.example.justfivemins.modules.gallery.GalleryFragment
 import com.example.justfivemins.modules.login.LoginFragment
@@ -267,8 +266,8 @@ class Navigator {
     fun navigateToHome() {
         navigate(activity, HomeActivity::class.java)
     }
-    fun navigateToContentFragment(){
-        navigate(activity, ContentFragment::class.java)
+    fun navigateToFilterFragment(){
+        navigate(activity, FilterFragment::class.java)
     }
 
     fun navigateToMain() {

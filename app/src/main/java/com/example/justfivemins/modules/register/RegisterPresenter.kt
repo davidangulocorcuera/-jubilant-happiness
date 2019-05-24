@@ -26,8 +26,8 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         view.showNameError(!Valid.isNotNullOrEmpty(text))
     }
 
-    fun isValidSurname(text: String) {
-        view.showSurnameError(!Valid.isNotNullOrEmpty(text))
+    fun isValidBirthday(text: String) {
+        view.showBirthdayError(!Valid.isNotNullOrEmpty(text))
     }
 
     fun isValidEmail(text: String) {
@@ -46,13 +46,7 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
             error = true
         }
         if (showError)
-            view.showNameError(!Valid.isNotNullOrEmpty(registerRequest.surname))
-
-        if (!Valid.isNotNullOrEmpty(registerRequest.surname)) {
-            error = true
-        }
-        if (showError)
-            view.showSurnameError(!Valid.isNotNullOrEmpty(registerRequest.surname))
+            view.showNameError(!Valid.isNotNullOrEmpty(registerRequest.name))
 
         if (!Valid.isEmailValid(registerRequest.email)) {
             error = true
@@ -66,6 +60,13 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         if (showError)
             view.showPasswordError(!Valid.isPasswordValid(registerRequest.password, registerRequest.confirmPassword))
 
+        if (!Valid.isNotNullOrEmpty(registerRequest.birthday)) {
+            error = true
+        }
+        if (showError) {
+            view.showBirthdayError(!Valid.isNotNullOrEmpty(registerRequest.birthday))
+        }
+
 
         return error
     }
@@ -77,7 +78,8 @@ class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Pres
         fun showEmailError(error: Boolean)
         fun showPasswordError(error: Boolean)
         fun enableRegister(enable: Boolean)
-        fun showSurnameError(error: Boolean)
         fun showPasswordConfirmError(error: Boolean)
+        fun showBirthdayError(error: Boolean)
+
     }
 }

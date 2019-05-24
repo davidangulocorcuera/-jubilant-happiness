@@ -3,9 +3,7 @@ package com.example.justfivemins.modules.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.support.v4.app.ActivityCompat
 import android.view.View
 import android.widget.Toast
 import com.example.justfivemins.R
@@ -20,22 +18,18 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import kotlinx.android.synthetic.main.fragment_location_dialog.*
+import kotlinx.android.synthetic.main.fragment_location.*
 import java.util.*
 
 
 class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener {
     private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(locationUpdateListener = this) }
-
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val permissionFineLocation = android.Manifest.permission.ACCESS_FINE_LOCATION
-    private val permissionCoarseLocation = android.Manifest.permission.ACCESS_COARSE_LOCATION
-    private val REQUEST_CODE_LOCATION = 100
+
 
 
     override fun onCreateViewId(): Int {
-        return R.layout.fragment_location_dialog
+        return R.layout.fragment_location
     }
 
 
@@ -73,8 +67,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             CurrentUser.firebaseUser!!
         )
 
-
-    fun requestPermissions() {
+    private fun requestPermissions() {
         Dexter.withActivity(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_COARSE_LOCATION,

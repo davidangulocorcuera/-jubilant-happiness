@@ -56,6 +56,7 @@
     <string name="postal_code">Postal code</string>
     <string name="city">City</string>
     <string name="random_users">Random users</string>
+    <string name="birthday">Birthday</string>
 
 
 </resources>

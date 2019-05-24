@@ -10,6 +10,7 @@ class User(
     , var surname: String = "Gómez"
     , var secondSurname: String = "Cebollo"
     , var age: Int = 27
+    , var birthday: String = ""
     , var gender: String = "Male"
     , var phoneNumber: String = "638787465"
     , var locations: ArrayList<Location> = ArrayList()
@@ -20,5 +21,5 @@ class User(
     , var numLikes: Int = 0
     , var universityName: String = ""
     , var jobName: String = "",
-    var currentLocation: Location = Location()
+    var currentLocation: Location? = null
 ) : Serializable

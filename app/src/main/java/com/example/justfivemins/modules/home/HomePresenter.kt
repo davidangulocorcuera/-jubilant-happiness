@@ -17,6 +17,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
         if (success) {
             setUser(userResponse)
 
+
         } else {
             Log.v("taag", "fail getting firebaseUser data")
         }
@@ -25,7 +26,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
     fun setUser(userResponse: UserResponse) {
         user.name = userResponse.name
         user.email = userResponse.email
-        user.surname = userResponse.surname
+        user.birthday = userResponse.birthday
         user.currentLocation = userResponse.location
         view.setMenuData(user)
     }
@@ -38,5 +39,6 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
     interface View : MainMVP.View {
         fun showProgress(enable: Boolean)
         fun setMenuData(user: User)
+        fun navigateToLocationFragment()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.justfivemins.modules.register
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -11,6 +12,9 @@ import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.utils.DatePickerFragment
+import com.example.justfivemins.utils.DateUtils
+import com.example.justfivemins.utils.DateUtils.DATE_FORMAT_USER
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -33,22 +37,27 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     override fun viewCreated(view: View?) {
         btnPrivacyTerms.setOnClickListener {
         }
+        ivOpenCalendar.setOnClickListener {
+            showDatePickerDialog()
+        }
         etName.setOnLongClickListener {
             autoFill()
             true
         }
         setToolbarTitle(getString(R.string.register))
         setListeners()
-        val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat)
+        val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat,etName,etBirthday)
 
         fields.forEach {
             it.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
                     it.postDelayed({
 
-
                         if (it == etEmail) {
                             presenter.isValidEmail(p0.toString())
+                        }
+                        if (it == etName) {
+                            presenter.isValidName(p0.toString())
                         }
 
                         if (it == etPassword) {
@@ -57,6 +66,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
                         if (it == etPasswordRepeat) {
                             presenter.isValidPassword(etPassword.text.toString(), p0.toString())
+                        }
+                        if (it == etBirthday) {
+                            presenter.isValidBirthday(p0.toString())
                         }
 
                         presenter.onChange(retrieveRegisterData())
@@ -85,11 +97,11 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     private fun retrieveRegisterData(): RegisterRequest {
         val register = RegisterRequest()
-        register.email = etEmail?.text.toString()
-        register.password = etPassword?.text.toString()
+        register.email = etEmail.text.toString()
+        register.password = etPassword.text.toString()
         register.confirmPassword = etPasswordRepeat?.text.toString()
-        register.name = etName?.text.toString()
-        register.surname = etSurname?.text.toString()
+        register.name = etName.text.toString()
+        register.birthday = etBirthday.text.toString()
         return register
     }
 
@@ -98,7 +110,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         etPassword.setText("Berlinwood1")
         etPasswordRepeat.setText("Berlinwood1")
         etName.setText("dvd")
-        etSurname.setText("cebollo")
     }
 
     private fun setListeners() {
@@ -110,7 +121,14 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             backToLogin()
         }
     }
-
+    fun showDatePickerDialog() {
+        val newFragment = DatePickerFragment()
+        newFragment.arguments = Bundle()
+        newFragment.onDateSelected {
+            etBirthday.setText(DateUtils.formatTarget(DATE_FORMAT_USER).formatDate(it))
+        }
+        newFragment.show(this.activity?.supportFragmentManager, "")
+    }
 
     private fun goToNextScreen() {
         navigator.addBackStack(false).navigateToRequestLocationDialog()
@@ -124,9 +142,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         tiEmail.isErrorEnabled = false
         tiPassword.isErrorEnabled = false
         tiPasswordRepeat.isErrorEnabled = false
-
-        tiPassword.isErrorEnabled = false
-        tiPasswordRepeat.passwordVisibilityToggleDrawable
+        tiBirthday.isErrorEnabled = false
+        tiName.isErrorEnabled = false
     }
 
     override fun showEmailError(error: Boolean) {
@@ -156,7 +173,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         tiPasswordRepeat.showError(error)
     }
 
-    override fun showSurnameError(error: Boolean) {
+    override fun showNameError(error: Boolean) {
         if (error) {
             tiName.error = "Invalid name or empty"
         }
@@ -164,12 +181,10 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         tiName.showError(error)
     }
 
-    override fun showNameError(error: Boolean) {
-        if (error) {
-            tiSurname.error = "Invalid surname or empty"
-        }
 
-        tiSurname.showError(error)
+    override fun showBirthdayError(error: Boolean) {
+        if (error) tiBirthday.error = "Invalid date or empty"
+        tiBirthday.showError(error)
     }
 
     override fun isRegister(success: Boolean) {

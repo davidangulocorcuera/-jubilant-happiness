@@ -5,11 +5,12 @@
              android:layout_height="match_parent"
              tools:context=".modules.map.LocationFragment">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
                 android:id="@+id/containerLogo"
@@ -26,7 +27,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/location_image"
-                    />
+            />
 
             <TextView
                     android:gravity="center"
@@ -54,9 +55,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/containerLogo" app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_bias="0.497" app:layout_constraintVertical_bias="0.44"/>
-
-
-
 
 
     </android.support.constraint.ConstraintLayout>

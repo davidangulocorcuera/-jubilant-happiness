@@ -1,24 +1,22 @@
-package com.example.justfivemins.modules.content
+package com.example.justfivemins.modules.filter
 
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
-import com.example.justfivemins.R.layout.fragment_content
+import com.example.justfivemins.R.layout.fragment_filter
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.base.Configurator
-import kotlinx.android.synthetic.main.fragment_content.*
+import kotlinx.android.synthetic.main.fragment_filter.*
 import kotlinx.android.synthetic.main.item_filter_people.view.*
 import kotlinx.android.synthetic.main.item_users_card_layout.*
 
-class ContentFragment : BaseFragment() {
+class FilterFragment : BaseFragment() {
     private var users: ArrayList<User> = ArrayList()
 
 
     override fun onCreateViewId(): Int {
-        return fragment_content
+        return fragment_filter
     }
 
     override fun viewCreated(view: View?) {

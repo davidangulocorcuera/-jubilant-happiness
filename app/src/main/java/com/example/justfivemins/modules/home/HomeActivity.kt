@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.example.justfivemins.R
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
@@ -17,10 +18,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 class HomeActivity : BaseActivity(), HomePresenter.View {
-
-    override fun showProgress(enable: Boolean) {
-        showProgress(enable, enable)
-    }
 
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
@@ -33,14 +30,14 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
    override fun setMenuData(user: User){
        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
-       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation.city.capitalize()
+       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
 
    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        navigator.addBackStack(false).navigateToFilterFragment()
         presenter.init()
-        navigator.addBackStack(false).navigateToContentFragment()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
@@ -84,7 +81,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
                     navigator.navigateToProfileData()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    navigator.navigateToContentFragment()
+                    navigator.navigateToFilterFragment()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
                     navigator.navigateToMain()
@@ -100,6 +97,12 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
             }
         }
     }
+    override fun navigateToLocationFragment() {
+        navigator.addBackStack(false).navigateToRequestLocationDialog()
+    }
 
+    override fun showProgress(enable: Boolean) {
+        showProgress(enable, enable)
+    }
 
 }

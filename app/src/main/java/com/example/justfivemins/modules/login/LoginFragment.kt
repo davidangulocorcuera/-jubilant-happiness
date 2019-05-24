@@ -6,9 +6,10 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.example.justfivemins.R
-import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.ApiEventsListeners
+import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LoginRequest
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -20,19 +21,17 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
 
-    override fun isLogin(success: Boolean) {
+    override fun isLogin(success: Boolean){
         showProgress(show = false, hasShade = false)
-        if(success){
-            goToHome()
-        }
-        else{
+        if (success) {
+                navigator.addBackStack(false).navigateToRequestLocationDialog()
+        } else {
             Toast.makeText(
                 activity?.applicationContext, "Authentication failed.",
                 Toast.LENGTH_SHORT
             ).show()
         }
     }
-
 
 
     override fun onCreateViewId(): Int {
@@ -93,7 +92,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
-    private  fun signUser(data: LoginRequest) {
+    private fun signUser(data: LoginRequest) {
         return firebaseApiManager.loginUser(
             data, activity!!
         )
