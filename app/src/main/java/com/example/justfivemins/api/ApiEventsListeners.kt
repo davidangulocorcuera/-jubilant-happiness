@@ -16,5 +16,8 @@ interface ApiEventsListeners{
     interface LocationDataListener {
         fun isLocationUpdated(success: Boolean)
     }
+    interface UpdateUserListener {
+        fun isUserUpdated(success: Boolean)
+    }
 }
 

@@ -1,9 +1,10 @@
 package com.example.justfivemins.api.requests
 
 import com.example.justfivemins.model.User
+import java.io.Serializable
 
 
-class RegisterRequest {
+class RegisterRequest: Serializable {
     var email: String = ""
     var password: String = ""
     var name: String = ""
@@ -12,5 +13,6 @@ class RegisterRequest {
     var birthday: String = ""
     var age: Int = 0
     var gender: User.Gender = User.Gender.OTHER
+
 
 }

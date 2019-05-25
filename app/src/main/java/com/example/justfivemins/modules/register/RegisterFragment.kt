@@ -22,8 +22,6 @@ import kotlinx.android.synthetic.main.fragment_register.*
 import java.util.*
 
 
-
-
 class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListeners.RegisterListener {
 
     companion object {
@@ -34,7 +32,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private var age: Int = 0
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
-    private var gender: User.Gender= User.Gender.FEMALE
+    private var gender: User.Gender = User.Gender.FEMALE
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_register
@@ -43,8 +41,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun viewCreated(view: View?) {
         presenter.init()
-        configurator?.hasToolbar = false
-        etBirthday.setOnClickListener{
+        hideToolbar()
+        etBirthday.setOnClickListener {
             showDatePickerDialog()
         }
         rgGender.setOnCheckedChangeListener { group, checkedId ->
@@ -104,9 +102,13 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
 
-
     private fun registerUser(data: RegisterRequest) {
-        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this, activity = activity!!) }
+        val firebaseApiManager: FirebaseApiManager by lazy {
+            FirebaseApiManager(
+                registerListener = this,
+                activity = activity!!
+            )
+        }
         return firebaseApiManager.createUser(data)
     }
 
@@ -250,8 +252,11 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
                 activity?.applicationContext, "Register failed.",
                 Toast.LENGTH_SHORT
             ).show()
+
         }
+
     }
+
     override fun hasToolbar(): Boolean {
         return false
     }

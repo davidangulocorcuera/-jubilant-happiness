@@ -31,13 +31,20 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
-
+ fun autofill(){
+     etEmail.setText("ce@g.com")
+     etPassword.setText("Berlinwood1")
+ }
     override fun onCreateViewId(): Int {
         return R.layout.fragment_login
     }
 
     override fun viewCreated(view: View?) {
-        configurator?.hasToolbar = false
+        etEmail.setOnLongClickListener{
+            autofill()
+            true
+        }
+        hideToolbar()
         presenter.init()
         setButtonsListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword)
@@ -132,8 +139,6 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tiPassword.isErrorEnabled = false
 
     }
-    override fun hasToolbar(): Boolean {
-        return false
-    }
+
 
 }

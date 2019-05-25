@@ -8,6 +8,7 @@ import com.example.justfivemins.api.Mapper
 import com.example.justfivemins.api.requests.LocationRequest
 import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.api.requests.RegisterRequest
+import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,8 @@ class FirebaseApiManager(
     , private val registerListener: ApiEventsListeners.RegisterListener? = null
     , private val userDataListener: ApiEventsListeners.UserDataListener? = null
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
+    , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
+
     , private val activity: Activity
 ) : Api {
 
@@ -104,6 +107,20 @@ class FirebaseApiManager(
                 locationUpdateListener?.isLocationUpdated(false)
             }
 
+    }
+
+    override fun updateUserData(updateUserRequest: UpdateUserRequest, userId: String) {
+        db.collection("users").document(userId)
+            .update(
+                "surname", updateUserRequest.job,
+                "university", updateUserRequest.university,
+                "job", updateUserRequest.job,
+                "description", updateUserRequest.description
+            ).addOnCompleteListener {
+                updateUserListener?.isUserUpdated(true)
+            }.addOnFailureListener {
+                updateUserListener?.isUserUpdated(false)
+            }
     }
 
 

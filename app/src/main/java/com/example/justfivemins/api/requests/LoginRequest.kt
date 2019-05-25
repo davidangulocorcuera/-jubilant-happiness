@@ -1,9 +1,10 @@
 package com.example.justfivemins.api.requests
 
 import com.example.justfivemins.api.requests.LoginRequest.LoginType.NORMAL
+import java.io.Serializable
 
 
-class LoginRequest() {
+class LoginRequest(): Serializable {
     var token: String? = null
     @Transient
     var type: LoginType = LoginType.NORMAL

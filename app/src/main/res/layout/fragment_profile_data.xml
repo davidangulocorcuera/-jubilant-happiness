@@ -63,6 +63,7 @@
 
 
                     </android.support.design.widget.TextInputLayout>
+
                     <android.support.design.widget.TextInputLayout
                             android:layout_margin="10dp"
                             android:id="@+id/tiSurname"
@@ -81,40 +82,7 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                            android:layout_margin="10dp"
-                            android:id="@+id/tiBirthday"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent">
 
-                        <EditText
-                                android:id="@+id/etBirthday"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:hint="@string/birthday"
-                                android:focusable="false"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:inputType="date"/>
-
-
-                    </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
-                            android:layout_margin="10dp"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
-                            android:layout_width="match_parent"
-                            android:id="@+id/tiEmail"
-                    >
-                        <EditText
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:id="@+id/etEmail"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"                        android:hint="@string/e_mail"
-                        />
-                    </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                             android:layout_margin="10dp"

@@ -36,8 +36,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         btnNext.setOnClickListener {
             requestPermissions()
         }
-        configurator?.hasToolbar = false
-
+        hideToolbar()
 
     }
 

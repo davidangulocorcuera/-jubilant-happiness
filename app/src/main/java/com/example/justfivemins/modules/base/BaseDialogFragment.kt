@@ -80,11 +80,6 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
 
             baseActivity?.currentToolbar?.setVisible(configurator!!.hasToolbar)
 
-            baseActivity?.currentToolbar?.ivToolbarClose?.setVisible(configurator!!.hasCloseButton)
-
-            baseActivity?.currentToolbar?.ivToolbarClose?.setOnClickListener {
-                configurator!!.onCloseClicked?.invoke()
-            }
         }
     }
 

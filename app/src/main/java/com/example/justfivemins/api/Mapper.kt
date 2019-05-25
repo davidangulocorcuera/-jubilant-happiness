@@ -17,6 +17,11 @@ object Mapper {
             data["email"] = email
             data["age"] = age
             data["gender"] = gender
+
+            data["job"] = ""
+            data["university"] = ""
+            data["description"] = ""
+            data["surname"] = ""
             return data
         }
     }
@@ -32,8 +37,10 @@ object Mapper {
             userResponse.email = it?.get("email") as String
             userResponse.age = Integer.parseInt(it?.get("age").toString())
             userResponse.gender = User.Gender.valueOf( it["gender"].toString())
-            Log.v("taag", userResponse.gender.toString())
-
+            userResponse.job = it?.get("job") as String
+            userResponse.university = it?.get("university") as String
+            userResponse.surname = it?.get("surname") as String
+            userResponse.description = it?.get("description") as String
 
 
             if(documentSnapshot.get("location") !=  null){

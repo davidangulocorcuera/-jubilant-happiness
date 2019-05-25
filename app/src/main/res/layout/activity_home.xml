@@ -12,6 +12,12 @@
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+    <include
+            android:id="@+id/toolbarSeparator"
+            layout="@layout/view_separator"
+            android:layout_below="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separator" />
 
 
     <FrameLayout
