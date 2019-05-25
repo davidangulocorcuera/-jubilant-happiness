@@ -67,5 +67,6 @@
     <dimen name="header_big">200dp</dimen>
     <dimen name="ic_drawer">28dp</dimen>
     <dimen name="biggest_circle_size">140dp</dimen>
+    <dimen name="regular_card">160dp</dimen>
     <dimen name="regular_input_height">100dp</dimen>
 </resources>

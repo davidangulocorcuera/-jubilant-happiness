@@ -8,7 +8,7 @@ import com.example.justfivemins.utils.Valid
 class RegisterPresenter(private val view: RegisterPresenter.View) : MainMVP.Presenter {
 
 
-    fun init(arguments: Bundle?) {
+    fun init() {
 
 
     }

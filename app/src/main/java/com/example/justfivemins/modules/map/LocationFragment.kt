@@ -38,6 +38,8 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         btnNext.setOnClickListener {
             requestPermissions()
         }
+        configurator?.hasToolbar = false
+
 
 
     }
@@ -113,6 +115,9 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         fusedLocationClient.lastLocation.addOnSuccessListener {
             updateLocation(getLocationFromCoordinates(it.latitude, it.longitude))
         }
+    }
+    override fun hasToolbar(): Boolean {
+        return false
     }
 
 

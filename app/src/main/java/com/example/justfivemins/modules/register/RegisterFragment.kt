@@ -38,11 +38,13 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private var gender: User.Gender= User.Gender.FEMALE
 
     override fun onCreateViewId(): Int {
-        return com.example.justfivemins.R.layout.fragment_register
+        return R.layout.fragment_register
     }
 
 
     override fun viewCreated(view: View?) {
+        presenter.init()
+        configurator?.hasToolbar = false
         etBirthday.setOnClickListener{
             showDatePickerDialog()
         }
@@ -177,15 +179,20 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         tiEmail.isEnabled = enable
         btnNext.isEnabled = enable
         btnBack.isEnabled = enable
+        rbFemale.isEnabled = enable
+        rbMale.isEnabled = enable
+        rbOther.isEnabled = enable
+        rgGender.isEnabled = enable
     }
 
     private fun goToNextScreen() {
-        navigator.finishCurrent(true).navigateToRequestLocationDialog()
+        navigator.addBackStack(false).finishCurrent(true).navigateToRequestLocationDialog()
     }
 
     private fun backToLogin() {
-        navigator.finishCurrent(true).navigateToLogin()
+        navigator.addBackStack(false).finishCurrent(true).navigateToLogin()
     }
+
 
     override fun hideInputErrors() {
         tiEmail.isErrorEnabled = false
@@ -248,6 +255,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+    override fun hasToolbar(): Boolean {
+        return false
     }
 
 

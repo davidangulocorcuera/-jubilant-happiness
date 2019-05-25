@@ -10,7 +10,7 @@ class MainActivity(
 ) : BaseActivity() {
 
     override fun onCreateViewId(): Int {
-        return R.layout.activity_main
+        return R.layout.activity_home
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,5 +18,7 @@ class MainActivity(
         navigator.navigateToLogin()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
     }
+
+
 
 }

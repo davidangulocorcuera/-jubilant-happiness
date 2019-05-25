@@ -76,7 +76,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:text="@string/register"
-                    style="@style/transparent_button"
+                    style="@style/roundWhiteButton"
                     android:id="@+id/btnRegister"
             />
 
@@ -87,7 +87,7 @@
                     android:layout_marginTop="@dimen/space_big"
                     android:text="@string/login"
                     android:enabled="false"
-                    style="@style/button"
+                    style="@style/roundButton"
                     android:layout_gravity="center"
                     android:id="@+id/btnLogin"
             />

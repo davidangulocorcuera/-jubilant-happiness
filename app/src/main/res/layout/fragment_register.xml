@@ -22,8 +22,6 @@
                       android:orientation="vertical"
                       android:padding="@dimen/space_medium"
         >
-
-
             <android.support.design.widget.TextInputLayout
                     android:layout_margin="10dp"
                     android:id="@+id/tiName"
@@ -37,7 +35,7 @@
                         android:layout_width="match_parent"
                         android:hint="@string/name"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:inputType="date"/>
+                        />
 
 
             </android.support.design.widget.TextInputLayout>
@@ -74,47 +72,6 @@
                         android:id="@+id/etEmail"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"                        android:hint="@string/e_mail"
-                />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tiPassword"
-                    android:layout_margin="10dp"
-                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
-
-
-            >
-                <EditText
-                        android:id="@+id/etPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
-                />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tiPasswordRepeat"
-                    android:layout_margin="10dp"
-                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                    app:passwordToggleEnabled="true"
-                    app:passwordToggleTint="@color/colorPrimary"
-
-
-            >
-                <EditText
-                        android:id="@+id/etPasswordRepeat"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:hint="@string/password"
-                        android:inputType="textPassword"
                 />
             </android.support.design.widget.TextInputLayout>
             <LinearLayout android:layout_width="match_parent"
@@ -164,28 +121,88 @@
 
             </LinearLayout>
 
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tiPassword"
+                    android:layout_margin="10dp"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
+
+
+            >
+                <EditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tiPasswordRepeat"
+                    android:layout_marginStart="@dimen/space_medium"
+                    android:layout_marginTop="@dimen/space_medium"
+                    android:layout_marginEnd="@dimen/space_medium"
+                    style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/colorPrimary"
+
+
+            >
+                <EditText
+                        android:id="@+id/etPasswordRepeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        android:hint="@string/validate_password"
+                        android:inputType="textPassword"
+                />
+            </android.support.design.widget.TextInputLayout>
+            <TextView
+                    android:id="@+id/tvPasswordConfirmAdvise"
+                    android:layout_marginStart="@dimen/space_medium"
+                    android:layout_marginEnd="@dimen/space_medium"
+                    android:padding="@dimen/space_small"
+                    android:textColor="@color/lightBlack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password_info"
+
+            />
+
+
+
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:layout_gravity="center"
+                          android:layout_margin="@dimen/space_medium"
                           android:layout_marginBottom="@dimen/space_medium" android:padding="@dimen/space_small"
             >
-
-                <Button android:layout_width="match_parent"
+                <Button android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/transparent_button"
+                        style="@style/roundWhiteButton"
+                        android:textSize="@dimen/medium_font"
                         android:id="@+id/btnBack"
                         android:layout_margin="10dp"
                         android:text="@string/back"
                         android:textColor="@color/red"
                 />
-
-                <Button android:layout_width="match_parent"
+                <Button android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/roundButton"
                         android:id="@+id/btnNext"
                         android:enabled="false"
                         android:layout_margin="10dp"
+                        style="@style/roundButton"
+                        android:textSize="@dimen/medium_font"
                         android:text="@string/next"
 
                 />

@@ -57,9 +57,6 @@ fun Context.drawable(@DrawableRes id: Int?): Drawable? {
 
 fun TextInputLayout.showError(hasError: Boolean) {
     this.isErrorEnabled = hasError
-    if (hasError) {
-        this.setHintTextAppearance(R.style.HintError)
-   }
 }
 
 

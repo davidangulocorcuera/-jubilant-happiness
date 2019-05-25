@@ -107,7 +107,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     }
 
     override fun gotToRegister() {
-        navigator.addBackStack(true).navigateToRegister()
+        navigator.addBackStack(true).finishCurrent(true).navigateToRegister()
     }
 
     override fun showEmailError(error: Boolean) {
@@ -133,6 +133,9 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tiEmail.isErrorEnabled = false
         tiPassword.isErrorEnabled = false
 
+    }
+    override fun hasToolbar(): Boolean {
+        return false
     }
 
 }

@@ -24,7 +24,16 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         }
 
     var configurator: Configurator? = null
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (configurator == null) {
+            configurator = Configurator.instance
+            configurator!!.hasToolbar(hasToolbar())
+            configurator!!.hasToolbarBackButton(hasToolbarBackButton())
+            configurator!!.showOnlyToolbarTitle(showOnlyToolbarTitle())
+            configurator!!.hasOwnToolbar(false)
+        }
+    }
 
     override fun onViewCreated(
         view: View,

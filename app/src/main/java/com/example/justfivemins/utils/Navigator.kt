@@ -368,7 +368,7 @@ class Navigator {
             clearBackStack()
         }
         setUpTransition(ft)
-        ft.replace(R.id.fragment_container_home, f)
+        ft.replace(R.id.fragment_container_main, f)
         if (addBackStack) {
             ft.addToBackStack(null)
         }

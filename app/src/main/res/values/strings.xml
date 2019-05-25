@@ -60,6 +60,9 @@
     <string name="female">Female</string>
     <string name="other">Other</string>
     <string name="gender">Gender</string>
+    <string name="password_info">Password must contain more than 6 character\'s and one number, two passwords must be
+        the same
+    </string>
 
 
 </resources>
