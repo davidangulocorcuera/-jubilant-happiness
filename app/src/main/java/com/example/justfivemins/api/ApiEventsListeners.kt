@@ -5,10 +5,10 @@ import com.example.justfivemins.api.responses.UserResponse
 
 interface ApiEventsListeners{
     interface LoginListener {
-        fun isLogin(success: Boolean)
+        fun isLogged(success: Boolean)
     }
     interface RegisterListener {
-        fun isRegister(success: Boolean)
+        fun isRegistered(success: Boolean)
     }
     interface UserDataListener {
         fun isUserDataSaved(success: Boolean, userResponse: UserResponse)

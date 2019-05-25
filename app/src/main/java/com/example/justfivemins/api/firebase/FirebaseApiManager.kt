@@ -25,16 +25,16 @@ class FirebaseApiManager(
     , private val registerListener: ApiEventsListeners.RegisterListener? = null
     , private val userDataListener: ApiEventsListeners.UserDataListener? = null
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
-
+    , private val activity: Activity
 ) : Api {
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     var db = FirebaseFirestore.getInstance()
 
 
-    override fun createUser(registerRequest: RegisterRequest, password: String, activity: Activity) {
+    override fun createUser(registerRequest: RegisterRequest) {
 
-        auth.createUserWithEmailAndPassword(registerRequest.email, password)
+        auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
@@ -43,15 +43,15 @@ class FirebaseApiManager(
                         db.collection("users").document(user.uid)
                             .set(Mapper.registerRequestMapper(registerRequest))
                             .addOnFailureListener { e ->
-                                registerListener?.isRegister(false)
+                                registerListener?.isRegistered(false)
                                 Log.v("taag", e.toString())
                             }
-                        registerListener?.isRegister(true)
+                        registerListener?.isRegistered(true)
                     }
 
                 } else {
                     Log.v("taag", task.exception.toString())
-                    registerListener?.isRegister(false)
+                    registerListener?.isRegistered(false)
 
                 }
             }
@@ -79,22 +79,22 @@ class FirebaseApiManager(
             }
     }
 
-    override fun loginUser(loginRequest: LoginRequest, activity: Activity) {
+    override fun loginUser(loginRequest: LoginRequest) {
         auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
             .addOnCompleteListener(activity) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     CurrentUser.firebaseUser = user
-                    loginListener?.isLogin(true)
+                    loginListener?.isLogged(true)
                 } else {
-                    loginListener?.isLogin(false)
+                    loginListener?.isLogged(false)
                 }
 
             }
     }
 
-    override fun updateLocation(locationRequest: LocationRequest, activity: Activity,currentUser: FirebaseUser) {
-        db.collection("users").document(currentUser.uid)
+    override fun updateLocation(locationRequest: LocationRequest ,userId: String) {
+        db.collection("users").document(userId)
             .update("location", locationRequest)
             .addOnCompleteListener{
                 locationUpdateListener?.isLocationUpdated(true)

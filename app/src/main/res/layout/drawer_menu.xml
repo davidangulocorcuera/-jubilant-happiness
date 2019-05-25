@@ -7,10 +7,7 @@
                                         android:layout_height="match_parent"
                                         tools:context=".modules.home.HomeActivity"
 >
-
     <include layout="@layout/activity_home"/>
-
-
     <android.support.design.widget.NavigationView
             android:id="@+id/menuNavigation"
             android:layout_width="wrap_content"

@@ -63,6 +63,9 @@
     <string name="password_info">Password must contain more than 6 character\'s and one number, two passwords must be
         the same
     </string>
+    <string name="description">Description</string>
+    <string name="university">University</string>
+    <string name="job">Job</string>
 
 
 </resources>

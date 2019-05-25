@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/transparent"
+    android:background="@color/white"
     >
 
     <ScrollView
@@ -23,12 +23,175 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include
-                android:id="@+id/personalDataContainer"
-                layout="@layout/view_profile_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+            <ScrollView android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:fadeScrollbars="false"
+            >
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:padding="@dimen/space_medium"
+                >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/profile_image"
+                            android:layout_width="@dimen/biggest_circle_size"
+                            android:layout_height="@dimen/biggest_circle_size"
+                            android:layout_margin="@dimen/space_medium"
+                            style="@style/Clickable"
+                            android:src="@drawable/no_profile_image"
+                            android:elevation="@dimen/space_medium"
+                            android:layout_marginTop="8dp"
+                            android:layout_gravity="center"
+                    />
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            android:id="@+id/tiName"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                        <EditText
+                                android:id="@+id/etName"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/name"
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        />
+
+
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            android:id="@+id/tiSurname"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                        <EditText
+                                android:id="@+id/etSurname"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/surname"
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                        />
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            android:id="@+id/tiBirthday"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                        <EditText
+                                android:id="@+id/etBirthday"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/birthday"
+                                android:focusable="false"
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                android:inputType="date"/>
+
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tiEmail"
+                    >
+                        <EditText
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                android:id="@+id/etEmail"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"                        android:hint="@string/e_mail"
+                        />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="120dp"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tiDescription"
+                    >
+                        <EditText
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                android:id="@+id/etDescription"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/description"
+                                android:inputType="textMultiLine"
+                                android:maxLength="100"
+                        />
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tiUniversity"
+                    >
+                        <EditText
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                android:id="@+id/etUniversity"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/university"
+                        />
+                    </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                            android:layout_margin="10dp"
+                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:id="@+id/tiJob"
+                    >
+                        <EditText
+                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                                android:id="@+id/etJob"
+                                android:layout_height="match_parent"
+                                android:layout_width="match_parent"
+                                android:hint="@string/job"
+                        />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:orientation="horizontal"
+                                  android:layout_gravity="center"
+                                  android:layout_margin="@dimen/space_medium"
+                                  android:layout_marginBottom="@dimen/space_medium" android:padding="@dimen/space_small"
+                    >
+                        <Button android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/roundWhiteButton"
+                                android:textSize="@dimen/medium_font"
+                                android:id="@+id/btnBack"
+                                android:layout_margin="10dp"
+                                android:text="@string/back"
+                                android:textColor="@color/red"
+                        />
+                        <Button android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/btnNext"
+                                android:enabled="false"
+                                android:layout_margin="10dp"
+                                style="@style/roundButton"
+                                android:textSize="@dimen/medium_font"
+                                android:text="@string/next"
+                        />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
     </ScrollView>

@@ -23,9 +23,7 @@ import java.util.*
 
 
 class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener {
-    private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(locationUpdateListener = this) }
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
 
 
     override fun onCreateViewId(): Int {
@@ -39,7 +37,6 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             requestPermissions()
         }
         configurator?.hasToolbar = false
-
 
 
     }
@@ -62,12 +59,10 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         return location
     }
 
-    private fun updateLocation(data: com.example.justfivemins.api.requests.LocationRequest) =
-        firebaseApiManager.updateLocation(
-            data,
-            activity!!,
-            CurrentUser.firebaseUser!!
-        )
+    private fun updateLocation(data: com.example.justfivemins.api.requests.LocationRequest) {
+        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(locationUpdateListener = this, activity = activity!!) }
+        firebaseApiManager.updateLocation(data, CurrentUser.firebaseUser!!.uid)
+    }
 
     private fun requestPermissions() {
         Dexter.withActivity(activity)
@@ -84,6 +79,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                         // permission is denied permenantly, navigate user to app settings
                     }
                 }
+
                 override fun onPermissionRationaleShouldBeShown(
                     permissions: List<PermissionRequest>,
                     token: PermissionToken
@@ -116,6 +112,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             updateLocation(getLocationFromCoordinates(it.latitude, it.longitude))
         }
     }
+
     override fun hasToolbar(): Boolean {
         return false
     }

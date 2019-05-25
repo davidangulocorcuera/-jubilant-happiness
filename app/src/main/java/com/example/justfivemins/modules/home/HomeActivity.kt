@@ -40,8 +40,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        navigator.addBackStack(false).navigateToFilterFragment()
-        presenter.init()
+        presenter.init(this)
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
@@ -103,6 +102,10 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
             }
         }
     }
+    override fun loadhome() {
+        navigator.addBackStack(false).navigateToFilterFragment()
+    }
+
     override fun navigateToLocationFragment() {
         navigator.addBackStack(false).navigateToRequestLocationDialog()
     }

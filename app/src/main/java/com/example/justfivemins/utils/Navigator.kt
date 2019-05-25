@@ -339,7 +339,7 @@ class Navigator {
             }
 
             if (hasTransition) {
-                //trans.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
+                trans.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
             }
 
             trans.replace(containerId, fragment, tag)
@@ -368,7 +368,7 @@ class Navigator {
             clearBackStack()
         }
         setUpTransition(ft)
-        ft.replace(R.id.fragment_container_main, f)
+        ft.replace(R.id.fragment_container_home, f)
         if (addBackStack) {
             ft.addToBackStack(null)
         }

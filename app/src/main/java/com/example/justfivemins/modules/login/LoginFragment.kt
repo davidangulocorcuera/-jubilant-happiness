@@ -16,11 +16,10 @@ import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener {
 
-    private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this) }
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
 
-    override fun isLogin(success: Boolean){
+    override fun isLogged(success: Boolean){
         showProgress(show = false, hasShade = false)
         if (success) {
                 navigator.finishCurrent(true).navigateToRequestLocationDialog()
@@ -93,9 +92,8 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     }
 
     private fun signUser(data: LoginRequest) {
-        return firebaseApiManager.loginUser(
-            data, activity!!
-        )
+        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this,activity = activity!!) }
+        return firebaseApiManager.loginUser(data)
     }
 
     override fun goToHome() {

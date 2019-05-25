@@ -3,6 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/activity_home"
 >
@@ -11,18 +12,29 @@
             layout="@layout/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    <include
-            android:id="@+id/toolbarSeparator"
-            layout="@layout/view_separator"
-            android:layout_below="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separator" />
 
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/fragment_container_home"
              android:layout_below="@+id/toolbar"/>
+    <LinearLayout
+            android:id="@+id/progressContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/transparentBlack"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+        <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="gone" />
+    </LinearLayout>
 
 </RelativeLayout>

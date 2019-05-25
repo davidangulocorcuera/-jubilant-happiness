@@ -4,15 +4,14 @@ import com.example.justfivemins.R
 import java.io.Serializable
 
 class User(
-    var email: String = "Jesus@bot.com"
-    , var name: String = "Jesus"
-    , var description: String = "Este soy yo"
-    , var surname: String = "Gómez"
-    , var secondSurname: String = "Cebollo"
+    var email: String = ""
+    , var name: String = ""
+    , var description: String = ""
+    , var surname: String = ""
     , var age: Int = 27
     , var birthday: String = ""
-    , var gender: String = "Male"
-    , var phoneNumber: String = "638787465"
+    , var gender: Gender = Gender.OTHER
+    , var phoneNumber: String = ""
     , var locations: ArrayList<Location> = ArrayList()
     , var profileImage: Int = R.drawable.img_profile_example
     , var headerImage: Int = R.drawable.header_background

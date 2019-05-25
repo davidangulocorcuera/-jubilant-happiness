@@ -34,7 +34,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private var age: Int = 0
     private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
-    private val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this) }
     private var gender: User.Gender= User.Gender.FEMALE
 
     override fun onCreateViewId(): Int {
@@ -107,11 +106,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
     private fun registerUser(data: RegisterRequest) {
-        return firebaseApiManager.createUser(
-            data,
-            data.password,
-            activity!!
-        )
+        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(registerListener = this, activity = activity!!) }
+        return firebaseApiManager.createUser(data)
     }
 
 
@@ -243,7 +239,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         tiBirthday.showError(error)
     }
 
-    override fun isRegister(success: Boolean) {
+    override fun isRegistered(success: Boolean) {
         showProgress(show = false, hasShade = false)
         disableScreenOnRegister(true)
 
