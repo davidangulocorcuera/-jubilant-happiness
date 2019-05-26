@@ -22,11 +22,8 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
     private var user: User = User()
 
     override fun isUserDataSaved(success: Boolean, userResponse: UserResponse) {
-        view.showProgress(false)
         if (success) {
             setUser(userResponse)
-            view.loadhome()
-
         } else {
             Log.v("taag", "fail getting firebaseUser data")
         }
@@ -45,6 +42,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
         user.description = userResponse.description
 
         CurrentUser.user = user
+        view.showProgress(false)
         view.setMenuData(user)
     }
 

@@ -4,13 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
+import android.view.WindowManager
 import com.example.justfivemins.R
-import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
@@ -19,9 +19,10 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
+import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 
 
-class HomeActivity : BaseActivity(), HomePresenter.View {
+class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
@@ -34,20 +35,25 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     @SuppressLint("SetTextI18n")
     override fun setMenuData(user: User) {
-
-//        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
-//        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
-
+        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
+        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState)
         presenter.init(this)
+        loadhome()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        enableDrawerMenu(true)
+        presenter.init(this)
     }
 
 
@@ -86,7 +92,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
                     navigator.navigateToMap()
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
-                    navigator.navigateToProfileData()
+                    navigator.addBackStack(true).navigateToProfileData()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
                     navigator.navigateToFilterFragment()
@@ -107,8 +113,12 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
     }
 
     override fun loadhome() {
-        navigator.addBackStack(false).navigateToFilterFragment()
+        navigator.navigateToFilterFragment()
+        showProgress(false)
+
     }
+
+
 
     override fun navigateToLocationFragment() {
         navigator.addBackStack(false).navigateToRequestLocationDialog()
@@ -116,6 +126,15 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
 
     override fun showProgress(enable: Boolean) {
         showProgress(enable, enable)
+    }
+    override fun setDrawerEnabled(enabled: Boolean) {
+        val lockMode = if (enabled)
+            DrawerLayout.LOCK_MODE_UNLOCKED
+        else
+            DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        drawerLayout.setDrawerLockMode(lockMode)
+
+        toggleHome.isDrawerIndicatorEnabled = enabled
     }
 
 }

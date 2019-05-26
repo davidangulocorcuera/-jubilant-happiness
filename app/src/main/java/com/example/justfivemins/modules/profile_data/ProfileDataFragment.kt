@@ -26,8 +26,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun viewCreated(view: View?) {
+        setTextViews()
         enableDrawerMenu(false)
-        hasToolbarBackButton()
         btnNext.setOnClickListener {
             updateUser(retrieveRegisterData())
         }
@@ -41,15 +41,13 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         super.onDestroy()
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
+
+    private fun setTextViews(){
         etName.setText(CurrentUser.user?.name)
         etSurname.setText(CurrentUser.user?.surname)
         etUniversity.setText(CurrentUser.user?.universityName)
         etJob.setText(CurrentUser.user?.jobName)
         etDescription.setText(CurrentUser.user?.description)
-
-
     }
 
     private fun retrieveRegisterData(): UpdateUserRequest {
@@ -76,7 +74,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         showProgress(show = false, hasShade = false)
         enableScreenOnUpdate(true)
         if (success) {
-
+             navigator.addBackStack(false).navigateToHome()
         } else {
             Toast.makeText(
                 activity?.applicationContext, "Register failed.",

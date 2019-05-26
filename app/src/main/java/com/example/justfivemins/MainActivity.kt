@@ -2,6 +2,7 @@ package com.example.justfivemins
 
 
 import android.os.Bundle
+import android.view.WindowManager
 import com.example.justfivemins.modules.base.BaseActivity
 
 
@@ -14,6 +15,7 @@ class MainActivity(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
         navigator.navigateToLogin()
     }
 

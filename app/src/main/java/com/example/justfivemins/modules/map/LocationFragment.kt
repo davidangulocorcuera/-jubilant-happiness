@@ -90,9 +90,12 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             .check()
     }
 
-
-    override fun isLocationUpdated(success: Boolean) {
+    override fun onResume() {
+        super.onResume()
         showProgress(show = false, hasShade = false)
+
+    }
+    override fun isLocationUpdated(success: Boolean) {
         if (success) {
             navigator.finishCurrent(true).navigateToHome()
         } else {
