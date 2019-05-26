@@ -2,7 +2,6 @@ package com.example.justfivemins.modules.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -20,14 +19,18 @@ import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
+import android.content.Intent
+
+
 
 
 class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
-
+    private val PICK_IMAGE_REQUEST = 1
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
     private val presenter: HomePresenter by lazy { HomePresenter(this) }
+
 
     override fun onCreateViewId(): Int {
         return R.layout.drawer_menu
@@ -136,5 +139,13 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
         toggleHome.isDrawerIndicatorEnabled = enabled
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+
 
 }

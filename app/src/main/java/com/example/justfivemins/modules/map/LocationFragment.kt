@@ -34,7 +34,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
     @SuppressLint("MissingPermission")
     override fun viewCreated(view: View?) {
         btnNext.setOnClickListener {
-            requestPermissions()
+            requestLocationPermissions()
         }
         hideToolbar()
 
@@ -63,7 +63,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         firebaseApiManager.updateLocation(data, CurrentUser.firebaseUser!!.uid)
     }
 
-    private fun requestPermissions() {
+    private fun requestLocationPermissions() {
         Dexter.withActivity(activity)
             .withPermissions(
                 Manifest.permission.ACCESS_COARSE_LOCATION,

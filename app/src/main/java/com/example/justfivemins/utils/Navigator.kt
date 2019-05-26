@@ -38,6 +38,7 @@ class Navigator {
     private var addBackStack: Boolean = false
     private var animated = true
     private var preserve: Boolean = false
+    private var hasTransition = false
     private var configurator: Configurator? = null
     private var newTaskFlag = false
     private var targetFragment: BaseFragment? = null
@@ -256,6 +257,10 @@ class Navigator {
         navigate(activity, clazz, extras)
     }
 
+    fun hasTransition(hasTransition: Boolean): Navigator {
+        this.hasTransition = hasTransition
+        return this
+    }
 
 
     fun navigateToHome() {
@@ -333,6 +338,9 @@ class Navigator {
                 fragment.setTargetFragment(targetFragment, targetCode)
             }
 
+            if (hasTransition) {
+                trans.setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_up)
+            }
 
             trans.replace(containerId, fragment, tag)
 
@@ -359,6 +367,7 @@ class Navigator {
         if (cleanStack) {
             clearBackStack()
         }
+        setUpTransition(ft)
         ft.replace(R.id.fragment_container_home, f)
         if (addBackStack) {
             ft.addToBackStack(null)
@@ -397,7 +406,11 @@ class Navigator {
             .commit()
     }
 
+    fun setUpTransition(transaction: FragmentTransaction) {
+        if (hasTransition) {
 
+        }
+    }
 
     fun clearBackStack(): Navigator {
         val manager = activity.supportFragmentManager

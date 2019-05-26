@@ -133,6 +133,7 @@ class FirebaseApiManager(
                 }
 
                if (snapshot != null && snapshot.exists()) {
+
                    val user  = Mapper.userResponseMapper(snapshot)
                    onUserDataChangedListenerListener?.isUserDataChanged(true,user)
                 } else {

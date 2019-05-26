@@ -46,14 +46,14 @@ class DrawerListAdapter(val items: ArrayList<DrawerItem>, var onMenuItemClick: (
 
             }
             when (current.type){
-                DrawerViewModel.MenuItemType.HOME -> {view.ivDrawerIcon.tint(R.color.colorAccent)}
-                DrawerViewModel.MenuItemType.PERSONAL_DATA -> {view.ivDrawerIcon.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.MAP -> { view.ivDrawerIcon.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.MESSAGE -> {  view.ivDrawerIcon.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.LOG_OUT -> { view.ivDrawerIcon.tint(R.color.colorPrimaryDark)}
-                DrawerViewModel.MenuItemType.FRIENDS -> { view.ivDrawerIcon.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.MY_PICTURES -> { view.ivDrawerIcon.tint(R.color.colorPrimary)}
-                DrawerViewModel.MenuItemType.CONTACT -> {view.ivDrawerIcon.tint(R.color.colorPrimary)}
+                DrawerViewModel.MenuItemType.HOME -> {view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.PERSONAL_DATA -> {view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.MAP -> { view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.MESSAGE -> {  view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.LOG_OUT -> { view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.FRIENDS -> { view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.MY_PICTURES -> { view.ivDrawerIcon.tint(R.color.grey)}
+                DrawerViewModel.MenuItemType.CONTACT -> {view.ivDrawerIcon.tint(R.color.grey)}
             }
 
         }

@@ -34,6 +34,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:hint="@string/name"
+                        android:maxLength="10"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         />
 

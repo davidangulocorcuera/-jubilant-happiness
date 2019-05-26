@@ -43,17 +43,16 @@
             android:layout_marginStart="@dimen/space_big"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/imageView" app:layout_constraintHorizontal_bias="0.0"
-             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.727"/>
+            android:layout_marginTop="28dp"/>
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/space_medium"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-             android:layout_marginEnd="300dp" android:id="@+id/linearLayout"
-            android:layout_marginStart="@dimen/space_big" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="300dp" android:id="@+id/linearLayout"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0">
 
         <TextView
@@ -63,7 +62,6 @@
                 tools:text="@string/username"
                 android:textColor="@color/white"
                 style="@style/regular"
-                android:layout_marginEnd="@dimen/space_small"
 
         />
         <TextView android:layout_width="match_parent"
