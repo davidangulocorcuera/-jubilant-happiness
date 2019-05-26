@@ -2,41 +2,44 @@ package com.example.justfivemins.modules.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.WindowManager
+import android.view.ViewGroup
 import com.example.justfivemins.R
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
+import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
-import com.example.justfivemins.modules.base.BaseActivity
 import kotlinx.android.synthetic.main.drawer_menu.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
+
 
 class HomeActivity : BaseActivity(), HomePresenter.View {
 
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
-    private val presenter: HomePresenter by lazy {HomePresenter(this)}
+    private val presenter: HomePresenter by lazy { HomePresenter(this) }
 
     override fun onCreateViewId(): Int {
         return R.layout.drawer_menu
     }
 
-   @SuppressLint("SetTextI18n")
-   override fun setMenuData(user: User){
-       menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
-       menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
-       menuNavigation.getHeaderView(0).menuAge.text = user.age.toString() + " " + getString(R.string.years)
+    @SuppressLint("SetTextI18n")
+    override fun setMenuData(user: User) {
 
-   }
+//        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
+//        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
+
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
         initList()
 
     }
+
 
     private fun setDrawerMenu() {
         toggleHome = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
@@ -101,6 +105,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View {
             }
         }
     }
+
     override fun loadhome() {
         navigator.addBackStack(false).navigateToFilterFragment()
     }

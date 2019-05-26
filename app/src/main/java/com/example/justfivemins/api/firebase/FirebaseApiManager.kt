@@ -1,6 +1,7 @@
 package com.example.justfivemins.api.firebase
 
 import android.app.Activity
+import android.support.annotation.Nullable
 import android.util.Log
 import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.ApiEventsListeners
@@ -13,12 +14,7 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-
-
-
-
-
+import com.google.firebase.firestore.*
 
 
 class FirebaseApiManager(
@@ -27,9 +23,10 @@ class FirebaseApiManager(
     , private val userDataListener: ApiEventsListeners.UserDataListener? = null
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
-
+    , private val onUserDataChangedListenerListener: ApiEventsListeners.OnDataChangedListener? = null
     , private val activity: Activity
 ) : Api {
+
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     var db = FirebaseFirestore.getInstance()
@@ -112,8 +109,9 @@ class FirebaseApiManager(
     override fun updateUserData(updateUserRequest: UpdateUserRequest, userId: String) {
         db.collection("users").document(userId)
             .update(
-                "surname", updateUserRequest.job,
+                "surname", updateUserRequest.surname,
                 "university", updateUserRequest.university,
+                "name", updateUserRequest.name,
                 "job", updateUserRequest.job,
                 "description", updateUserRequest.description
             ).addOnCompleteListener {
@@ -121,6 +119,27 @@ class FirebaseApiManager(
             }.addOnFailureListener {
                 updateUserListener?.isUserUpdated(false)
             }
+    }
+    override fun onUserDataChanged(userId: String) {
+        val docRef = db.collection("users").document(userId)
+        docRef.addSnapshotListener(object : EventListener<DocumentSnapshot> {
+           override fun onEvent(
+                @Nullable snapshot: DocumentSnapshot?,
+                @Nullable e: FirebaseFirestoreException?
+            ) {
+                if (e != null) {
+                    onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())
+                    return
+                }
+
+               if (snapshot != null && snapshot.exists()) {
+                   val user  = Mapper.userResponseMapper(snapshot)
+                   onUserDataChangedListenerListener?.isUserDataChanged(true,user)
+                } else {
+                   onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())
+                }
+            }
+        })
     }
 
 

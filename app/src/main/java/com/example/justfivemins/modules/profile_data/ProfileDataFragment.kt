@@ -1,6 +1,7 @@
 package com.example.justfivemins.modules.profile_data
 
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -25,53 +26,31 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun viewCreated(view: View?) {
+        enableDrawerMenu(false)
+        hasToolbarBackButton()
         btnNext.setOnClickListener {
-            showProgress(show = true, hasShade = true)
-            disableScreenOnUpdate(false)
             updateUser(retrieveRegisterData())
         }
         setToolbarTitle(getString(R.string.my_data_title))
 
-        val fields = arrayListOf<EditText>(etName, etDescription, etJob, etSurname, etUniversity)
-
-        fields.forEach {
-            it.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                    it.postDelayed({
-
-                        if (it == etName) {
-                            presenter.isValidName(p0.toString())
-                        }
-                        if (it == etDescription) {
-                            presenter.isValidDescription(p0.toString())
-                        }
-                        if (it == etSurname) {
-                            presenter.isValidSurname(p0.toString())
-                        }
-                        if (it == etUniversity) {
-                            presenter.isValidUniversity(p0.toString())
-                        }
-                        if (it == etJob) {
-                            presenter.isValidJob(p0.toString())
-                        }
-
-
-                        presenter.onChange(retrieveRegisterData())
-                    }, 400)
-
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-            })
-        }
 
     }
 
+    override fun onDestroy() {
+        enableDrawerMenu(true)
+        super.onDestroy()
+    }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        etName.setText(CurrentUser.user?.name)
+        etSurname.setText(CurrentUser.user?.surname)
+        etUniversity.setText(CurrentUser.user?.universityName)
+        etJob.setText(CurrentUser.user?.jobName)
+        etDescription.setText(CurrentUser.user?.description)
+
+
+    }
 
     private fun retrieveRegisterData(): UpdateUserRequest {
         val updateUserRequest = UpdateUserRequest()
@@ -84,58 +63,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
 
-    override fun showNameError(error: Boolean) {
-        if (error) {
-            tiName.error = "this field can´t be empty"
-        }
 
-        tiName.showError(error)
-    }
-
-    override fun showSurnameError(error: Boolean) {
-        if (error) {
-            tiSurname.error = "this field can´t be empty"
-        }
-
-        tiSurname.showError(error)    }
-
-    override fun showDescriptionError(error: Boolean) {
-        if (error) {
-            tiDescription.error = "this field can´t be empty"
-        }
-
-        tiDescription.showError(error)    }
-
-    override fun showUniversityError(error: Boolean) {
-        if (error) {
-            tiUniversity.error = "this field can´t be empty"
-        }
-
-        tiUniversity.showError(error)    }
-
-    override fun showJobError(error: Boolean) {
-        if (error) {
-            tiJob.error = "this field can´t be empty"
-        }
-
-        tiJob.showError(error)    }
-
-
-    override fun enableEdit(enable: Boolean) {
-        btnNext.isEnabled = enable
-    }
-
-    override fun hideInputErrors() {
-        tiSurname.isErrorEnabled = false
-        tiUniversity.isErrorEnabled = false
-        tiDescription.isErrorEnabled = false
-        tiName.isErrorEnabled = false
-        tiJob.isErrorEnabled = false
-    }
-    private fun disableScreenOnUpdate(enable: Boolean) {
+    private fun enableScreenOnUpdate(enable: Boolean) {
         tiName.isEnabled = enable
         btnNext.isEnabled = enable
-        btnBack.isEnabled = enable
         tiJob.isEnabled = enable
         tiDescription.isEnabled = enable
         tiSurname.isEnabled = enable
@@ -143,9 +74,9 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
     override fun isUserUpdated(success: Boolean) {
         showProgress(show = false, hasShade = false)
-        disableScreenOnUpdate(true)
+        enableScreenOnUpdate(true)
         if (success) {
-            navigator.addBackStack(false).finishCurrent(true).navigateToHome()
+
         } else {
             Toast.makeText(
                 activity?.applicationContext, "Register failed.",
@@ -155,7 +86,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     private fun updateUser(data: UpdateUserRequest) {
-        showProgress(show = false, hasShade = false)
+        enableScreenOnUpdate(false)
+        showProgress(show = true, hasShade = true)
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
                 updateUserListener = this,

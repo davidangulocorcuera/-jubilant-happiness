@@ -2,6 +2,7 @@ package com.example.justfivemins.api.responses
 
 import com.example.justfivemins.model.Location
 import com.example.justfivemins.model.User
+import java.io.Serializable
 
 class UserResponse (var name: String = "",
                     var email: String = "",
@@ -13,4 +14,4 @@ class UserResponse (var name: String = "",
                     var description: String = "",
                     var university: String = "",
                     var job: String = ""
-)
+): Serializable

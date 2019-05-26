@@ -8,7 +8,6 @@ import android.content.Intent
 
 class MainApplication : Application() {
 
-
     init {
         instance = this
     }
@@ -19,6 +18,11 @@ class MainApplication : Application() {
             return instance.applicationContext
         }
 
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        val context: Context = MainApplication.applicationContext()
     }
 
 

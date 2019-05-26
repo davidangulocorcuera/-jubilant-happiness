@@ -118,6 +118,9 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         baseActivity?.goBack()
 
     }
+    fun enableDrawerMenu(enable: Boolean) {
+        baseActivity?.enableDrawerMenu(enable)
+    }
 
 
 
