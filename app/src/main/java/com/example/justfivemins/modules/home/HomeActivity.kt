@@ -44,6 +44,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        showProgress(show = true, hasShade = true)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState)
         presenter.init(this)

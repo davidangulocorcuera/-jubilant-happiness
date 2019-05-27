@@ -27,6 +27,8 @@
                     android:id="@+id/tiName"
                     style="@style/Base.Widget.MaterialComponents.TextInputLayout"
                     android:layout_height="wrap_content"
+                    app:counterEnabled = "true"
+                    app:counterMaxLength="20"
                     android:layout_width="match_parent">
 
                 <EditText
@@ -34,7 +36,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:hint="@string/name"
-                        android:maxLength="10"
+                        android:maxLength="20"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         />
 
@@ -53,12 +55,62 @@
                             android:layout_height="match_parent"
                             android:layout_width="match_parent"
                             android:hint="@string/birthday"
+                            android:drawableEnd="@drawable/ic_calendar"
+                            android:drawableTint="@color/colorPrimary"
                             android:focusable="false"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:inputType="date"/>
 
 
                 </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:padding="@dimen/space_small"
+                          android:layout_margin="@dimen/space_medium"
+            >
+
+                <RadioGroup
+                        android:id="@+id/rgGender"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="@dimen/space_big"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbFemale"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:text="@string/female"
+                            android:checked="true"
+                            android:layout_margin="@dimen/space_small"
+                    />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbMale"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/male"
+                            android:layout_margin="@dimen/space_small"
+
+                    />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/rbOther"
+                            style="@style/semi_bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:text="@string/other"
+                            android:layout_margin="@dimen/space_small"
+
+                    />
+                </RadioGroup>
+
+            </LinearLayout>
 
 
             <android.support.design.widget.TextInputLayout
@@ -75,52 +127,7 @@
                         android:layout_width="match_parent"                        android:hint="@string/e_mail"
                 />
             </android.support.design.widget.TextInputLayout>
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-                          android:padding="@dimen/space_small"
-                          android:layout_margin="@dimen/space_medium"
-            >
-                <TextView
-                        android:id="@+id/tvSexTitle"
-                        style="@style/title"
-                        android:layout_marginStart="@dimen/space_medium"
-                        android:textColor="@color/colorAccent"
-                        android:text="@string/gender"
-                />
 
-                <RadioGroup
-                        android:id="@+id/rgGender"
-                        android:layout_margin="10dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/space_big"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/rbFemale"
-                            style="@style/semi_bold"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginStart="@dimen/space_small"
-                            android:text="@string/female"
-                            android:checked="true"
-                    />
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/rbMale"
-                            style="@style/semi_bold"
-                            android:textColor="@color/colorPrimary"
-                            android:text="@string/male"/>
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                            android:id="@+id/rbOther"
-                            style="@style/semi_bold"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginStart="@dimen/space_small"
-                            android:text="@string/other"/>
-                </RadioGroup>
-
-            </LinearLayout>
 
 
             <android.support.design.widget.TextInputLayout

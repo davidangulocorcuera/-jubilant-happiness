@@ -27,6 +27,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
         } else {
             Log.v("taag", "fail getting firebaseUser data")
         }
+        view.showProgress(false)
     }
 
     fun setUser(userResponse: UserResponse) {

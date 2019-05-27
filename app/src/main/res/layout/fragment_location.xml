@@ -21,7 +21,7 @@
                 android:padding="@dimen/space_bigger"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="148dp" app:layout_constraintHorizontal_bias="1.0">
+                android:layout_marginTop="100dp" app:layout_constraintHorizontal_bias="0.0">
 
             <ImageView
                     android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:gravity="center"
                 android:text="@string/next"
                 android:textAllCaps="false"
-                style="@style/register_button"
+                style="@style/roundButton"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/containerLogo" app:layout_constraintEnd_toEndOf="parent"

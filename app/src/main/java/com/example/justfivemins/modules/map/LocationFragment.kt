@@ -4,6 +4,7 @@ package com.example.justfivemins.modules.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Geocoder
+import android.media.MediaDrmException
 import android.view.View
 import android.widget.Toast
 import com.example.justfivemins.R
@@ -90,14 +91,15 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             .check()
     }
 
+
+
     override fun onResume() {
         super.onResume()
-        showProgress(show = false, hasShade = false)
 
     }
     override fun isLocationUpdated(success: Boolean) {
         if (success) {
-            navigator.finishCurrent(true).navigateToHome()
+            navigator.addBackStack(false).navigateToHome()
         } else {
             Toast.makeText(
                 activity?.applicationContext, "update failed.",

@@ -60,6 +60,9 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
+    // Firebase storage
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
+
 
 
 }
