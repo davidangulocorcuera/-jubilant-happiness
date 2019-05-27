@@ -15,6 +15,7 @@ import com.example.justfivemins.model.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import io.reactivex.Observable
 
 
 class FirebaseApiManager(
