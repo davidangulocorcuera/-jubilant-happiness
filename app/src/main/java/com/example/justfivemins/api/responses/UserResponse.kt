@@ -13,5 +13,7 @@ class UserResponse (var name: String = "",
                     var surname: String = "",
                     var description: String = "",
                     var university: String = "",
-                    var job: String = ""
+                    var job: String = "",
+                    var profileImageUrl: String = ""
+
 ): Serializable

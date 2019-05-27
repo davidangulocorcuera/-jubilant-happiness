@@ -8,4 +8,5 @@ class UpdateUserRequest: Serializable{
     var description: String = ""
     var university: String = ""
     var job: String = ""
+    var profileImageUrl: String = ""
 }

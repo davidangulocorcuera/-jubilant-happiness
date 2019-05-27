@@ -22,6 +22,8 @@ object Mapper {
             data["university"] = ""
             data["description"] = ""
             data["surname"] = ""
+            data["profileImageUrl"] = ""
+
             return data
         }
     }
@@ -41,6 +43,8 @@ object Mapper {
             userResponse.university = it?.get("university") as String
             userResponse.surname = it?.get("surname") as String
             userResponse.description = it?.get("description") as String
+            userResponse.profileImageUrl = it?.get("profileImageUrl") as String
+
 
 
             if(documentSnapshot.get("location") !=  null){

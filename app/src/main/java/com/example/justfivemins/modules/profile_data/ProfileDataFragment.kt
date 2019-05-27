@@ -16,6 +16,7 @@ import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
+import com.example.justfivemins.api.firebase.FirebaseFilesManager
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
@@ -189,7 +190,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             val selectedPicture = data?.data
             // Get and resize profile image
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor = activity?.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
+            val cursor = activity?.contentResolver?.query(selectedPicture!!, filePathColumn, null, null, null)
             cursor?.moveToFirst()
 
             val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
@@ -201,43 +202,42 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             var exif: ExifInterface? = null
             try {
                 val pictureFile = File(picturePath)
-                exif = ExifInterface(pictureFile.getAbsolutePath())
+                exif = ExifInterface(pictureFile.absolutePath)
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
-
             var orientation = ExifInterface.ORIENTATION_NORMAL
-
             if (exif != null)
                 orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
             when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> loadedBitmap = rotateBitmap(loadedBitmap, 90)
-                ExifInterface.ORIENTATION_ROTATE_180 -> loadedBitmap = rotateBitmap(loadedBitmap, 180)
-                ExifInterface.ORIENTATION_ROTATE_270 -> loadedBitmap = rotateBitmap(loadedBitmap, 270)
+                ExifInterface.ORIENTATION_ROTATE_90 -> {
+                    loadedBitmap = rotateBitmap(loadedBitmap, 90)
+                }
+                ExifInterface.ORIENTATION_ROTATE_180 -> {
+                    loadedBitmap = rotateBitmap(loadedBitmap, 180)
+                }
+                ExifInterface.ORIENTATION_ROTATE_270 -> {
+                    loadedBitmap = rotateBitmap(loadedBitmap, 270)
+                }
             }
             ivProfileImage.setImageBitmap(loadedBitmap)
+            uploadProfileImage(loadedBitmap)
 
         }
     }
 
-    fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
+    private fun uploadProfileImage(img: Bitmap){
+       val firebaseFilesManager: FirebaseFilesManager = FirebaseFilesManager()
+        firebaseFilesManager.uploadProfileImage(img,CurrentUser.firebaseUser!!.uid)
+    }
+
+    private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
         val matrix: Matrix = Matrix()
         matrix.postRotate(degrees.toFloat())
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true);
+        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
-
-    private fun exifToDegrees(exifOrientation: Int): Int {
-
-        return when (exifOrientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> 90
-            ExifInterface.ORIENTATION_ROTATE_180 -> 180
-            ExifInterface.ORIENTATION_ROTATE_270 -> 270
-            else -> 0
-        }
-    }
 
 
 }

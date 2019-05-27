@@ -41,8 +41,6 @@ dependencies {
     // maps
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    //places
-    implementation 'com.google.android.gms:play-services-places:16.0.0'
     //firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
@@ -61,7 +59,7 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     // Firebase storage
-    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
 
 
 
