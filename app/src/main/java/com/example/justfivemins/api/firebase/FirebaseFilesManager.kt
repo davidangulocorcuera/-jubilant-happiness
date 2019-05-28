@@ -1,19 +1,15 @@
 package com.example.justfivemins.api.firebase
 
 import android.graphics.Bitmap
-import android.net.Uri
 import android.util.Log
-import com.example.justfivemins.api.FilesManager
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
+import com.example.justfivemins.api.filesManager.FilesEventsListeners
+import com.example.justfivemins.api.filesManager.FilesManager
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import java.io.ByteArrayOutputStream
-import com.google.android.gms.tasks.OnSuccessListener
 
 
 
-class FirebaseFilesManager(): FilesManager {
+class FirebaseFilesManager( private val uploadImageListener: FilesEventsListeners.UploadProfileImageListener? = null): FilesManager {
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
@@ -25,12 +21,12 @@ class FirebaseFilesManager(): FilesManager {
         val data = baos.toByteArray()
         val uploadTask = profileImagesRef.putBytes(data)
         uploadTask.addOnFailureListener {
-
+            uploadImageListener?.isImageUploaded(true)
             Log.v("taag", it.message)
         }.addOnSuccessListener {
             profileImagesRef.downloadUrl.addOnSuccessListener { uri ->
                 val url = uri.toString()
-                Log.v("taag", url)
+                uploadImageListener?.isUrlSaved(true,url)
             }
 
 

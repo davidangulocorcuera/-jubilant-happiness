@@ -11,10 +11,12 @@ import android.media.ExifInterface
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
+import com.example.justfivemins.api.filesManager.FilesEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.firebase.FirebaseFilesManager
 import com.example.justfivemins.api.requests.UpdateUserRequest
@@ -31,24 +33,12 @@ import java.io.File
 import java.io.IOException
 
 
-class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener {
-    override fun showNameError(error: Boolean) {
-        if (error) {
-            tiName.error = "Invalid name or empty"
-        }
-        tiName.showError(error)
-    }
-
-    override fun enableEdit(enable: Boolean) {
-        btnNext.isEnabled = enable
-    }
-
-    override fun hideInputErrors() {
-        tiName.isErrorEnabled = false
-    }
+class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener,
+    FilesEventsListeners.UploadProfileImageListener {
 
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
+    private var profileImageUrl = ""
 
 
     override fun onCreateViewId(): Int {
@@ -97,13 +87,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
 
-    override fun onDestroy() {
-        enableDrawerMenu(true)
-        showToolbar()
-        super.onDestroy()
-    }
-
-
     private fun setTextViews() {
         etName.setText(CurrentUser.user?.name)
         etSurname.setText(CurrentUser.user?.surname)
@@ -119,6 +102,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         updateUserRequest.description = etDescription.text.toString()
         updateUserRequest.university = etUniversity.text.toString()
         updateUserRequest.job = etJob.text.toString()
+        updateUserRequest.profileImageUrl = profileImageUrl
         return updateUserRequest
     }
 
@@ -185,7 +169,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
-
+            showProgress(show = true, hasShade = true)
             // Get selected gallery image
             val selectedPicture = data?.data
             // Get and resize profile image
@@ -227,9 +211,9 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
     }
 
-    private fun uploadProfileImage(img: Bitmap){
-       val firebaseFilesManager: FirebaseFilesManager = FirebaseFilesManager()
-        firebaseFilesManager.uploadProfileImage(img,CurrentUser.firebaseUser!!.uid)
+    private fun uploadProfileImage(img: Bitmap) {
+        val firebaseFilesManager: FirebaseFilesManager = FirebaseFilesManager(this)
+        firebaseFilesManager.uploadProfileImage(img, "justFiveMinsProfile")
     }
 
     private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
@@ -238,6 +222,54 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
 
+    override fun isImageUploaded(success: Boolean) {
+        enableScreenOnUpdate(true)
+        if (success) {
+
+        } else {
+            showProgress(show = false, hasShade = false)
+            Toast.makeText(
+                activity?.applicationContext, "image Uploaded",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    override fun isUrlSaved(success: Boolean, url: String) {
+        showProgress(show = false, hasShade = false)
+        enableScreenOnUpdate(true)
+        if (success) {
+            profileImageUrl = url
+            Log.v("taag", url)
+        } else {
+            Toast.makeText(
+                activity?.applicationContext, "image Uploaded",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+    }
+
+    override fun showNameError(error: Boolean) {
+        if (error) {
+            tiName.error = "Invalid name or empty"
+        }
+        tiName.showError(error)
+    }
+
+    override fun enableEdit(enable: Boolean) {
+        btnNext.isEnabled = enable
+    }
+
+    override fun hideInputErrors() {
+        tiName.isErrorEnabled = false
+    }
+
+    override fun onDestroy() {
+        enableDrawerMenu(true)
+        showToolbar()
+        super.onDestroy()
+    }
 
 
 }

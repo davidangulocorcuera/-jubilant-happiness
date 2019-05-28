@@ -1,4 +1,4 @@
-package com.example.justfivemins.api
+package com.example.justfivemins.api.filesManager
 
 import android.graphics.Bitmap
 import android.net.Uri
