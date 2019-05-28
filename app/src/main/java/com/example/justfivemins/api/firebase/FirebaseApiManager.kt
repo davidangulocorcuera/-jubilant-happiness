@@ -12,10 +12,11 @@ import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
+import com.example.justfivemins.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.google.firebase.storage.FirebaseStorage
+
 
 
 class FirebaseApiManager(
@@ -25,6 +26,7 @@ class FirebaseApiManager(
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
     , private val onUserDataChangedListenerListener: ApiEventsListeners.OnDataChangedListener? = null
+    , private val onGetUsersListener: ApiEventsListeners.GetUsersListener? = null
     , private val activity: Activity
 ) : Api {
 
@@ -64,7 +66,7 @@ class FirebaseApiManager(
         docRef.get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    user = Mapper.userResponseMapper(document)
+                    user = Mapper.userResponseMapper(document.data!!)
                     userDataListener?.isUserDataSaved(true,user)
 
                 } else {
@@ -102,8 +104,10 @@ class FirebaseApiManager(
 
             }
             .addOnFailureListener {
+                Log.v("errortag", it.localizedMessage)
                 locationUpdateListener?.isLocationUpdated(false)
             }
+
 
     }
 
@@ -135,13 +139,40 @@ class FirebaseApiManager(
                 }
 
                if (snapshot != null && snapshot.exists()) {
-                   val user  = Mapper.userResponseMapper(snapshot)
+                   val user  = Mapper.userResponseMapper(snapshot.data!!)
                    onUserDataChangedListenerListener?.isUserDataChanged(true,user)
+
                 } else {
                    onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())
                 }
             }
         })
+    }
+
+    override fun getAllUsers() {
+        val docRef = db.collection("users")
+
+        docRef.get()
+            .addOnSuccessListener { document ->
+
+
+                if (document != null) {
+                    onGetUsersListener?.areUsersSaved(true,
+                        Mapper.mapAllUsers(document)
+                        )
+
+                } else {
+                    Log.d("taag", "No such document")
+                    onGetUsersListener?.areUsersSaved(false, ArrayList())
+
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("taag", "get failed with ", exception)
+                onGetUsersListener?.areUsersSaved(false, ArrayList())
+
+            }
+
     }
 
 

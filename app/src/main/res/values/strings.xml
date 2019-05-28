@@ -15,8 +15,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="login">Sign in</string>
+    <string name="register">Sign up</string>
     <string name="location">Location</string>
     <string name="add_address">Add Address</string>
     <string name="Address">Address</string>
@@ -66,6 +66,17 @@
     <string name="description">Description</string>
     <string name="university">University</string>
     <string name="job">Job</string>
+    <string name="login_error_info">Maybe because you are not connected to internet , or you write bad your e-mail or
+        password
+    </string>
+    <string name="register_error_message">Maybe because you are not connected to internet , or this email already have
+        an account
+    </string>
+    <string name="invalid_access">Invalid access</string>
+    <string name="location_update_error_message">Error updating data</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

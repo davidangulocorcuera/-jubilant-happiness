@@ -11,15 +11,23 @@ import kotlinx.android.synthetic.main.fragment_filter.*
 import kotlinx.android.synthetic.main.item_filter_people.view.*
 import kotlinx.android.synthetic.main.item_users_card_layout.*
 
-class FilterFragment : BaseFragment() {
+class FilterFragment : BaseFragment(), FilterPresenter.View {
+
     private var users: ArrayList<User> = ArrayList()
+    private val filterPresenter: FilterPresenter by lazy { FilterPresenter(this) }
 
 
     override fun onCreateViewId(): Int {
-        return fragment_filter
+        return R.layout.fragment_filter
+    }
+
+    override fun setUsers(user: ArrayList<User>) {
+         users = user
     }
 
     override fun viewCreated(view: View?) {
+
+
         filterByCountryContainer.tvFilterName.text = getString(R.string.country)
         filterByCountryContainer.ivBackgrounnd.setImageResource(R.drawable.country_image)
         filterByPostalCodeContainer.tvFilterName.text = getString(R.string.postal_code)
@@ -29,6 +37,10 @@ class FilterFragment : BaseFragment() {
         filterByCityContainer.tvFilterName.text = getString(R.string.city)
         setToolbarTitle(getString(R.string.home).toUpperCase())
         configurator?.hasToolbar = true
+
+        filterByCountryContainer.setOnClickListener {
+            navigator.addExtra("users",users).navigateToShowUsers()
+        }
 
     }
 

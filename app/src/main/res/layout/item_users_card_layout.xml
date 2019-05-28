@@ -16,9 +16,10 @@
             android:layout_marginBottom="15dp"
     >
 
-        <ImageView android:layout_width="match_parent"
+        <ImageView
+                android:layout_width="match_parent"
                    android:layout_height="100dp"
-                   android:id="@+id/imageView_cellImage"
+                   android:id="@+id/ivProfileImage"
                    android:src="@drawable/no_profile_image"
                    android:scaleType="fitXY"
                    />
@@ -30,13 +31,14 @@
                       android:layout_marginStart="@dimen/space_small"
                       android:layout_marginEnd="@dimen/space_small"
         >
-            <TextView android:layout_width="match_parent"
+            <TextView
+                    android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:textSize="15sp"
                       android:textColor="@color/black"
                       android:text="@string/name"
                       android:gravity="center_vertical"
-                      android:id="@+id/textViewName"
+                      android:id="@+id/tvName"
             />
 
 
@@ -45,7 +47,7 @@
                       android:textSize="12sp"
                       android:text="@string/age"
                       android:layout_marginStart="@dimen/space_small"
-                      android:id="@+id/textViewAge"
+                      android:id="@+id/tvAge"
             />
         </LinearLayout>
 

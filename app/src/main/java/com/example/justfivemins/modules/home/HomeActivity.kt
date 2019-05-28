@@ -21,15 +21,19 @@ import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import android.content.Intent
 import com.bumptech.glide.Glide
+import com.example.justfivemins.api.responses.UserResponse
 import kotlinx.android.synthetic.main.view_drawer_menu_header.*
 
 
 class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
+
+
     private val PICK_IMAGE_REQUEST = 1
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
-    private val presenter: HomePresenter by lazy { HomePresenter(this) }
+    private val presenter: HomePresenter by lazy { HomePresenter(this,this) }
+    private val users = ArrayList<User>()
 
 
     override fun onCreateViewId(): Int {
@@ -45,10 +49,12 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
             Glide
                 .with(this)
                 .load(user.profileImageUrl)
+                .centerCrop()
                 .into(ivDrawerProfileImage)
+
         }
         else{
-            ivDrawerProfileImage.borderWidth = 2
+            ivDrawerProfileImage.borderWidth = 8
             ivDrawerProfileImage.borderColor = getResourceColor(R.color.red)
             ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
         }
@@ -60,8 +66,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         showProgress(show = true, hasShade = true)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState)
-        presenter.init(this)
-        loadhome()
+        presenter.init()
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
@@ -73,7 +78,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     override fun onResume() {
         super.onResume()
         enableDrawerMenu(true)
-        presenter.init(this)
+        presenter.init()
     }
 
 
@@ -115,7 +120,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
                     navigator.addBackStack(true).navigateToProfileData()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    navigator.navigateToFilterFragment()
+                    navigator.addExtra("users",users).navigateToFilterFragment()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
                     navigator.navigateToMain()
@@ -132,7 +137,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         }
     }
 
-    override fun loadhome() {
+    override fun loadHome() {
         navigator.navigateToFilterFragment()
         showProgress(false)
 
@@ -161,6 +166,28 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun setUsersList(response: ArrayList<UserResponse>) {
+        var unknownUser: User = User()
+
+        response.forEach {userResponse ->
+            unknownUser.name = userResponse.name
+            unknownUser.email = userResponse.email
+            unknownUser.birthday = userResponse.birthday
+            unknownUser.currentLocation = userResponse.location
+            unknownUser.age = userResponse.age
+
+            unknownUser.surname = userResponse.surname
+            unknownUser.jobName = userResponse.job
+            unknownUser.universityName = userResponse.university
+            unknownUser.description = userResponse.description
+            unknownUser.profileImageUrl = userResponse.profileImageUrl
+
+            users.add(unknownUser)
+            unknownUser = User()
+        }
+
     }
 
 

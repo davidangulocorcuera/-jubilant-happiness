@@ -1,5 +1,6 @@
 package com.example.justfivemins.api.requests
 
+import com.example.justfivemins.model.Location
 import com.example.justfivemins.model.User
 import java.io.Serializable
 
@@ -13,6 +14,7 @@ class RegisterRequest: Serializable {
     var birthday: String = ""
     var age: Int = 0
     var gender: User.Gender = User.Gender.OTHER
+    var location: Location = Location()
 
 
 }

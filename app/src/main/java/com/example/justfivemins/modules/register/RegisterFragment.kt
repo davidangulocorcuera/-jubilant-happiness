@@ -19,6 +19,7 @@ import com.example.justfivemins.utils.DateUtils
 import com.example.justfivemins.utils.DateUtils.DATE_FORMAT_USER
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_register.*
+import org.aviran.cookiebar2.CookieBar
 import java.util.*
 
 
@@ -243,15 +244,22 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun isRegistered(success: Boolean) {
         showProgress(show = false, hasShade = false)
-        disableScreenOnRegister(true)
-
         if (success) {
             goToNextScreen()
         } else {
-            Toast.makeText(
-                activity?.applicationContext, "Register failed.",
-                Toast.LENGTH_SHORT
-            ).show()
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setAction("CLOSE") {
+                    disableScreenOnRegister(true)
+                    CookieBar.dismiss(activity)
+                }
+
+                .setSwipeToDismiss(false)
+                .setEnableAutoDismiss(false)
+                .setTitle("Fail signing up")
+                .setBackgroundColor(R.color.materialRed800)
+                .setMessage(getString(R.string.register_error_message))
+                .show()
 
         }
 
@@ -259,6 +267,12 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun hasToolbar(): Boolean {
         return false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CookieBar.dismiss(activity)
+
     }
 
 

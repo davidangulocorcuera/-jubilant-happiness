@@ -4,7 +4,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -12,6 +11,7 @@ import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.aviran.cookiebar2.CookieBar
 
 
 class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener {
@@ -22,12 +22,21 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     override fun isLogged(success: Boolean){
         showProgress(show = false, hasShade = false)
         if (success) {
-                navigator.finishCurrent(true).navigateToRequestLocationDialog()
+            navigator.finishCurrent(true).navigateToRequestLocationDialog()
         } else {
-            Toast.makeText(
-                activity?.applicationContext, "Authentication failed.",
-                Toast.LENGTH_SHORT
-            ).show()
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setAction("CLOSE") {
+                    disableScreenOnLogin(true)
+                    CookieBar.dismiss(activity)
+                }
+
+                .setSwipeToDismiss(false)
+                .setEnableAutoDismiss(false)
+                .setTitle(getString(R.string.invalid_access))
+                .setBackgroundColor(R.color.materialRed800)
+                .setMessage(getString(R.string.login_error_info))
+                .show()
         }
     }
 
@@ -88,6 +97,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     private fun setButtonsListeners() {
         btnLogin.setOnClickListener {
+            disableScreenOnLogin(false)
             showProgress(show = true, hasShade = true)
             signUser(retrieveLoginData())
 
@@ -137,6 +147,17 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     override fun hideInputErrors() {
         tiEmail.isErrorEnabled = false
         tiPassword.isErrorEnabled = false
+
+    }
+    private fun disableScreenOnLogin(enable: Boolean) {
+        tiPassword.isEnabled = enable
+        tiEmail.isEnabled = enable
+        btnLogin.isEnabled = enable
+        btnRegister.isEnabled = enable
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        CookieBar.dismiss(activity)
 
     }
 

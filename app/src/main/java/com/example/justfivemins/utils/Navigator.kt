@@ -24,6 +24,7 @@ import com.example.justfivemins.modules.map.MapFragment
 import com.example.justfivemins.modules.messages.MessagesFragment
 import com.example.justfivemins.modules.profile_data.ProfileDataFragment
 import com.example.justfivemins.modules.register.RegisterFragment
+import com.example.justfivemins.modules.showUsersScreen.ShowUsersFragment
 import java.io.Serializable
 
 
@@ -288,6 +289,10 @@ class Navigator {
     }
     fun navigateToFriends() {
         navigate(activity, FriendsFragment::class.java)
+    }
+
+    fun navigateToShowUsers() {
+        navigate(activity, ShowUsersFragment::class.java)
     }
 
     fun navigateToMap() {

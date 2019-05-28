@@ -30,6 +30,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_profile_data.*
+import org.aviran.cookiebar2.CookieBar
 import java.io.File
 import java.io.IOException
 
@@ -98,7 +99,9 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             Glide
                 .with(this)
                 .load(CurrentUser.user?.profileImageUrl)
+                .centerCrop()
                 .into(ivProfileImage)
+
         }
         else{
             ivProfileImage.setImageResource(R.drawable.no_profile_image)
@@ -277,9 +280,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         enableDrawerMenu(true)
         showToolbar()
-        super.onDestroy()
+        CookieBar.dismiss(activity)
     }
 
 
