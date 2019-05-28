@@ -28,12 +28,12 @@ import kotlinx.android.synthetic.main.view_drawer_menu_header.*
 class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
 
-    private val PICK_IMAGE_REQUEST = 1
     private lateinit var toggleHome: ActionBarDrawerToggle
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
     private val presenter: HomePresenter by lazy { HomePresenter(this,this) }
-    private val users = ArrayList<User>()
+    private var users = ArrayList<User>()
+    private var currentUser = User()
 
 
     override fun onCreateViewId(): Int {
@@ -41,7 +41,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     }
 
     @SuppressLint("SetTextI18n")
-    override fun setMenuData(user: User) {
+     fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
         menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
 
@@ -53,32 +53,27 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
                 .into(ivDrawerProfileImage)
 
         }
-        else{
-            ivDrawerProfileImage.borderWidth = 8
-            ivDrawerProfileImage.borderColor = getResourceColor(R.color.red)
-            ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
-        }
 
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        showProgress(show = true, hasShade = true)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         super.onCreate(savedInstanceState)
-        presenter.init()
+        presenter.init(intent)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
             navigator.navigateToProfileData()
         }
+        setMenuData(currentUser)
+        loadHome()
     }
 
     override fun onResume() {
         super.onResume()
         enableDrawerMenu(true)
-        presenter.init()
     }
 
 
@@ -138,7 +133,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     }
 
     override fun loadHome() {
-        navigator.navigateToFilterFragment()
+        navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
         showProgress(false)
 
     }
@@ -166,29 +161,31 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
         }
-    }
-
-    override fun setUsersList(response: ArrayList<UserResponse>) {
-        var unknownUser: User = User()
-
-        response.forEach {userResponse ->
-            unknownUser.name = userResponse.name
-            unknownUser.email = userResponse.email
-            unknownUser.birthday = userResponse.birthday
-            unknownUser.currentLocation = userResponse.location
-            unknownUser.age = userResponse.age
-
-            unknownUser.surname = userResponse.surname
-            unknownUser.jobName = userResponse.job
-            unknownUser.universityName = userResponse.university
-            unknownUser.description = userResponse.description
-            unknownUser.profileImageUrl = userResponse.profileImageUrl
-
-            users.add(unknownUser)
-            unknownUser = User()
-        }
 
     }
+
+    override fun setUsers(users: ArrayList<User>) {
+        this.users = users
+    }
+    override fun setCurrentUser(user: User) {
+        this.currentUser = user
+    }
+    override fun getNewData(userResponse: UserResponse){
+        currentUser.name = userResponse.name
+        currentUser.email = userResponse.email
+        currentUser.birthday = userResponse.birthday
+        currentUser.currentLocation = userResponse.location
+        currentUser.age = userResponse.age
+
+        currentUser.surname = userResponse.surname
+        currentUser.jobName = userResponse.job
+        currentUser.universityName = userResponse.university
+        currentUser.description = userResponse.description
+        currentUser.profileImageUrl = userResponse.profileImageUrl
+
+    }
+
+
 
 
 

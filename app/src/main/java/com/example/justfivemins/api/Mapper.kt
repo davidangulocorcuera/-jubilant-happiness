@@ -43,35 +43,35 @@ object Mapper {
         val userResponse = UserResponse()
         val location = Location()
 
-
-        response.let {
-
-
-            userResponse.name = it["name"] as String
-            userResponse.birthday = it["birthday"] as String
-            userResponse.email = it["email"] as String
-            userResponse.age = Integer.parseInt(it["age"].toString())
-            userResponse.gender = User.Gender.valueOf(it["gender"].toString())
-            userResponse.job = it["job"] as String
-            userResponse.university = it["university"] as String
-            userResponse.surname = it["surname"] as String
-            userResponse.description = it["description"] as String
-            userResponse.profileImageUrl = it["profileImageUrl"] as String
+      if(response.isNotEmpty()){
+          response.let {
+              userResponse.name = it["name"] as String
+              userResponse.birthday = it["birthday"] as String
+              userResponse.email = it["email"] as String
+              userResponse.age = Integer.parseInt(it["age"].toString())
+              userResponse.gender = User.Gender.valueOf(it["gender"].toString())
+              userResponse.job = it["job"] as String
+              userResponse.university = it["university"] as String
+              userResponse.surname = it["surname"] as String
+              userResponse.description = it["description"] as String
+              userResponse.profileImageUrl = it["profileImageUrl"] as String
 
 
 
-            if (response["location"] != null) {
-                val locationMap: HashMap<String, Any> = response["location"] as HashMap<String, Any>
-                if (locationMap.size > 0) {
-                    location.lng = locationMap["lng"] as Double
-                    location.lat = locationMap["lat"] as Double
-                    location.postalCode = locationMap["postalCode"] as String
-                    location.city = locationMap["city"] as String
-                    location.country = locationMap["country"] as String
-                }
-            }
-            userResponse.location = location
-        }
+              if (response["location"] != null) {
+                  val locationMap: HashMap<String, Any> = response["location"] as HashMap<String, Any>
+                  if (locationMap.size > 0) {
+                      location.lng = locationMap["lng"] as Double
+                      location.lat = locationMap["lat"] as Double
+                      location.postalCode = locationMap["postalCode"] as String
+                      location.city = locationMap["city"] as String
+                      location.country = locationMap["country"] as String
+                  }
+              }
+              userResponse.location = location
+          }
+      }
+
         return userResponse
     }
 

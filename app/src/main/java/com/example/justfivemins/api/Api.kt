@@ -13,5 +13,5 @@ interface Api {
      fun updateLocation(locationRequest: LocationRequest, userId: String)
      fun updateUserData(updateUserRequest: UpdateUserRequest, userId: String)
      fun onUserDataChanged(userId: String)
-     fun getAllUsers()
+      fun getAllUsers()
 }

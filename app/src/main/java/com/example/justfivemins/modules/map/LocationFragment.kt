@@ -105,7 +105,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     override fun isLocationUpdated(success: Boolean) {
         if (success) {
-            navigator.addBackStack(false).navigateToHome()
+            navigator.addBackStack(false).navigateToDownloadData()
         } else {
             showErrorMessage()
         }

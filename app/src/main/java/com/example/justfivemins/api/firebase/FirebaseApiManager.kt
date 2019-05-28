@@ -149,7 +149,7 @@ class FirebaseApiManager(
         })
     }
 
-    override fun getAllUsers() {
+    override fun  getAllUsers() {
         val docRef = db.collection("users")
 
         docRef.get()

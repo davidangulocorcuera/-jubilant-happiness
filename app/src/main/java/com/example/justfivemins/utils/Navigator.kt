@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
+import com.example.justfivemins.downloadingDataScreen.DownloadDataActivity
 import com.example.justfivemins.modules.home.HomeActivity
 import com.example.justfivemins.modules.base.BaseActivity
 import com.example.justfivemins.modules.base.BaseFragment
@@ -293,6 +294,9 @@ class Navigator {
 
     fun navigateToShowUsers() {
         navigate(activity, ShowUsersFragment::class.java)
+    }
+    fun navigateToDownloadData() {
+        navigate(activity, DownloadDataActivity::class.java)
     }
 
     fun navigateToMap() {
