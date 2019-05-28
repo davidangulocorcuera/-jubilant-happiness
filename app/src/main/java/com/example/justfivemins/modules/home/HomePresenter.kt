@@ -41,6 +41,7 @@ class HomePresenter(private val view: View) : MainMVP.Presenter, ApiEventsListen
         user.jobName = userResponse.job
         user.universityName = userResponse.university
         user.description = userResponse.description
+        user.profileImageUrl = userResponse.profileImageUrl
 
         CurrentUser.user = user
         view.showProgress(false)

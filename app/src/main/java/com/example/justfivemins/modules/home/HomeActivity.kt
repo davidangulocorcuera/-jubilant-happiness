@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import android.content.Intent
-
-
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.view_drawer_menu_header.*
 
 
 class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
@@ -40,6 +40,11 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     override fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
         menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
+        Glide
+            .with(this)
+            .load(user.profileImageUrl)
+            .into(ivDrawerProfileImage)
+
     }
 
 
@@ -52,6 +57,9 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
+        menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
+            navigator.navigateToProfileData()
+        }
     }
 
     override fun onResume() {

@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.filesManager.FilesEventsListeners
@@ -93,6 +94,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         etUniversity.setText(CurrentUser.user?.universityName)
         etJob.setText(CurrentUser.user?.jobName)
         etDescription.setText(CurrentUser.user?.description)
+        Glide
+            .with(this)
+            .load(CurrentUser.user?.profileImageUrl)
+            .into(ivProfileImage)
     }
 
     private fun retrieveRegisterData(): UpdateUserRequest {
@@ -223,10 +228,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun isImageUploaded(success: Boolean) {
-        enableScreenOnUpdate(true)
         if (success) {
 
         } else {
+            enableScreenOnUpdate(true)
             showProgress(show = false, hasShade = false)
             Toast.makeText(
                 activity?.applicationContext, "image Uploaded",

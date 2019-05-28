@@ -24,14 +24,7 @@ class FriendsFragment : BaseFragment() {
         setToolbarTitle(getString(R.string.friends).toUpperCase())
         users.addAll(
             arrayOf(
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1),
-                User(name = "Jesus Ortera", description = "18", profileImage = 1)
+
             )
         )
         initUsersList()

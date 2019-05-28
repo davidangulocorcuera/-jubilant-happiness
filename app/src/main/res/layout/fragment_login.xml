@@ -19,7 +19,6 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical"
-                      android:layout_gravity="center_vertical"
 
 
         >
@@ -27,8 +26,8 @@
                        android:layout_height="100dp"
                        android:src="@drawable/ic_logo"
                        android:layout_gravity="center"
-                       android:layout_marginBottom="@dimen/space_big"
-                       android:tint="@color/colorPrimary"
+                       android:layout_marginBottom="@dimen/space_biggest"
+                       android:layout_marginTop="@dimen/space_biggest"
 
             />
             <android.support.design.widget.TextInputLayout
@@ -71,6 +70,17 @@
                 />
             </android.support.design.widget.TextInputLayout>
             <Button android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/space_biggest"
+                    android:layout_marginEnd="@dimen/space_biggest"
+                    android:layout_marginBottom="@dimen/space_big"
+                    android:text="@string/login"
+                    android:enabled="false"
+                    style="@style/roundButton"
+                    android:layout_gravity="center"
+                    android:id="@+id/btnLogin"
+            />
+            <Button android:layout_width="match_parent"
                     android:layout_marginStart="@dimen/space_biggest"
                     android:layout_marginEnd="@dimen/space_biggest"
                     android:layout_height="50dp"
@@ -78,19 +88,10 @@
                     android:text="@string/register"
                     style="@style/roundWhiteButton"
                     android:id="@+id/btnRegister"
+                    android:layout_marginBottom="@dimen/space_biggest"
+
             />
 
-            <Button android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/space_biggest"
-                    android:layout_marginEnd="@dimen/space_biggest"
-                    android:layout_marginTop="@dimen/space_big"
-                    android:text="@string/login"
-                    android:enabled="false"
-                    style="@style/roundButton"
-                    android:layout_gravity="center"
-                    android:id="@+id/btnLogin"
-            />
 
         </LinearLayout>
     </ScrollView>

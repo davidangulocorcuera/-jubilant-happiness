@@ -12,8 +12,8 @@ class User(
     , var birthday: String = ""
     , var gender: Gender = Gender.OTHER
     , var phoneNumber: String = ""
-    , var locations: ArrayList<Location> = ArrayList()
-    , var profileImage: Int = R.drawable.img_profile_example
+    , var locations: ArrayList<Location> = ArrayList(),
+      var profileImageUrl: String = ""
     , var headerImage: Int = R.drawable.header_background
     , var images: ArrayList<Int> = ArrayList()
     , var friends: ArrayList<User> = ArrayList()

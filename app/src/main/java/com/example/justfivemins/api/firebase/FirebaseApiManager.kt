@@ -114,7 +114,8 @@ class FirebaseApiManager(
                 "university", updateUserRequest.university,
                 "name", updateUserRequest.name,
                 "job", updateUserRequest.job,
-                "description", updateUserRequest.description
+                "description", updateUserRequest.description,
+                "profileImageUrl", updateUserRequest.profileImageUrl
             ).addOnCompleteListener {
                 updateUserListener?.isUserUpdated(true)
             }.addOnFailureListener {
