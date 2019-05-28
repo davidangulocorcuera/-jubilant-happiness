@@ -94,10 +94,16 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         etUniversity.setText(CurrentUser.user?.universityName)
         etJob.setText(CurrentUser.user?.jobName)
         etDescription.setText(CurrentUser.user?.description)
-        Glide
-            .with(this)
-            .load(CurrentUser.user?.profileImageUrl)
-            .into(ivProfileImage)
+        if(CurrentUser.user?.profileImageUrl!!.isNotEmpty()){
+            Glide
+                .with(this)
+                .load(CurrentUser.user?.profileImageUrl)
+                .into(ivProfileImage)
+        }
+        else{
+            ivProfileImage.setImageResource(R.drawable.no_profile_image)
+        }
+
     }
 
     private fun retrieveRegisterData(): UpdateUserRequest {

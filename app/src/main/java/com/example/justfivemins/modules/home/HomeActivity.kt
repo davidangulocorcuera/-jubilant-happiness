@@ -40,10 +40,18 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     override fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
         menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
-        Glide
-            .with(this)
-            .load(user.profileImageUrl)
-            .into(ivDrawerProfileImage)
+
+        if(user.profileImageUrl.isNotEmpty()){
+            Glide
+                .with(this)
+                .load(user.profileImageUrl)
+                .into(ivDrawerProfileImage)
+        }
+        else{
+            ivDrawerProfileImage.borderWidth = 2
+            ivDrawerProfileImage.borderColor = getResourceColor(R.color.red)
+            ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
+        }
 
     }
 
