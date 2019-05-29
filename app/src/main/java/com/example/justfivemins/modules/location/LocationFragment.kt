@@ -3,18 +3,15 @@ package com.example.justfivemins.modules.location
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.location.Geocoder
 import android.view.View
 import androidx.navigation.Navigation
-import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LocationRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
-import com.example.justfivemins.modules.home.HomeActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.karumi.dexter.Dexter
@@ -127,7 +124,6 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                 btnNext.isEnabled = true
                 CookieBar.dismiss(activity)
                 if(CurrentUser.user?.currentLocation!!.country.isNotEmpty()){
-                    goToHome()
                 }
             }
 
@@ -139,13 +135,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             .show()
     }
 
-    private fun goToHome(){
-        view?.let {
-            Navigation.findNavController(it).navigate(R.id.goToHomeGraph)
-            activity?.finish()
-        }
 
-    }
 
     /** app won´t access this method if user does not accept permissions*/
 
@@ -156,8 +146,6 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         fusedLocationClient.lastLocation.addOnSuccessListener {
             updateLocation(getLocationFromCoordinates(it.latitude, it.longitude))
         }
-
-
     }
 
     private fun goToDownloadData() {

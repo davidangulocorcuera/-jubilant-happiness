@@ -1,12 +1,19 @@
 package com.example.justfivemins.modules.downloadingDataScreen
 
+import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.navigation.NavGraph
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.home.HomeActivity
 
 class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
@@ -54,33 +61,36 @@ class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
     }
 
 
-    override fun navigateToHome(){
-        if(users.isNotEmpty()){
-            Log.v("taag",users.size.toString())
-//           navigator.addExtra("users", users)
-//               .addExtra("currentUser", currentUser)
-//               .navigateToHome()
+    override fun navigateToHome() {
+        if (users.isNotEmpty()) {
+            view?.let {
+                val intent = Intent(activity?.applicationContext, HomeActivity::class.java).apply {
+                    putExtra("users", users)
+                    putExtra("currentUser", currentUser)
+                }
+                startActivity(intent)
+                activity?.finish()
+            }
         }
     }
-    override fun setCurrentUserData(userResponse: UserResponse) {
-        currentUser.name = userResponse.name
-        currentUser.email = userResponse.email
-        currentUser.birthday = userResponse.birthday
-        currentUser.currentLocation = userResponse.location
-        currentUser.age = userResponse.age
+        override fun setCurrentUserData(userResponse: UserResponse) {
+            currentUser.name = userResponse.name
+            currentUser.email = userResponse.email
+            currentUser.birthday = userResponse.birthday
+            currentUser.currentLocation = userResponse.location
+            currentUser.age = userResponse.age
 
-        currentUser.surname = userResponse.surname
-        currentUser.jobName = userResponse.job
-        currentUser.universityName = userResponse.university
-        currentUser.description = userResponse.description
-        currentUser.profileImageUrl = userResponse.profileImageUrl
+            currentUser.surname = userResponse.surname
+            currentUser.jobName = userResponse.job
+            currentUser.universityName = userResponse.university
+            currentUser.description = userResponse.description
+            currentUser.profileImageUrl = userResponse.profileImageUrl
 
-        Log.v("taag", "currentUser  in setUser from dwdactv" + currentUser.name)
+            Log.v("taag", "currentUser  in setUser from dwdactv" + currentUser.name)
 
 
-        CurrentUser.user = currentUser
+            CurrentUser.user = currentUser
+        }
+
     }
 
-
-
-}

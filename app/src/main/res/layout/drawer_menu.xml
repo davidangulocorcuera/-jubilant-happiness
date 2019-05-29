@@ -9,33 +9,45 @@
         tools:context=".modules.home.HomeActivity"
         android:background="@android:color/transparent"
 >
-
-<include layout="@layout/activity_home"/>
-
-<com.google.android.material.navigation.NavigationView
-android:id="@+id/menuNavigation"
-android:layout_width="wrap_content"
-android:layout_height="match_parent"
-android:layout_gravity="start"
-app:headerLayout="@layout/view_drawer_menu_header">
-
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="130dp"
->
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDrawerMenu"
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:nestedScrollingEnabled="false"
-            tools:targetApi="lollipop"/>
+            android:orientation="vertical"
+    >
+        <include layout="@layout/toolbar"/>
+        <fragment
+                android:id="@+id/navHostActivity"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="false"
+                app:navGraph="@navigation/home_activity_nav_graph" />
+    </LinearLayout>
+    <com.google.android.material.navigation.NavigationView
+            android:id="@+id/menuNavigation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:headerLayout="@layout/view_drawer_menu_header"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="parent">
 
-</LinearLayout>
-</com.google.android.material.navigation.NavigationView>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="130dp"
+        >
 
-        </androidx.drawerlayout.widget.DrawerLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewDrawerMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:nestedScrollingEnabled="false"
+                    tools:targetApi="lollipop"/>
+
+        </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
 
