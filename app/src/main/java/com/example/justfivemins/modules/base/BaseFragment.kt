@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
-import com.example.justfivemins.utils.Navigator
 
 
 
@@ -18,10 +17,6 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
 
     protected abstract fun onCreateViewId(): Int
     protected abstract fun viewCreated(view: View?)
-    val navigator: Navigator
-        get() {
-            return baseActivity?.navigator!!
-        }
 
     var configurator: Configurator? = null
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -41,8 +41,8 @@ class FilterFragment : BaseFragment(), FilterPresenter.View {
 
 
         filterByCountryContainer.setOnClickListener {
-            navigator.addExtra("users", users)
-                .navigateToShowUsers()
+//            navigator.addExtra("users", users)
+//                .navigateToShowUsers()
         }
     }
 

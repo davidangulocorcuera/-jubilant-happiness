@@ -5,6 +5,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.view.View
+import androidx.navigation.Navigation
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -105,7 +106,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     override fun isLocationUpdated(success: Boolean) {
         if (success) {
-            navigator.addBackStack(false).navigateToDownloadData()
+            goToDownloadData()
         } else {
             showErrorMessage()
         }
@@ -119,7 +120,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                 btnNext.isEnabled = true
                 CookieBar.dismiss(activity)
                 if(CurrentUser.user?.currentLocation!!.country.isNotEmpty()){
-                   navigator.navigateToHome()
+//                   navigator.navigateToHome()
                 }
             }
 
@@ -131,6 +132,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             .show()
     }
 
+    /** app won´t access this method if user does not accept permissions*/
 
     @SuppressLint("MissingPermission")
     fun getLocation() {
@@ -141,6 +143,12 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
         }
 
 
+    }
+
+    private fun goToDownloadData() {
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.goToDownloadFragment)
+        }
     }
 
     override fun hasToolbar(): Boolean {

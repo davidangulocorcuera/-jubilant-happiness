@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.DialogFragment
-import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -18,10 +17,7 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
     protected abstract fun viewCreated(view: View?)
 
     var configurator: Configurator? = null
-    val navigator: Navigator
-        get() {
-            return baseActivity?.navigator!!
-        }
+
 
     override fun onViewCreated(
             view: View,

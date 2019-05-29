@@ -76,7 +76,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
         hideToolbar()
         btnBack.setOnClickListener {
-            navigator.addBackStack(false).navigateToHome()
+//            navigator.addBackStack(false).navigateToHome()
         }
 
 
@@ -134,7 +134,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         showProgress(show = false, hasShade = false)
         enableScreenOnUpdate(true)
         if (success) {
-            navigator.addBackStack(false).finishCurrent(true).navigateToHome()
+//            navigator.addBackStack(false).finishCurrent(true).navigateToHome()
         } else {
             Toast.makeText(
                 activity?.applicationContext, "Register failed.",

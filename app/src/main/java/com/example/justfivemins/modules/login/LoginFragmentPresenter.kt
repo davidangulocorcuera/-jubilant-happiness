@@ -47,8 +47,7 @@ class LoginFragmentPresenter(private val view: View) : MainMVP.Presenter {
     }
 
     interface View : MainMVP.View {
-        fun goToHome()
-        fun gotToRegister()
+        fun goToRegister()
         fun showEmailError(error: Boolean)
         fun showPasswordError(error: Boolean)
         fun enableRegister(enable: Boolean)

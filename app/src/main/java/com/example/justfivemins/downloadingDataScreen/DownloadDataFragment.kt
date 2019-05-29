@@ -1,19 +1,18 @@
 package com.example.justfivemins.downloadingDataScreen
 
-import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
-import com.example.justfivemins.modules.base.BaseActivity
-import java.util.*
-import kotlin.collections.ArrayList
+import com.example.justfivemins.modules.base.BaseFragment
+
+class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
 
-class DownloadDataActivity : BaseActivity(), DownloadDataPresenter.View {
     private val users = ArrayList<User>()
-    private val presenter: DownloadDataPresenter by lazy { DownloadDataPresenter(this,this) }
+    private val presenter: DownloadDataPresenter by lazy { DownloadDataPresenter(this,activity) }
     private var currentUser  = User()
 
 
@@ -48,20 +47,20 @@ class DownloadDataActivity : BaseActivity(), DownloadDataPresenter.View {
 
 
     override fun onCreateViewId(): Int {
-        return R.layout.activity_splash
+        return R.layout.fragment_download_data
     }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun viewCreated(view: View?) {
         presenter.downloadData()
-
     }
-   override fun navigateToHome(){
-       if(users.isNotEmpty()){
-           navigator.addExtra("users", users)
-               .addExtra("currentUser", currentUser)
-               .navigateToHome()
-       }
+
+
+    override fun navigateToHome(){
+        if(users.isNotEmpty()){
+            Log.v("taag",users.size.toString())
+//           navigator.addExtra("users", users)
+//               .addExtra("currentUser", currentUser)
+//               .navigateToHome()
+        }
     }
     override fun setCurrentUserData(userResponse: UserResponse) {
         currentUser.name = userResponse.name

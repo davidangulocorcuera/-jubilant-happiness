@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.navigation.Navigation
 import com.example.justfivemins.R
 import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.ApiEventsListeners
@@ -185,11 +186,15 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
     private fun goToNextScreen() {
-        navigator.addBackStack(false).finishCurrent(true).navigateToRequestLocationDialog()
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.goToLocation)
+        }
     }
 
     private fun backToLogin() {
-        navigator.addBackStack(false).finishCurrent(true).navigateToLogin()
+        view?.let {
+            Navigation.findNavController(it).popBackStack()
+        }
     }
 
 

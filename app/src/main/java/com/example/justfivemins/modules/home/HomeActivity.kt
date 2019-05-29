@@ -71,7 +71,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
-            navigator.navigateToProfileData()
+//            navigator.navigateToProfileData()
         }
         setMenuData(currentUser)
     }
@@ -112,26 +112,26 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
             drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.type) {
                 DrawerViewModel.MenuItemType.MESSAGE -> {
-                    navigator.navigateToMessages()
+//                    navigator.navigateToMessages()
 
                 }
                 DrawerViewModel.MenuItemType.MAP -> {
-                    navigator.navigateToMap()
+//                    navigator.navigateToMap()
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
                     loadHome()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
+//                    navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
-                    navigator.navigateToMain()
+//                    navigator.navigateToMain()
                 }
                 DrawerViewModel.MenuItemType.FRIENDS -> {
-                    navigator.navigateToFriends()
+//                    navigator.navigateToFriends()
                 }
                 DrawerViewModel.MenuItemType.MY_PICTURES -> {
-                    navigator.navigateToGallery()
+//                    navigator.navigateToGallery()
                 }
                 DrawerViewModel.MenuItemType.CONTACT -> {
                 }
@@ -140,7 +140,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     }
 
     override fun loadHome() {
-        navigator.addBackStack(false).addExtra("users",users).navigateToFilterFragment()
+//        navigator.addBackStack(false).addExtra("users",users).navigateToFilterFragment()
         showProgress(false)
 
     }
@@ -148,7 +148,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
 
     override fun navigateToLocationFragment() {
-        navigator.addBackStack(false).navigateToRequestLocationDialog()
+//        navigator.addBackStack(false).navigateToRequestLocationDialog()
     }
 
     override fun showProgress(enable: Boolean) {

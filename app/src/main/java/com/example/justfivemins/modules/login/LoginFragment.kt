@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import androidx.navigation.Navigation.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -19,15 +20,15 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
 
-    override fun isLogged(success: Boolean){
+    override fun isLogged(success: Boolean) {
         showProgress(show = false, hasShade = false)
         if (success) {
-            navigator.finishCurrent(true).navigateToRequestLocationDialog()
+            goToLocation()
         } else {
             CookieBar.build(activity)
                 .setCookiePosition(CookieBar.BOTTOM)
                 .setAction("CLOSE") {
-                    disableScreenOnLogin(true)
+                    enableScreen(true)
                     CookieBar.dismiss(activity)
                 }
 
@@ -40,16 +41,57 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
- fun autofill(){
-     etEmail.setText("ce@g.com")
-     etPassword.setText("Berlinwood1")
- }
+    private fun goToLocation() {
+        view?.let {
+            findNavController(it).navigate(R.id.goToLocation)
+        }
+    }
+
+    private fun autofill() {
+        etEmail.setText("ce@g.com")
+        etPassword.setText("Berlinwood1")
+    }
+
+    private fun retrieveLoginData(): LoginRequest {
+        val login = LoginRequest()
+        login.email = etEmail?.text.toString()
+        login.password = etPassword?.text.toString()
+        return login
+
+    }
+
+    private fun setButtonsListeners() {
+        btnLogin.setOnClickListener {
+            enableScreen(false)
+            showProgress(show = true, hasShade = true)
+            signUser(retrieveLoginData())
+
+
+        }
+        btnRegister.setOnClickListener {
+            goToRegister()
+        }
+    }
+
+    private fun signUser(data: LoginRequest) {
+        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this, activity = activity!!) }
+        return firebaseApiManager.loginUser(data)
+    }
+
+    private fun enableScreen(enable: Boolean) {
+        tiPassword.isEnabled = enable
+        tiEmail.isEnabled = enable
+        btnLogin.isEnabled = enable
+        btnRegister.isEnabled = enable
+    }
+
+
     override fun onCreateViewId(): Int {
         return R.layout.fragment_login
     }
 
     override fun viewCreated(view: View?) {
-        etEmail.setOnLongClickListener{
+        etEmail.setOnLongClickListener {
             autofill()
             true
         }
@@ -87,42 +129,11 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
-    private fun retrieveLoginData(): LoginRequest {
-        val login = LoginRequest()
-        login.email = etEmail?.text.toString()
-        login.password = etPassword?.text.toString()
-        return login
 
-    }
-
-    private fun setButtonsListeners() {
-        btnLogin.setOnClickListener {
-            disableScreenOnLogin(false)
-            showProgress(show = true, hasShade = true)
-            signUser(retrieveLoginData())
-
-
+    override fun goToRegister() {
+        view?.let {
+            findNavController(it).navigate(R.id.goToRegister)
         }
-        btnRegister.setOnClickListener {
-            gotToRegister()
-        }
-    }
-
-    private fun signUser(data: LoginRequest) {
-        val firebaseApiManager: FirebaseApiManager by lazy { FirebaseApiManager(this,activity = activity!!) }
-        return firebaseApiManager.loginUser(data)
-    }
-
-    override fun goToHome() {
-        navigator.let {
-            it.finishCurrent(true)
-            it.addBackStack(true).navigateToHome()
-        }
-
-    }
-
-    override fun gotToRegister() {
-        navigator.addBackStack(true).finishCurrent(true).navigateToRegister()
     }
 
     override fun showEmailError(error: Boolean) {
@@ -149,16 +160,11 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tiPassword.isErrorEnabled = false
 
     }
-    private fun disableScreenOnLogin(enable: Boolean) {
-        tiPassword.isEnabled = enable
-        tiEmail.isEnabled = enable
-        btnLogin.isEnabled = enable
-        btnRegister.isEnabled = enable
-    }
+
     override fun onDestroy() {
         super.onDestroy()
         CookieBar.dismiss(activity)
-
+        enableScreen(true)
     }
 
 

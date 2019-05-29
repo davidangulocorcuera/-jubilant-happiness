@@ -14,9 +14,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.navigation.Navigation
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
-import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.color
 import com.example.justfivemins.utils.setVisible
 import com.karumi.dexter.listener.PermissionGrantedResponse
@@ -30,12 +30,12 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         return this.javaClass.simpleName
     }
 
-    val navigator: Navigator by lazy { Navigator(this) }
 
     var toolbar_title: TextView? = null
     var currentToolbar: Toolbar? = null
 
     protected abstract fun onCreateViewId(): Int
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -185,7 +185,6 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         }
     }
     override fun goBack() {
-        navigator.goBack()
     }
 
     fun enableDrawerMenu(enable: Boolean) {
