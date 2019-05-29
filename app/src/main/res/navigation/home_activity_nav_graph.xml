@@ -1,20 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/nav_graph">
-
-
-
-    <activity android:id="@+id/homeActivity"
-              android:label="home_activity"
-              tools:layout="@layout/drawer_menu">
-
-        <argument android:name="users" android:defaultValue="@null"/>
-        <argument android:name="currentUser" android:defaultValue="@null"/>
-
-
-    </activity>
-
+            android:id="@+id/homeActivityGraph"
+            app:startDestination="@id/filterFragment">
 
     <fragment android:id="@+id/filterFragment"
               android:name="com.example.justfivemins.modules.filter.FilterFragment"
@@ -30,7 +18,6 @@
               android:name="com.example.justfivemins.modules.showUsersScreen.ShowUsersFragment"
               android:label="fragment_showUsers"
               tools:layout="@layout/fragment_show_users"/>
-
 
 
 </navigation>

@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
 import com.example.justfivemins.R
-import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.RegisterRequest
@@ -24,6 +24,8 @@ import org.aviran.cookiebar2.CookieBar
 import java.util.*
 
 
+
+
 class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListeners.RegisterListener {
 
     companion object {
@@ -32,7 +34,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
     private var age: Int = 0
-    private lateinit var api: Api
     private val presenter: RegisterPresenter by lazy { RegisterPresenter(this) }
     private var gender: User.Gender = User.Gender.FEMALE
 
@@ -41,20 +42,25 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
 
+
+
     override fun viewCreated(view: View?) {
+
         presenter.init()
         hideToolbar()
         etBirthday.setOnClickListener {
             showDatePickerDialog()
         }
-        rgGender.setOnCheckedChangeListener { group, checkedId ->
-            when {
-                rbFemale.isChecked -> gender = User.Gender.FEMALE
-                rbMale.isChecked -> gender = User.Gender.MALE
-                else -> gender = User.Gender.OTHER
+        rgGender.setOnCheckedChangeListener { _, _ ->
+            gender = when {
+                rbFemale.isChecked -> User.Gender.FEMALE
+                rbMale.isChecked -> User.Gender.MALE
+                else -> User.Gender.OTHER
             }
 
         }
+
+
 
         etName.setOnLongClickListener {
             autoFill()
@@ -277,6 +283,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     override fun onDestroy() {
         super.onDestroy()
         CookieBar.dismiss(activity)
+        showProgress(false,false)
 
     }
 

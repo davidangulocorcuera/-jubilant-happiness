@@ -37,6 +37,10 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         viewCreated(view)
     }
 
+    fun onBackPressed(){
+        baseActivity?.onBackPressed()
+    }
+
     fun showProgress(show: Boolean, hasShade: Boolean) {
         baseActivity?.showProgress(show, hasShade)
     }

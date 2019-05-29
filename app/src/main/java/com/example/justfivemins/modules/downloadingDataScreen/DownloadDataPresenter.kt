@@ -1,4 +1,4 @@
-package com.example.justfivemins.downloadingDataScreen
+package com.example.justfivemins.modules.downloadingDataScreen
 
 import android.app.Activity
 import android.util.Log
@@ -34,6 +34,7 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
 
 
     override fun isUserDataSaved(success: Boolean, userResponse: UserResponse) {
+        view.showProgress(false)
 
         if (success) {
             view.setCurrentUserData(userResponse)
@@ -48,10 +49,10 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
 
 
     override fun areUsersSaved(success: Boolean, users: ArrayList<UserResponse>) {
-        Log.v("taag", "areUsersSaved" + users.size)
+        view.showProgress(false)
+
         if (users.isNotEmpty()) {
             view.setUsersList(users)
-            view.showProgress(false)
             view.navigateToHome()
 
 

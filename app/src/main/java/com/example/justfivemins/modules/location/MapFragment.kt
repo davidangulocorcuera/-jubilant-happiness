@@ -1,4 +1,4 @@
-package com.example.justfivemins.modules.map
+package com.example.justfivemins.modules.location
 
 
 

@@ -1,4 +1,4 @@
-package com.example.justfivemins.downloadingDataScreen
+package com.example.justfivemins.modules.downloadingDataScreen
 
 import android.util.Log
 import android.view.View
@@ -80,5 +80,7 @@ class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
         CurrentUser.user = currentUser
     }
+
+
 
 }

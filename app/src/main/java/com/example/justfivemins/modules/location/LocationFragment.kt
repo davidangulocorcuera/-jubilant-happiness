@@ -1,17 +1,20 @@
-package com.example.justfivemins.modules.map
+package com.example.justfivemins.modules.location
 
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Geocoder
 import android.view.View
 import androidx.navigation.Navigation
+import com.example.justfivemins.MainActivity
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LocationRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.home.HomeActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.karumi.dexter.Dexter
@@ -37,6 +40,8 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
     override fun viewCreated(view: View?) {
         btnNext.setOnClickListener {
             requestLocationPermissions()
+            showProgress(true, hasShade = true)
+
         }
         hideToolbar()
 
@@ -66,7 +71,8 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     }
 
-    private fun updateLocation(data: com.example.justfivemins.api.requests.LocationRequest) {
+    private fun updateLocation(data: LocationRequest) {
+        showProgress(true, hasShade = true)
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
                 locationUpdateListener = this,
@@ -105,6 +111,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
 
     override fun isLocationUpdated(success: Boolean) {
+        showProgress(false,false)
         if (success) {
             goToDownloadData()
         } else {
@@ -120,7 +127,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
                 btnNext.isEnabled = true
                 CookieBar.dismiss(activity)
                 if(CurrentUser.user?.currentLocation!!.country.isNotEmpty()){
-//                   navigator.navigateToHome()
+                    goToHome()
                 }
             }
 
@@ -130,6 +137,14 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
             .setBackgroundColor(R.color.materialRed800)
             .setMessage("Maybe because you don´t have internet connexion")
             .show()
+    }
+
+    private fun goToHome(){
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.goToHomeGraph)
+            activity?.finish()
+        }
+
     }
 
     /** app won´t access this method if user does not accept permissions*/
@@ -153,6 +168,11 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
 
     override fun hasToolbar(): Boolean {
         return false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        showProgress(false,false)
     }
 
 

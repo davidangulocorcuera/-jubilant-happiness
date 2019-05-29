@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -133,7 +134,11 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     override fun goToRegister() {
         view?.let {
             findNavController(it).navigate(R.id.goToRegister)
+            NavOptions.Builder()
+                .setPopUpTo(R.id.loginFragment,
+                    true).build()
         }
+
     }
 
     override fun showEmailError(error: Boolean) {
@@ -163,8 +168,8 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     override fun onDestroy() {
         super.onDestroy()
+        showProgress(false,false)
         CookieBar.dismiss(activity)
-        enableScreen(true)
     }
 
 

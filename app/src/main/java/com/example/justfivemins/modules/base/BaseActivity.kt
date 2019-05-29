@@ -1,7 +1,6 @@
 package com.example.justfivemins.modules.base
 
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -14,13 +13,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.Navigation
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.utils.color
 import com.example.justfivemins.utils.setVisible
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import kotlinx.android.synthetic.main.activity_home.*
 
 
 abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
@@ -52,7 +48,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
     fun initToolbar(toolbar: Toolbar? = null) {
         var current = toolbar
         if (current == null) {
-            current = activity_home?.findViewById(R.id.toolbar)
+            current = findViewById(R.id.toolbar)
         }
         if (current != null) {
             setSupportActionBar(current)
@@ -127,29 +123,6 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         }
         return actionBarHeight
     }
-
-    fun willConsumeBackPressed(): Boolean {
-        var willConsumeBackPressed = false
-        val fragments = supportFragmentManager.fragments
-        for (i in fragments.indices) {
-            val fragment = fragments[i]
-            if (fragment is BaseFragment) {
-                if (fragment.willConsumeBackPressed()) {
-                    willConsumeBackPressed = true
-                    break
-                }
-            }
-        }
-
-        return willConsumeBackPressed
-    }
-
-    override fun onBackPressed() {
-        if (!willConsumeBackPressed()) {
-            super.onBackPressed()
-        }
-    }
-
 
 
     override fun hideKeyboard() {
