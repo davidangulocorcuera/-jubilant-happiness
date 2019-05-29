@@ -68,8 +68,14 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     // pop ups
     implementation 'org.aviran.cookiebar2:cookiebar2:1.1.2'
+
+    // android x
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
+   implementation  'androidx.appcompat:appcompat:1.1.0-alpha05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0-alpha05'
+
 
 
 }

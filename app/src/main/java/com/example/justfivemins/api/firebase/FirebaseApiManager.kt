@@ -1,8 +1,8 @@
 package com.example.justfivemins.api.firebase
 
 import android.app.Activity
-import android.support.annotation.Nullable
 import android.util.Log
+import androidx.annotation.Nullable
 import com.example.justfivemins.api.Api
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.Mapper
@@ -130,8 +130,8 @@ class FirebaseApiManager(
         val docRef = db.collection("users").document(userId)
         docRef.addSnapshotListener(object : EventListener<DocumentSnapshot> {
            override fun onEvent(
-                @Nullable snapshot: DocumentSnapshot?,
-                @Nullable e: FirebaseFirestoreException?
+               @Nullable snapshot: DocumentSnapshot?,
+               @Nullable e: FirebaseFirestoreException?
             ) {
                 if (e != null) {
                     onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())

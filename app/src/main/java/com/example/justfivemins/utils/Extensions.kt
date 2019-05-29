@@ -5,14 +5,14 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 
-import android.support.annotation.ColorRes
-import android.support.annotation.DrawableRes
-import android.support.design.widget.TextInputLayout
 
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import com.example.justfivemins.R
+import com.google.android.material.textfield.TextInputLayout
 
 
 class Extensions {

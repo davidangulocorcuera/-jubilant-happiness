@@ -2,11 +2,11 @@ package com.example.justfivemins.modules.base
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.DialogFragment
 import com.example.justfivemins.utils.Navigator
 import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.toolbar.view.*

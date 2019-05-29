@@ -30,7 +30,7 @@
                        android:layout_marginTop="@dimen/space_biggest"
 
             />
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tiEmail"
@@ -47,10 +47,13 @@
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/e_mail"
                 />
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"                    android:id="@+id/tiPassword"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tiPassword"
                     android:layout_marginBottom="@dimen/space_biggest"
                     android:layout_marginStart="@dimen/space_big"
                     android:layout_marginEnd="@dimen/space_big"
@@ -68,7 +71,9 @@
                         android:hint="@string/password"
                         android:inputType="textPassword"
                 />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <Button android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="@dimen/space_biggest"

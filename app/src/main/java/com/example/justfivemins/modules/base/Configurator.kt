@@ -1,6 +1,6 @@
 package com.example.justfivemins.modules.base
 
-import android.support.annotation.ColorRes
+import androidx.annotation.ColorRes
 import com.example.justfivemins.R
 
 class Configurator {

@@ -2,11 +2,6 @@ package com.example.justfivemins.modules.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.WindowManager
 import com.example.justfivemins.R
@@ -21,6 +16,12 @@ import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import android.content.Intent
 import android.util.Log
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.justfivemins.api.responses.UserResponse
 import kotlinx.android.synthetic.main.view_drawer_menu_header.*
@@ -63,6 +64,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.drawer_menu)
         loadHome()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setDrawerMenu()
@@ -162,6 +164,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         toggleHome.isDrawerIndicatorEnabled = enabled
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)

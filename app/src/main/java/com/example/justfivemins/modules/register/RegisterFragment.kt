@@ -156,7 +156,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             age = getAge(it.get(Calendar.YEAR), it.get(Calendar.MONTH), it.get(Calendar.DAY_OF_MONTH))
             etBirthday.setText(DateUtils.formatTarget(DATE_FORMAT_USER).formatDate(it))
         }
-        newFragment.show(this.activity?.supportFragmentManager, "")
+        this.activity?.supportFragmentManager?.let { newFragment.show(it, "") }
 
     }
 
