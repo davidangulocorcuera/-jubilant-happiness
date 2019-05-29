@@ -28,10 +28,10 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
         return R.layout.fragment_show_users
     }
     private fun initUsersList() {
-        val layoutManager = GridLayoutManager(activity, 1)
+        val layoutManager = GridLayoutManager(activity, 2)
         rvUsers.layoutManager = layoutManager as RecyclerView.LayoutManager?
         usersListAdapter =
-            ShowUsersListAdapter(users,activity!!)
+            ShowUsersListAdapter(activity = activity!!)
         rvUsers.adapter = usersListAdapter
     }
 

@@ -1,17 +1,21 @@
 package com.example.justfivemins.downloadingDataScreen
 
 import android.os.Bundle
+import android.util.Log
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseActivity
-
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DownloadDataActivity : BaseActivity(), DownloadDataPresenter.View {
     private val users = ArrayList<User>()
     private val presenter: DownloadDataPresenter by lazy { DownloadDataPresenter(this,this) }
-    private var user  = User()
+    private var currentUser  = User()
+
 
 
 
@@ -36,6 +40,7 @@ class DownloadDataActivity : BaseActivity(), DownloadDataPresenter.View {
             unknownUser = User()
         }
 
+
     }
     override fun showProgress(enable:Boolean){
         showProgress(enable,enable)
@@ -52,17 +57,29 @@ class DownloadDataActivity : BaseActivity(), DownloadDataPresenter.View {
 
     }
    override fun navigateToHome(){
-
-
-        navigator.addExtra("users", users)
-            .addExtra("currentUser", user)
-            .addBackStack(false)
-            .finishCurrent(true)
-            .navigateToHome()
-
-
-
-
-
+       if(users.isNotEmpty()){
+           navigator.addExtra("users", users)
+               .addExtra("currentUser", currentUser)
+               .navigateToHome()
+       }
     }
+    override fun setCurrentUserData(userResponse: UserResponse) {
+        currentUser.name = userResponse.name
+        currentUser.email = userResponse.email
+        currentUser.birthday = userResponse.birthday
+        currentUser.currentLocation = userResponse.location
+        currentUser.age = userResponse.age
+
+        currentUser.surname = userResponse.surname
+        currentUser.jobName = userResponse.job
+        currentUser.universityName = userResponse.university
+        currentUser.description = userResponse.description
+        currentUser.profileImageUrl = userResponse.profileImageUrl
+
+        Log.v("taag", "currentUser  in setUser from dwdactv" + currentUser.name)
+
+
+        CurrentUser.user = currentUser
+    }
+
 }

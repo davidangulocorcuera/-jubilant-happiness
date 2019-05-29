@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.friends_cell_item.view.*
 import kotlinx.android.synthetic.main.item_users_card_layout.view.*
 
 
-class ShowUsersListAdapter(val items: ArrayList<User>, val activity: Activity) : BaseRecyclerAdapter<User, ShowUsersListAdapter.ViewHolder>() {
+class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activity: Activity) : BaseRecyclerAdapter<User, ShowUsersListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_users_card_layout, parent, false)

@@ -4,6 +4,7 @@
                                     android:layout_width="180dp" android:layout_height="180dp"
                                     android:elevation="@dimen/space_medium"
                                     app:cardCornerRadius="@dimen/space_small"
+                                    style="card"
 >
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

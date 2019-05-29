@@ -29,10 +29,9 @@ class HomePresenter(private val view: View, val activity: Activity? = null) : Ma
 
 
     fun init(arguments: Intent?){
-        if (arguments != null) {
+        if (arguments != null && users.isEmpty()) {
             users = arguments.getSerializableExtra("users") as ArrayList<User>
             view.setUsers(users)
-
             currentUser = arguments.getSerializableExtra("currentUser") as User
             view.setCurrentUser(currentUser)
         }

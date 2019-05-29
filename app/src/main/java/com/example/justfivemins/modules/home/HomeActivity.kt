@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import android.content.Intent
+import android.util.Log
 import com.bumptech.glide.Glide
 import com.example.justfivemins.api.responses.UserResponse
 import kotlinx.android.synthetic.main.view_drawer_menu_header.*
@@ -37,6 +38,8 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
 
 
     override fun onCreateViewId(): Int {
+        showProgress(true)
+        presenter.init(intent)
         return R.layout.drawer_menu
     }
 
@@ -50,16 +53,17 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
                 .with(this)
                 .load(user.profileImageUrl)
                 .centerCrop()
-                .into(ivDrawerProfileImage)
+                .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
 
         }
+
 
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter.init(intent)
+        loadHome()
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setDrawerMenu()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
@@ -68,12 +72,13 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
             navigator.navigateToProfileData()
         }
         setMenuData(currentUser)
-        loadHome()
     }
 
     override fun onResume() {
         super.onResume()
         enableDrawerMenu(true)
+        loadHome()
+
     }
 
 
@@ -112,10 +117,10 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
                     navigator.navigateToMap()
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
-                    navigator.addBackStack(true).navigateToProfileData()
+                    loadHome()
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-                    navigator.addExtra("users",users).navigateToFilterFragment()
+                    navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
                     navigator.navigateToMain()
@@ -133,7 +138,7 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
     }
 
     override fun loadHome() {
-        navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
+        navigator.addBackStack(false).addExtra("users",users).navigateToFilterFragment()
         showProgress(false)
 
     }

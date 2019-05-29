@@ -6,6 +6,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         tools:context=".modules.home.HomeActivity"
+                                        android:background="@android:color/transparent"
 >
     <include layout="@layout/activity_home"/>
     <android.support.design.widget.NavigationView
