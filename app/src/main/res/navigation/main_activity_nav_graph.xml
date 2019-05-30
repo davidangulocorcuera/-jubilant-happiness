@@ -23,6 +23,7 @@
     <fragment android:id="@+id/registerFragment"
               android:name="com.example.justfivemins.modules.register.RegisterFragment"
               android:label="fragmentRegister"
+
               tools:layout="@layout/fragment_register">
         <action android:id="@+id/goToLocation"
                 app:destination="@id/locationFragment"
@@ -47,9 +48,36 @@
               android:label="DownloadDataFragment"
               tools:layout="@layout/fragment_download_data">
 
-        <action android:id="@+id/goToHomeGraph"
-                app:destination="@id/homeActivityGraph"/>
+        <action android:id="@+id/goToHomeFragment"
+                app:destination="@id/homeFragment"/>
     </fragment>
-    <include app:graph="@navigation/home_activity_nav_graph"/>
 
+    <action android:id="@+id/goToProfileData"
+            app:destination="@id/profileFragment"
+            app:launchSingleTop="false"
+
+    />
+
+    <fragment android:id="@+id/homeFragment"
+              android:name="com.example.justfivemins.modules.home.homeFragment.HomeFragment"
+              android:label="fragment_detail" tools:layout="@layout/fragment_home">
+
+    </fragment>
+
+
+    <fragment android:id="@+id/profileFragment"
+              android:name="com.example.justfivemins.modules.profile_data.ProfileDataFragment"
+              android:label="fragment_profile"
+              tools:layout="@layout/fragment_profile_data">
+
+        <action android:id="@+id/goToHome"
+                app:destination="@id/homeFragment"
+                app:launchSingleTop="false"/>
+    </fragment>
+
+
+    <fragment android:id="@+id/showUsersFragment"
+              android:name="com.example.justfivemins.modules.showUsersScreen.ShowUsersFragment"
+              android:label="fragment_showUsers"
+              tools:layout="@layout/fragment_show_users"/>
 </navigation>

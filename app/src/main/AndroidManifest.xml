@@ -23,12 +23,7 @@
                 android:value="@string/google_maps_key"/>
 
         <activity
-                android:name=".modules.home.HomeActivity"
-                android:label="@string/title_activity_home"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-                android:name=".modules.login.MainActivity"
+                android:name=".modules.home.MainActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

@@ -1,15 +1,16 @@
-package com.example.justfivemins.modules.login
+package com.example.justfivemins.modules.home
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
 
 
-class MainActivity: BaseActivity() {
-
+class MainActivity : BaseActivity() {
 
 
     override fun onCreateViewId(): Int {
@@ -25,7 +26,13 @@ class MainActivity: BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        showProgress(false,false)
+        showProgress(false, false)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val sharedViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        sharedViewModel.picture.postValue(data?.data)
     }
 
 }

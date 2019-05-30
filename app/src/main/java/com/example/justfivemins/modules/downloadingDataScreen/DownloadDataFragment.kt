@@ -13,7 +13,6 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
-import com.example.justfivemins.modules.home.HomeActivity
 
 class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
@@ -62,16 +61,10 @@ class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
 
     override fun navigateToHome() {
-        if (users.isNotEmpty()) {
-            view?.let {
-                val intent = Intent(activity?.applicationContext, HomeActivity::class.java).apply {
-                    putExtra("users", users)
-                    putExtra("currentUser", currentUser)
-                }
-                startActivity(intent)
-                activity?.finish()
-            }
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
         }
+
     }
         override fun setCurrentUserData(userResponse: UserResponse) {
             currentUser.name = userResponse.name

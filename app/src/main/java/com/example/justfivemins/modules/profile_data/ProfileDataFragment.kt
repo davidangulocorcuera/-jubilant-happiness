@@ -2,18 +2,20 @@ package com.example.justfivemins.modules.profile_data
 
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
+import android.net.Uri
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -23,6 +25,7 @@ import com.example.justfivemins.api.firebase.FirebaseFilesManager
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.home.MainViewModel
 import com.example.justfivemins.utils.showError
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -43,11 +46,24 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     private var profileImageUrl = ""
 
 
+
     override fun onCreateViewId(): Int {
         return R.layout.fragment_profile_data
     }
 
+    override fun onResume() {
+        super.onResume()
+         val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+
+        mainViewModel.picture.observe(this, Observer { image ->
+            image?.let {
+                uploadImage(it)
+            }
+        })
+    }
+
     override fun viewCreated(view: View?) {
+
 
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -181,14 +197,12 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             .check()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+     fun uploadImage(selectedPicture: Uri) {
+
             showProgress(show = true, hasShade = true)
-            // Get selected gallery image
-            val selectedPicture = data?.data
-            // Get and resize profile image
+
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor = activity?.contentResolver?.query(selectedPicture!!, filePathColumn, null, null, null)
+            val cursor = activity?.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
             cursor?.moveToFirst()
 
             val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
@@ -219,14 +233,15 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
                     loadedBitmap = rotateBitmap(loadedBitmap, 270)
                 }
             }
-            ivProfileImage.setImageBitmap(loadedBitmap)
-            uploadProfileImage(loadedBitmap)
 
-        }
+         ivProfileImage.setImageBitmap(loadedBitmap)
+         uploadProfileImage(loadedBitmap)
+
+
     }
 
     private fun uploadProfileImage(img: Bitmap) {
-        val firebaseFilesManager: FirebaseFilesManager = FirebaseFilesManager(this)
+        val firebaseFilesManager = FirebaseFilesManager(this)
         firebaseFilesManager.uploadProfileImage(img, "justFiveMinsProfile")
     }
 
@@ -238,6 +253,13 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     override fun isImageUploaded(success: Boolean) {
         if (success) {
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setSwipeToDismiss(false)
+                .setTitle(getString(R.string.image_ok_info))
+                .setBackgroundColor(R.color.green_notification)
+                .setDuration(500L)
+                .show()
 
         } else {
             enableScreenOnUpdate(true)
