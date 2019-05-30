@@ -65,8 +65,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun viewCreated(view: View?) {
-
-
+        showToolbar()
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 etName.postDelayed({
@@ -92,7 +91,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         ivProfileImage.setOnClickListener {
             requestPermissions()
         }
-        hideToolbar()
         btnBack.setOnClickListener {
             //            navigator.addBackStack(false).navigateToHome()
         }

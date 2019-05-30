@@ -9,11 +9,14 @@ import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
+import com.example.justfivemins.model.User
 
 class MainViewModel() : ViewModel(),
     ApiEventsListeners.OnDataChangedListener {
     val picture = MutableLiveData<Uri>()
     val response = MutableLiveData<UserResponse>()
+    val users = MutableLiveData<ArrayList<User>>()
+
     val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
             onUserDataChangedListenerListener = this
@@ -21,6 +24,11 @@ class MainViewModel() : ViewModel(),
     }
     val userResponse: MutableLiveData<UserResponse> by lazy {
         MutableLiveData<UserResponse>().also {
+            response
+        }
+    }
+    val usersResponse: MutableLiveData<ArrayList<User>> by lazy {
+        MutableLiveData<ArrayList<User>>().also {
             response
         }
     }
