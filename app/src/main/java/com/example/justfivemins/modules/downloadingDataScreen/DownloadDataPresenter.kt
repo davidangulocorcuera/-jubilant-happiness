@@ -10,13 +10,11 @@ import com.example.justfivemins.modules.base.MainMVP
 
 
 class DownloadDataPresenter(private val view: View, val activity: Activity? = null) : MainMVP.Presenter,
-    ApiEventsListeners.UserDataListener,
     ApiEventsListeners.GetUsersListener {
 
 
     private val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
-            userDataListener = this,
             onGetUsersListener = this,
             activity = activity!!
         )
@@ -25,27 +23,9 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
 
     fun downloadData() {
         view.showProgress(true)
-
-        firebaseApiManager.getUserData(CurrentUser.firebaseUser!!)
-        firebaseApiManager.onUserDataChanged(CurrentUser.firebaseUser!!.uid)
-
-
+        firebaseApiManager.getAllUsers()
     }
 
-
-    override fun isUserDataSaved(success: Boolean, userResponse: UserResponse) {
-        view.showProgress(false)
-
-        if (success) {
-            view.setCurrentUserData(userResponse)
-            firebaseApiManager.getAllUsers()
-            view.navigateToHome()
-
-        } else {
-            Log.v("taag", "fail getting firebaseUser data")
-
-        }
-    }
 
 
     override fun areUsersSaved(success: Boolean, users: ArrayList<UserResponse>) {
@@ -54,7 +34,6 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
         if (users.isNotEmpty()) {
             view.setUsersList(users)
             view.navigateToHome()
-
 
         } else {
 
@@ -67,7 +46,6 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
         fun setUsersList(response: ArrayList<UserResponse>)
         fun showProgress(enable: Boolean)
         fun navigateToHome()
-        fun setCurrentUserData(userResponse: UserResponse)
     }
 
 

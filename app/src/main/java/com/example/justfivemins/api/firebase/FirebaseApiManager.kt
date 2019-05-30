@@ -23,7 +23,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 class FirebaseApiManager(
     private val loginListener: ApiEventsListeners.LoginListener? = null
     , private val registerListener: ApiEventsListeners.RegisterListener? = null
-    , private val userDataListener: ApiEventsListeners.UserDataListener? = null
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
     , private val onUserDataChangedListenerListener: ApiEventsListeners.OnDataChangedListener? = null
@@ -61,28 +60,6 @@ class FirebaseApiManager(
                 }
         }
 
-    }
-
-    override fun getUserData(currentUser: FirebaseUser) {
-        val docRef = db.collection("users").document(currentUser.uid)
-        var user = UserResponse()
-        docRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    user = Mapper.userResponseMapper(document.data!!)
-                    userDataListener?.isUserDataSaved(true, user)
-
-                } else {
-                    Log.d("taag", "No such document")
-                    userDataListener?.isUserDataSaved(false, UserResponse())
-
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("taag", "get failed with ", exception)
-                userDataListener?.isUserDataSaved(false, UserResponse())
-
-            }
     }
 
     override fun loginUser(loginRequest: LoginRequest) {

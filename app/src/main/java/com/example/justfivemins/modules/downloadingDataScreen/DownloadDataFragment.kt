@@ -64,24 +64,5 @@ class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
         }
 
     }
-        override fun setCurrentUserData(userResponse: UserResponse) {
-            currentUser.name = userResponse.name
-            currentUser.email = userResponse.email
-            currentUser.birthday = userResponse.birthday
-            currentUser.currentLocation = userResponse.location
-            currentUser.age = userResponse.age
-
-            currentUser.surname = userResponse.surname
-            currentUser.jobName = userResponse.job
-            currentUser.universityName = userResponse.university
-            currentUser.description = userResponse.description
-            currentUser.profileImageUrl = userResponse.profileImageUrl
-
-            Log.v("taag", "currentUser  in setUser from dwdactv" + currentUser.name)
-
-
-            CurrentUser.user = currentUser
-        }
-
     }
 

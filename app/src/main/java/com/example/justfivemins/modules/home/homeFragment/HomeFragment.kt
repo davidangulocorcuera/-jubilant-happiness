@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.home.MainViewModel
@@ -151,6 +152,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
                 .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
 
         }
+        CurrentUser.user = user
 
 
     }

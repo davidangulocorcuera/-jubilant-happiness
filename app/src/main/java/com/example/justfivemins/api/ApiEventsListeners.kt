@@ -11,9 +11,6 @@ interface ApiEventsListeners{
     interface RegisterListener {
         fun isRegistered(success: Boolean)
     }
-    interface UserDataListener {
-        fun isUserDataSaved(success: Boolean, userResponse: UserResponse)
-    }
     interface LocationDataListener {
         fun isLocationUpdated(success: Boolean)
     }
