@@ -14,7 +14,6 @@ class User(
     , var phoneNumber: String = ""
     , var locations: ArrayList<Location> = ArrayList(),
       var profileImageUrl: String = ""
-    , var headerImage: Int = R.drawable.header_background
     , var images: ArrayList<Int> = ArrayList()
     , var friends: ArrayList<User> = ArrayList()
     , var numLikes: Int = 0

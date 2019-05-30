@@ -18,6 +18,7 @@ import android.content.Intent
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -105,12 +106,17 @@ class HomeActivity : BaseActivity(), HomePresenter.View , DrawerLocker {
         recyclerViewDrawerMenu.adapter = drawerListAdapter
     }
 
+    private fun getView(): View{
+
+    }
+
     private fun setMenuListener() {
         drawerListAdapter = DrawerListAdapter(menuOptions) { menuItem ->
             drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.type) {
                 DrawerViewModel.MenuItemType.MESSAGE -> {
-//                    navigator.navigateToMessages()
+                val  controller =  this.findNavController(R.id.navHostActivity)
+                        controller.navigate(R.id.goToHome)
 
                 }
                 DrawerViewModel.MenuItemType.MAP -> {

@@ -23,7 +23,7 @@
                 android:src="@drawable/ic_location"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_big"
-                android:layout_marginEnd="@dimen/space_medium_big"
+                android:layout_marginEnd="@dimen/space_big"
                 android:layout_gravity="center_vertical
 " android:visibility="visible"/>
 

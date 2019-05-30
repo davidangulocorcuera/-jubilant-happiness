@@ -4,15 +4,38 @@
             android:id="@+id/homeActivityGraph"
             app:startDestination="@id/filterFragment">
 
+    <action android:id="@+id/goToProfileData"
+            app:destination="@id/profileFragment"
+            app:launchSingleTop="false"
+
+    />
+
     <fragment android:id="@+id/filterFragment"
-              android:name="com.example.justfivemins.modules.filter.FilterFragment"
-              android:label="fragment_detail"
-              tools:layout="@layout/fragment_filter"/>
+              android:name="com.example.justfivemins.modules.home.homeFragment.HomeFragment"
+              android:label="fragment_detail">
+
+    </fragment>
+
 
     <fragment android:id="@+id/profileFragment"
               android:name="com.example.justfivemins.modules.profile_data.ProfileDataFragment"
               android:label="fragment_profile"
-              tools:layout="@layout/fragment_profile_data"/>
+              tools:layout="@layout/fragment_profile_data">
+
+        <action android:id="@+id/goToHome"
+                app:destination="@id/filterFragment"
+                app:launchSingleTop="false"/>
+    </fragment>
+
+    <activity android:id="@+id/homeActivity"
+              android:label="home_activity"
+              tools:layout="@layout/drawer_menu">
+
+        <argument android:name="users" android:defaultValue="@null"/>
+        <argument android:name="currentUser" android:defaultValue="@null"/>
+
+
+    </activity>
 
     <fragment android:id="@+id/showUsersFragment"
               android:name="com.example.justfivemins.modules.showUsersScreen.ShowUsersFragment"

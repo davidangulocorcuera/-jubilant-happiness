@@ -1,10 +1,10 @@
-package com.example.justfivemins.modules.filter
+package com.example.justfivemins.modules.home.homeFragment
 
 import android.os.Bundle
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.MainMVP
 
-class FilterPresenter(private val view: View): MainMVP.Presenter {
+class HomeFragmentPresenter(private val view: View): MainMVP.Presenter {
     private var users: ArrayList<User>? = null
     fun init(arguments: Bundle?){
         if (arguments != null) {

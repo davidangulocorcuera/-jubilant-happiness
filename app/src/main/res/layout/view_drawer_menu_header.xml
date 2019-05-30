@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@drawable/header_image"
+            android:background="@color/colorPrimary"
             android:scaleType="fitXY"
             android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +40,8 @@
             android:elevation="@dimen/space_medium"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/space_big"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView" app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginTop="28dp"/>
     <LinearLayout
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="300dp" android:id="@+id/linearLayout"
             app:layout_constraintStart_toEndOf="@+id/ivDrawerProfileImage"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/space_big" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0">
 
