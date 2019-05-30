@@ -59,6 +59,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         mainViewModel.picture.observe(this, Observer { image ->
             image?.let {
                 uploadImage(it)
+
             }
         })
     }

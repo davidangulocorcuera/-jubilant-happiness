@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.Navigator
-import androidx.navigation.fragment.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
@@ -61,9 +59,10 @@ class DownloadDataFragment: BaseFragment(),DownloadDataPresenter.View  {
 
     override fun navigateToHome() {
 
+        view?.let {
+            Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
+        }
 
-
-       findNavController().navigate(R.id.goToHomeFragment)
     }
         override fun setCurrentUserData(userResponse: UserResponse) {
             currentUser.name = userResponse.name

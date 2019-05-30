@@ -12,11 +12,12 @@ import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
-import com.example.justfivemins.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.*
-
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 
 
 class FirebaseApiManager(
@@ -27,7 +28,7 @@ class FirebaseApiManager(
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
     , private val onUserDataChangedListenerListener: ApiEventsListeners.OnDataChangedListener? = null
     , private val onGetUsersListener: ApiEventsListeners.GetUsersListener? = null
-    , private val activity: Activity
+    , private val activity: Activity? = null
 ) : Api {
 
 
@@ -36,28 +37,30 @@ class FirebaseApiManager(
 
 
     override fun createUser(registerRequest: RegisterRequest) {
+        activity?.let {
+            auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
+                .addOnCompleteListener(it) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        if (user != null) {
+                            CurrentUser.firebaseUser = user
+                            db.collection("users").document(user.uid)
+                                .set(Mapper.registerRequestMapper(registerRequest))
+                                .addOnFailureListener { e ->
+                                    registerListener?.isRegistered(false)
+                                    Log.v("taag", e.toString())
+                                }
+                            registerListener?.isRegistered(true)
+                        }
 
-        auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
-            .addOnCompleteListener(activity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    if (user != null) {
-                        CurrentUser.firebaseUser = user
-                        db.collection("users").document(user.uid)
-                            .set(Mapper.registerRequestMapper(registerRequest))
-                            .addOnFailureListener { e ->
-                                registerListener?.isRegistered(false)
-                                Log.v("taag", e.toString())
-                            }
-                        registerListener?.isRegistered(true)
+                    } else {
+                        Log.v("taag", task.exception.toString())
+                        registerListener?.isRegistered(false)
+
                     }
-
-                } else {
-                    Log.v("taag", task.exception.toString())
-                    registerListener?.isRegistered(false)
-
                 }
-            }
+        }
+
     }
 
     override fun getUserData(currentUser: FirebaseUser) {
@@ -67,7 +70,7 @@ class FirebaseApiManager(
             .addOnSuccessListener { document ->
                 if (document != null) {
                     user = Mapper.userResponseMapper(document.data!!)
-                    userDataListener?.isUserDataSaved(true,user)
+                    userDataListener?.isUserDataSaved(true, user)
 
                 } else {
                     Log.d("taag", "No such document")
@@ -77,29 +80,32 @@ class FirebaseApiManager(
             }
             .addOnFailureListener { exception ->
                 Log.d("taag", "get failed with ", exception)
-                userDataListener?.isUserDataSaved(false ,UserResponse())
+                userDataListener?.isUserDataSaved(false, UserResponse())
 
             }
     }
 
     override fun loginUser(loginRequest: LoginRequest) {
-        auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
-            .addOnCompleteListener(activity) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    CurrentUser.firebaseUser = user
-                    loginListener?.isLogged(true)
-                } else {
-                    loginListener?.isLogged(false)
-                }
+        activity?.let {
+            auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
+                .addOnCompleteListener(activity) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        CurrentUser.firebaseUser = user
+                        loginListener?.isLogged(true)
+                    } else {
+                        loginListener?.isLogged(false)
+                    }
 
-            }
+                }
+        }
+
     }
 
-    override fun updateLocation(locationRequest: LocationRequest ,userId: String) {
+    override fun updateLocation(locationRequest: LocationRequest, userId: String) {
         db.collection("users").document(userId)
             .update("location", locationRequest)
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 locationUpdateListener?.isLocationUpdated(true)
 
             }
@@ -126,30 +132,31 @@ class FirebaseApiManager(
                 updateUserListener?.isUserUpdated(false)
             }
     }
+
     override fun onUserDataChanged(userId: String) {
         val docRef = db.collection("users").document(userId)
         docRef.addSnapshotListener(object : EventListener<DocumentSnapshot> {
-           override fun onEvent(
-               @Nullable snapshot: DocumentSnapshot?,
-               @Nullable e: FirebaseFirestoreException?
+            override fun onEvent(
+                @Nullable snapshot: DocumentSnapshot?,
+                @Nullable e: FirebaseFirestoreException?
             ) {
                 if (e != null) {
-                    onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())
+                    onUserDataChangedListenerListener?.isUserDataChanged(false, UserResponse())
                     return
                 }
 
-               if (snapshot != null && snapshot.exists()) {
-                   val user  = Mapper.userResponseMapper(snapshot.data!!)
-                   onUserDataChangedListenerListener?.isUserDataChanged(true,user)
+                if (snapshot != null && snapshot.exists()) {
+                    val user = Mapper.userResponseMapper(snapshot.data!!)
+                    onUserDataChangedListenerListener?.isUserDataChanged(true, user)
 
                 } else {
-                   onUserDataChangedListenerListener?.isUserDataChanged(false,UserResponse())
+                    onUserDataChangedListenerListener?.isUserDataChanged(false, UserResponse())
                 }
             }
         })
     }
 
-    override fun  getAllUsers() {
+    override fun getAllUsers() {
         val docRef = db.collection("users")
 
         docRef.get()
@@ -157,9 +164,10 @@ class FirebaseApiManager(
 
 
                 if (document != null) {
-                    onGetUsersListener?.areUsersSaved(true,
+                    onGetUsersListener?.areUsersSaved(
+                        true,
                         Mapper.mapAllUsers(document)
-                        )
+                    )
 
                 } else {
                     Log.d("taag", "No such document")
@@ -174,7 +182,6 @@ class FirebaseApiManager(
             }
 
     }
-
 
 
 }

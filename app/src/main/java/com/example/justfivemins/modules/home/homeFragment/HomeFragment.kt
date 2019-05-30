@@ -6,6 +6,8 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,7 @@ import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.home.MainViewModel
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
@@ -24,7 +27,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
-class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
+class HomeFragment : BaseFragment(), DrawerLocker {
 
 
     private var currentUser = User()
@@ -32,17 +35,33 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
     private var users: ArrayList<User> = ArrayList()
-    private val homeFragmentPresenter: HomeFragmentPresenter by lazy { HomeFragmentPresenter(this, activity) }
 
 
     override fun onCreateViewId(): Int {
-        homeFragmentPresenter.init(arguments)
         return R.layout.fragment_home
     }
 
+    override fun onStart() {
+        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
+        super.onStart()
+        mainViewModel.listenUserData()
+
+    }
+
     override fun viewCreated(view: View?) {
+        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
+
+            mainViewModel.response.observe(this, Observer { response ->
+                response?.let {
+                    setNewData(it)
+                }
+            })
+
+
+        setMenuData(currentUser)
 
         setDrawerMenu()
+        menuOptions.clear()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
@@ -135,15 +154,15 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
 
 
     }
-    override fun showProgress(enable: Boolean) {
+     fun showProgress(enable: Boolean) {
         showProgress(enable, enable)
     }
 
-    override fun setCurrentUser(user: User) {
+     fun setCurrentUser(user: User) {
         this.currentUser = user
     }
 
-    override fun setNewData(userResponse: UserResponse) {
+    fun setNewData(userResponse: UserResponse) {
         currentUser.name = userResponse.name
         currentUser.email = userResponse.email
         currentUser.birthday = userResponse.birthday
@@ -159,7 +178,7 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
         setMenuData(currentUser)
     }
 
-    override fun setUsers(user: ArrayList<User>) {
+     fun setUsers(user: ArrayList<User>) {
         users = user
     }
 
