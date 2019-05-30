@@ -1,7 +1,6 @@
 package com.example.justfivemins.modules.home.homeFragment
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -22,7 +21,7 @@ class HomeFragmentPresenter(private val view: View, val activity: Activity? = nu
     }
     override fun isUserDataChanged(success: Boolean, userResponse: UserResponse) {
         if(success){
-            view.getNewData(userResponse)
+            view.setNewData(userResponse)
         }
     }
 
@@ -32,6 +31,7 @@ class HomeFragmentPresenter(private val view: View, val activity: Activity? = nu
             view.setUsers(users)
             currentUser = arguments.getSerializable("currentUser") as User
             view.setCurrentUser(currentUser)
+
         }
         firebaseApiManager.onUserDataChanged(CurrentUser.firebaseUser!!.uid)
 
@@ -44,7 +44,7 @@ class HomeFragmentPresenter(private val view: View, val activity: Activity? = nu
         fun showProgress(enable: Boolean)
         fun setUsers(users: ArrayList<User>)
         fun setCurrentUser(user: User)
-        fun getNewData(userResponse: UserResponse)
+        fun setNewData(userResponse: UserResponse)
     }
 
 }

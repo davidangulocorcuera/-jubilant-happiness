@@ -22,4 +22,5 @@ class MainViewModel : ViewModel() {
     private fun loadPicture() {
         // Do an asynchronous operation to fetch users.
     }
+
 }

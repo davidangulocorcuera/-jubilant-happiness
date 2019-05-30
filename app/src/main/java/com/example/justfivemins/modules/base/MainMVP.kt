@@ -4,7 +4,6 @@ package com.example.justfivemins.modules.base
 class MainMVP {
 
     interface View {
-        fun goBack()
         fun hideKeyboard()
 
     }

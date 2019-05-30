@@ -24,7 +24,6 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         if (configurator == null) {
             configurator = Configurator.instance
             configurator!!.hasToolbar(hasToolbar())
-            configurator!!.hasToolbarBackButton(hasToolbarBackButton())
             configurator!!.showOnlyToolbarTitle(showOnlyToolbarTitle())
             configurator!!.hasOwnToolbar(false)
         }
@@ -37,9 +36,7 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         viewCreated(view)
     }
 
-    fun onBackPressed(){
-        baseActivity?.onBackPressed()
-    }
+
 
     fun showProgress(show: Boolean, hasShade: Boolean) {
         baseActivity?.showProgress(show, hasShade)
@@ -69,17 +66,6 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         actionBar?.show()
     }
 
-    fun showBottomMenu() {
-        //activity?.bottomNavigation?.setVisible(true)
-    }
-
-    fun hideBottomMenu() {
-        //activity?.bottomNavigation?.setVisible(false)
-    }
-
-    open fun hasToolbarBackButton(): Boolean {
-        return false
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,11 +81,6 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
             return activity as? BaseActivity
         }
 
-    open fun willConsumeBackPressed(): Boolean {
-        return false
-    }
-
-
     override fun hideKeyboard() {
         baseActivity?.hideKeyboard()
     }
@@ -113,10 +94,7 @@ abstract class BaseFragment : Fragment(), MainMVP.View {
         )
     }
 
-    override fun goBack() {
-        baseActivity?.goBack()
 
-    }
     fun enableDrawerMenu(enable: Boolean) {
         baseActivity?.enableDrawerMenu(enable)
     }

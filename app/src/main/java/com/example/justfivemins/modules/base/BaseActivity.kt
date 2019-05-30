@@ -53,7 +53,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         if (current != null) {
             setSupportActionBar(current)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
-            current.setNavigationOnClickListener { onBackPressed() }
+
 
             current.title = ""
             if (titleColor != 0)
@@ -76,9 +76,6 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
 
     }
 
-    fun setBackButtonColor(color: Int) {
-        currentToolbar?.navigationIcon?.setTint(getResourceColor(color))
-    }
 
     fun setToolbarColor(toolbarColor: Int) {
         val actionBar = supportActionBar
@@ -150,6 +147,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         progress?.setVisible(show)
     }
 
+
     fun centerToolbarText(center: Boolean) {
         if (center) {
             toolbar_title?.layoutParams?.width = LinearLayout.LayoutParams.MATCH_PARENT
@@ -157,8 +155,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             toolbar_title?.layoutParams?.width = LinearLayout.LayoutParams.WRAP_CONTENT
         }
     }
-    override fun goBack() {
-    }
+
 
     fun enableDrawerMenu(enable: Boolean) {
         (this as? DrawerLocker)?.setDrawerEnabled(enable)

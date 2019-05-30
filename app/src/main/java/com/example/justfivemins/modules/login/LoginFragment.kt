@@ -7,6 +7,7 @@ import android.widget.EditText
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -133,10 +134,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
 
     override fun goToRegister() {
-        view?.let {
-            Navigation.findNavController(it).navigate(R.id.goToRegister)
-        }
-
+        findNavController().navigate(R.id.goToRegister)
     }
 
     override fun showEmailError(error: Boolean) {

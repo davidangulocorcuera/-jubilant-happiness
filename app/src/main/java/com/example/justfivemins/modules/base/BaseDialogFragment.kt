@@ -35,17 +35,12 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
         baseActivity?.setToolbarText(title)
     }
 
-    open fun hasToolbar(): Boolean {
-        return false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (configurator == null) {
             configurator = Configurator.instance
-            configurator!!.hasToolbar(hasToolbar())
-            configurator!!.hasToolbarBackButton(hasToolbarBackButton())
             configurator!!.showOnlyToolbarTitle(showOnlyToolbarTitle())
             configurator!!.hasOwnToolbar(false)
         }
@@ -66,8 +61,6 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
             configurator!!.checkDefaults()
             baseActivity?.setToolbartTextColor(configurator!!.titleColor)
             baseActivity?.setToolbarColor(configurator!!.toolbarColor)
-            baseActivity?.enableToolbarBackButton(configurator!!.hasToolbarBackButton)
-            baseActivity?.setBackButtonColor(configurator!!.backButtonColor)
             if (!configurator!!.hasToolbar && !configurator!!.hasOwnToolbar) {
                 actionBar.hide()
             } else if (!actionBar.isShowing) {
@@ -89,13 +82,6 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
         actionBar?.show()
     }
 
-    fun showBottomMenu() {
-        //activity?.bottomNavigation?.setVisible(true)
-    }
-
-    fun hideBottomMenu() {
-        //activity?.bottomNavigation?.setVisible(false)
-    }
 
     open fun hasToolbarBackButton(): Boolean {
         return false
@@ -115,9 +101,7 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
             return activity as? BaseActivity
         }
 
-    open fun willConsumeBackPressed(): Boolean {
-        return false
-    }
+
 
     override fun hideKeyboard() {
         baseActivity?.hideKeyboard()
@@ -130,9 +114,6 @@ abstract class BaseDialogFragment: DialogFragment(), MainMVP.View  {
     }
 
 
-    override fun goBack() {
-        baseActivity?.goBack()
-    }
 
 
 

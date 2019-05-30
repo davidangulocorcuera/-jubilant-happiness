@@ -48,7 +48,6 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
             //            navigator.navigateToProfileData()
         }
-        setMenuData(currentUser)
 
         showProgress(true, true)
         filterByCountryContainer.tvFilterName.text = getString(R.string.country)
@@ -144,7 +143,7 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
         this.currentUser = user
     }
 
-    override fun getNewData(userResponse: UserResponse) {
+    override fun setNewData(userResponse: UserResponse) {
         currentUser.name = userResponse.name
         currentUser.email = userResponse.email
         currentUser.birthday = userResponse.birthday
@@ -156,6 +155,8 @@ class HomeFragment : BaseFragment(), HomeFragmentPresenter.View, DrawerLocker {
         currentUser.universityName = userResponse.university
         currentUser.description = userResponse.description
         currentUser.profileImageUrl = userResponse.profileImageUrl
+
+        setMenuData(currentUser)
     }
 
     override fun setUsers(user: ArrayList<User>) {

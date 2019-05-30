@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/mainActivityGraph"
             app:startDestination="@id/loginFragment">
 
@@ -12,22 +12,22 @@
 
         <action android:id="@+id/goToLocation"
                 app:destination="@id/locationFragment"
+
         />
 
         <action android:id="@+id/goToRegister"
                 app:destination="@id/registerFragment"
-        />
+                />
 
     </fragment>
 
     <fragment android:id="@+id/registerFragment"
               android:name="com.example.justfivemins.modules.register.RegisterFragment"
               android:label="fragmentRegister"
-
               tools:layout="@layout/fragment_register">
+
         <action android:id="@+id/goToLocation"
                 app:destination="@id/locationFragment"
-
         />
 
     </fragment>
@@ -40,13 +40,14 @@
         <action android:id="@+id/goToDownloadFragment"
                 app:destination="@id/downloadDataFragment"
                 app:launchSingleTop="false"
-
-        />
+                app:popUpToInclusive="true"
+                app:popUpTo="@+id/loginFragment"/>
     </fragment>
     <fragment android:id="@+id/downloadDataFragment"
               android:name="com.example.justfivemins.modules.downloadingDataScreen.DownloadDataFragment"
               android:label="DownloadDataFragment"
-              tools:layout="@layout/fragment_download_data">
+              tools:layout="@layout/fragment_download_data"
+    >
 
         <action android:id="@+id/goToHomeFragment"
                 app:destination="@id/homeFragment"/>
@@ -54,14 +55,12 @@
 
     <action android:id="@+id/goToProfileData"
             app:destination="@id/profileFragment"
-            app:launchSingleTop="false"
-
     />
 
     <fragment android:id="@+id/homeFragment"
               android:name="com.example.justfivemins.modules.home.homeFragment.HomeFragment"
-              android:label="fragment_detail" tools:layout="@layout/fragment_home">
-
+              android:label="fragment_detail"
+              tools:layout="@layout/fragment_home">
     </fragment>
 
 
@@ -72,7 +71,7 @@
 
         <action android:id="@+id/goToHome"
                 app:destination="@id/homeFragment"
-                app:launchSingleTop="false"/>
+        />
     </fragment>
 
 

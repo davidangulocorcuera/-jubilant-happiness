@@ -16,6 +16,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -46,14 +48,13 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     private var profileImageUrl = ""
 
 
-
     override fun onCreateViewId(): Int {
         return R.layout.fragment_profile_data
     }
 
     override fun onResume() {
         super.onResume()
-         val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         mainViewModel.picture.observe(this, Observer { image ->
             image?.let {
@@ -92,7 +93,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
         hideToolbar()
         btnBack.setOnClickListener {
-//            navigator.addBackStack(false).navigateToHome()
+            //            navigator.addBackStack(false).navigateToHome()
         }
 
 
@@ -111,15 +112,14 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         etUniversity.setText(CurrentUser.user?.universityName)
         etJob.setText(CurrentUser.user?.jobName)
         etDescription.setText(CurrentUser.user?.description)
-        if(CurrentUser.user?.profileImageUrl!!.isNotEmpty()){
+        if (CurrentUser.user?.profileImageUrl!!.isNotEmpty()) {
             Glide
                 .with(this)
                 .load(CurrentUser.user?.profileImageUrl)
                 .centerCrop()
                 .into(ivProfileImage)
 
-        }
-        else{
+        } else {
             ivProfileImage.setImageResource(R.drawable.no_profile_image)
         }
 
@@ -150,7 +150,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         showProgress(show = false, hasShade = false)
         enableScreenOnUpdate(true)
         if (success) {
-//            navigator.addBackStack(false).finishCurrent(true).navigateToHome()
+
+            view?.let {
+                Navigation.findNavController(it).navigate(R.id.goToHome)
+            }
         } else {
             Toast.makeText(
                 activity?.applicationContext, "Register failed.",
@@ -197,45 +200,44 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             .check()
     }
 
-     fun uploadImage(selectedPicture: Uri) {
+    fun uploadImage(selectedPicture: Uri) {
+        showProgress(show = true, hasShade = true)
 
-            showProgress(show = true, hasShade = true)
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = activity?.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
+        cursor?.moveToFirst()
 
-            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor = activity?.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
-            cursor?.moveToFirst()
+        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+        val picturePath = cursor?.getString(columnIndex!!)
+        cursor?.close()
 
-            val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
-            val picturePath = cursor?.getString(columnIndex!!)
-            cursor?.close()
+        var loadedBitmap = BitmapFactory.decodeFile(picturePath)
 
-            var loadedBitmap = BitmapFactory.decodeFile(picturePath)
+        var exif: ExifInterface? = null
+        try {
+            val pictureFile = File(picturePath)
+            exif = ExifInterface(pictureFile.absolutePath)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        var orientation = ExifInterface.ORIENTATION_NORMAL
+        if (exif != null)
+            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
-            var exif: ExifInterface? = null
-            try {
-                val pictureFile = File(picturePath)
-                exif = ExifInterface(pictureFile.absolutePath)
-            } catch (e: IOException) {
-                e.printStackTrace()
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> {
+                loadedBitmap = rotateBitmap(loadedBitmap, 90)
             }
-            var orientation = ExifInterface.ORIENTATION_NORMAL
-            if (exif != null)
-                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-
-            when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> {
-                    loadedBitmap = rotateBitmap(loadedBitmap, 90)
-                }
-                ExifInterface.ORIENTATION_ROTATE_180 -> {
-                    loadedBitmap = rotateBitmap(loadedBitmap, 180)
-                }
-                ExifInterface.ORIENTATION_ROTATE_270 -> {
-                    loadedBitmap = rotateBitmap(loadedBitmap, 270)
-                }
+            ExifInterface.ORIENTATION_ROTATE_180 -> {
+                loadedBitmap = rotateBitmap(loadedBitmap, 180)
             }
+            ExifInterface.ORIENTATION_ROTATE_270 -> {
+                loadedBitmap = rotateBitmap(loadedBitmap, 270)
+            }
+        }
 
-         ivProfileImage.setImageBitmap(loadedBitmap)
-         uploadProfileImage(loadedBitmap)
+        ivProfileImage.setImageBitmap(loadedBitmap)
+        uploadProfileImage(loadedBitmap)
 
 
     }

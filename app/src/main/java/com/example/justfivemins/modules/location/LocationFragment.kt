@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.location.Geocoder
 import android.view.View
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
@@ -149,9 +150,7 @@ class LocationFragment : BaseFragment(), ApiEventsListeners.LocationDataListener
     }
 
     private fun goToDownloadData() {
-        view?.let {
-            Navigation.findNavController(it).navigate(R.id.goToDownloadFragment)
-        }
+        findNavController().navigate(R.id.goToDownloadFragment)
     }
 
     override fun hasToolbar(): Boolean {

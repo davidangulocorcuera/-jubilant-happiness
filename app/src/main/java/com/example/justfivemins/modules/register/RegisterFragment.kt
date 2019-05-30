@@ -4,10 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.EditText
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -199,7 +197,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     private fun backToLogin() {
         view?.let {
-            Navigation.findNavController(it).popBackStack()
         }
     }
 
