@@ -2,11 +2,13 @@ package com.example.justfivemins.modules.home
 
 
 import android.content.Intent
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
@@ -17,8 +19,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+       window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
     }
 

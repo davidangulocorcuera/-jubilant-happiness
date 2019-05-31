@@ -21,7 +21,7 @@
         app:contentInsetRight="0dp"
         app:contentInsetStart="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/white"
+        android:background="@color/colorAccent"
         tools:ignore="RtlSymmetry">
 
 
@@ -30,7 +30,7 @@
                 style="@style/title_medium"
                 android:layout_gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/white"
                 android:visibility="visible"
                 tools:text="THE TITLE"
                 android:gravity="center"

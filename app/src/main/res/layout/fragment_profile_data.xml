@@ -1,193 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    >
-
-    <ScrollView
-        android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:background="@color/white"
+        android:orientation="vertical"
+>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <ScrollView android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:fadeScrollbars="false"
-            >
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollView2"
+               >
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:layout_margin="@dimen/space_medium"
+        >
 
-                <LinearLayout android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                              android:padding="@dimen/space_medium"
-                >
-                    <de.hdodenhof.circleimageview.CircleImageView
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/ivProfileImage"
-                            android:layout_width="@dimen/biggest_circle_size"
-                            app:civ_border_width="2dp"
-                            app:civ_border_color="@color/colorAccent"
-                            android:layout_height="@dimen/biggest_circle_size"
-                            android:layout_margin="@dimen/space_medium"
-                            style="@style/Clickable"
-                            android:src="@drawable/no_profile_image"
-                            android:layout_marginTop="8dp"
-                            android:layout_gravity="center"
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivProfileImage"
+                        android:layout_width="@dimen/big_circle_size"
+
+                        android:layout_height="@dimen/big_circle_size"
+                        android:layout_margin="@dimen/space_medium"
+                        style="@style/Clickable"
+                        android:src="@drawable/no_profile_image"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center"
+                />
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiName"
+                        android:layout_gravity="center"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="20"
+                        android:layout_width="match_parent">
+
+                    <EditText
+                            android:id="@+id/etName"
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:maxLength="20"
+                            android:hint="@string/name"
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     />
-                    <com.google.android.material.textfield.TextInputLayout
-                            android:layout_margin="10dp"
-                            android:id="@+id/tiName"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
-                            app:counterEnabled = "true"
-                            app:counterMaxLength="20"
-                            android:layout_width="match_parent">
-
-                        <EditText
-                                android:id="@+id/etName"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:maxLength="20"
-                                android:hint="@string/name"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        />
 
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                            android:layout_margin="10dp"
-                            android:id="@+id/tiSurname"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+            >
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiSurname"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="20"
+                >
+
+                    <EditText
+                            android:id="@+id/etSurname"
+                            android:layout_height="match_parent"
                             android:layout_width="match_parent"
-                            app:counterEnabled = "true"
-                            app:counterMaxLength="20"
-                    >
-
-                        <EditText
-                                android:id="@+id/etSurname"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:hint="@string/surname"
-                                android:maxLength="20"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        />
+                            android:hint="@string/surname"
+                            android:maxLength="20"
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    />
 
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                            android:layout_margin="10dp"
-                            android:id="@+id/tiDescription"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiDescription"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200"
+                >
+
+                    <EditText
+                            android:id="@+id/etDescription"
+                            android:layout_height="match_parent"
                             android:layout_width="match_parent"
-                            app:counterEnabled = "true"
-                            app:counterMaxLength="200"
-                    >
-
-                        <EditText
-                                android:id="@+id/etDescription"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:hint="@string/description"
-                                android:lines="5"
-                                android:gravity="top"
-                                android:maxLength="200"
-                                android:inputType="textMultiLine"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        />
+                            android:hint="@string/description"
+                            android:lines="5"
+                            android:gravity="top"
+                            android:maxLength="200"
+                            android:inputType="textMultiLine"
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    />
 
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                            android:layout_margin="10dp"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:id="@+id/tiUniversity"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="20"
+
+                >
+                    <EditText
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                            android:id="@+id/etUniversity"
+                            android:layout_height="match_parent"
                             android:layout_width="match_parent"
-                            android:id="@+id/tiUniversity"
-                            app:counterEnabled = "true"
-                            app:counterMaxLength="20"
+                            android:hint="@string/university"
+                            android:maxLength="20"
+                            android:inputType="textMultiLine"
 
-                    >
-                        <EditText
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:id="@+id/etUniversity"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:hint="@string/university"
-                                android:maxLength="20"
-                                android:inputType="textMultiLine"
-
-                        />
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                            android:layout_margin="10dp"
-                            style="@style/Base.Widget.MaterialComponents.TextInputLayout"
-                            android:layout_height="wrap_content"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                        android:layout_marginBottom="@dimen/space_medium"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:id="@+id/tiJob"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="20"
+                >
+                    <EditText
+                            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                            android:id="@+id/etJob"
+                            android:layout_height="match_parent"
                             android:layout_width="match_parent"
-                            android:id="@+id/tiJob"
-                            app:counterEnabled = "true"
-                            app:counterMaxLength="20"
-                    >
-                        <EditText
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:id="@+id/etJob"
-                                android:layout_height="match_parent"
-                                android:layout_width="match_parent"
-                                android:maxLength="20"
-                                android:hint="@string/job"
-                        />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                    <LinearLayout android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="horizontal"
-                                  android:layout_gravity="center"
-                                  android:layout_margin="@dimen/space_medium"
-                                  android:layout_marginBottom="@dimen/space_medium" android:padding="@dimen/space_small"
-                    >
-                        <Button android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/roundWhiteButton"
-                                android:textSize="@dimen/medium_font"
-                                android:id="@+id/btnBack"
-                                android:layout_margin="10dp"
-                                android:text="@string/back"
-                                android:textColor="@color/red"
-                        />
-                        <Button android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/btnNext"
-                                android:layout_margin="10dp"
-                                style="@style/roundButton"
-                                android:textSize="@dimen/medium_font"
-                                android:text="@string/next"
-
-                        />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </ScrollView>
+                            android:maxLength="20"
+                            android:hint="@string/job"
+                    />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--<Button-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:id="@+id/btnNext"-->
+                <!--android:textAllCaps="false"-->
+                <!--style="@style/button"-->
+                <!--android:text="@string/save_personal_data"-->
+                <!--android:layout_gravity="center"/>-->
+            </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="40dp"
+
+            android:id="@+id/btnNext"
+            android:src="@drawable/ic_save"
+            app:backgroundTint="@color/colorPrimary"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="40dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="40dp"
+            android:id="@+id/btnBack"
+            android:src="@drawable/ic_back"
+            app:backgroundTint="@color/materialRed800"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnNext"
+            app:layout_constraintHorizontal_bias="0.903" android:layout_marginBottom="40dp"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

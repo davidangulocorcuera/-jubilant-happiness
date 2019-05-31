@@ -77,6 +77,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_ok_info">Image uploaded!</string>
+    <string name="save_personal_data">Save personal data</string>
 
 
 </resources>

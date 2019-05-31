@@ -58,15 +58,18 @@
     >
 
         <action android:id="@+id/goToHomeFragment"
-                app:destination="@id/homeFragment" app:enterAnim="@anim/slide_in_from_top"
-                app:exitAnim="@anim/nav_default_pop_exit_anim"
-                app:popUpTo="@+id/loginFragment" app:popEnterAnim="@anim/slide_in_up"
+                app:destination="@id/homeFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/slide_in_up"
                 app:popExitAnim="@anim/slide_out_to_bottom"/>
+        <argument android:name="users" app:argType="com.example.justfivemins.model.User[]"/>
+        <argument android:name="user" app:argType="com.example.justfivemins.model.User"/>
     </fragment>
 
     <action android:id="@+id/goToProfileData"
             app:destination="@id/profileFragment"
-    />
+            app:enterAnim="@anim/slide_in_up" app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_up" app:popExitAnim="@anim/slide_out_to_bottom"/>
 
     <fragment android:id="@+id/homeFragment"
               android:name="com.example.justfivemins.modules.home.homeFragment.HomeFragment"
@@ -82,7 +85,9 @@
 
         <action android:id="@+id/goToHome"
                 app:destination="@id/homeFragment"
-        />
+                app:enterAnim="@anim/slide_in_up"
+                app:exitAnim="@anim/slide_out_to_bottom" app:popEnterAnim="@anim/slide_in_up"
+                app:popExitAnim="@anim/slide_out_to_bottom"/>
     </fragment>
 
 

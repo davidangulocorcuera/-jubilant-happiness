@@ -62,6 +62,12 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
             }
         })
+
+        btnBack.setOnClickListener {
+            hideKeyboard()
+            Navigation.findNavController(it).popBackStack()
+
+        }
     }
 
     override fun viewCreated(view: View?) {
@@ -91,9 +97,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         ivProfileImage.setOnClickListener {
             requestPermissions()
         }
-        btnBack.setOnClickListener {
-            //            navigator.addBackStack(false).navigateToHome()
-        }
+
 
 
     }
@@ -216,7 +220,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         try {
             val pictureFile = File(picturePath)
             exif = ExifInterface(pictureFile.absolutePath)
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         var orientation = ExifInterface.ORIENTATION_NORMAL

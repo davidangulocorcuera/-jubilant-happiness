@@ -23,7 +23,6 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_filter_people.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
@@ -37,7 +36,6 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     private lateinit var drawerListAdapter: DrawerListAdapter
     private var users: ArrayList<User> = ArrayList()
 
-
     override fun onCreateViewId(): Int {
         return R.layout.fragment_home
     }
@@ -50,6 +48,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     }
 
     override fun viewCreated(view: View?) {
+
         val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
 
             mainViewModel.response.observe(this, Observer { response ->
@@ -66,23 +65,14 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
-            //            navigator.navigateToProfileData()
+            this.findNavController().navigate(R.id.goToProfileData)
         }
 
         showProgress(true, true)
-        filterByCountryContainer.tvFilterName.text = getString(R.string.country)
-        filterByPostalCodeContainer.tvFilterName.text = getString(R.string.postal_code)
-        randomContainer.tvFilterName.text = getString(R.string.random_users)
-        filterByCityContainer.tvFilterName.text = getString(R.string.city)
         setToolbarTitle(getString(R.string.home).toUpperCase())
         configurator?.hasToolbar = true
         showProgress(false, false)
 
-
-        filterByCountryContainer.setOnClickListener {
-//            navigator.addExtra("users", users)
-//                .navigateToShowUsers()
-        }
     }
     private fun setDrawerMenu() {
         toggleHome = object : ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close) {
@@ -118,8 +108,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 //                    navigator.navigateToMap()
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
-                    val  controller =  this.findNavController()
-                    controller.navigate(R.id.goToProfileData)
+                    this.findNavController().navigate(R.id.goToProfileData)
 
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
@@ -142,7 +131,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     @SuppressLint("SetTextI18n")
     fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
-        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
+        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.country?.capitalize()
 
         if(user.profileImageUrl.isNotEmpty()){
             Glide

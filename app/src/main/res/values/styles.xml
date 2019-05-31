@@ -15,7 +15,7 @@
 
     <style name="DrawerHamburgerStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">@color/colorPrimaryDark</item>
+        <item name="color">@color/white</item>
     </style>
 
 
@@ -39,6 +39,9 @@
     </style>
     <style name="roundButton" parent="button">
         <item name="android:background">@drawable/round_button</item>
+    </style>
+    <style name="greenButton" parent="roundButton">
+        <item name="android:background">@color/green</item>
     </style>
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->

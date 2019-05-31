@@ -9,6 +9,13 @@
     <color name="materialGreen800">#00695C</color>
     <color name="lightPrimary">#412196F3</color>
 
+    <color name="materialOrange600">#FB8C00</color>
+    <color name="materialPink600">#D81B60</color>
+    <color name="materialGreen600">#00897B</color>
+    <color name="materialBlue600">#1E88E5</color>
+
+
+
     <color name="lightBlackDark">#8A000000</color>
 
     <color name="lightBlack">#68000000</color>
@@ -29,12 +36,12 @@
     <color name="facebookBlue">#3B5998</color>
     <color name="title">#272E46</color>
     <color name="dark_blue">#666F8B</color>
-    <color name="green">#0DA692</color>
+    <color name="green">#1DE9B6</color>
     <color name="backgroundColor">@color/white</color>
     <color name="container_border">#272727</color>
     <color name="subtext">#CCCCCC</color>
     <color name="light_grey">#ced8d8d8</color>
-    <color name="light_blue">#929CBD</color>
+    <color name="light_blue">#771E88E5</color>
     <color name="dark_white">#F9FAFD</color>
     <color name="disabled">#DEE2EF</color>
     <color name="editError">#FCF7F7</color>

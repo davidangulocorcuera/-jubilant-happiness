@@ -85,7 +85,9 @@
                     android:layout_gravity="center"
                     android:id="@+id/btnLogin"
             />
-            <Button android:layout_width="match_parent"
+
+            <Button
+                    android:layout_width="match_parent"
                     android:layout_marginStart="@dimen/space_biggest"
                     android:layout_marginEnd="@dimen/space_biggest"
                     android:layout_height="50dp"
