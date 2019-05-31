@@ -54,24 +54,10 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     override fun onResume() {
         super.onResume()
-        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
-        mainViewModel.picture.observe(this, Observer { image ->
-            image?.let {
-                uploadImage(it)
-
-            }
-        })
-
-        btnBack.setOnClickListener {
-            hideKeyboard()
-            Navigation.findNavController(it).popBackStack()
-
-        }
     }
 
     override fun viewCreated(view: View?) {
-        showToolbar()
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 etName.postDelayed({
@@ -97,9 +83,17 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         ivProfileImage.setOnClickListener {
             requestPermissions()
         }
+        btnBack.setOnClickListener {
+            hideKeyboard()
+            Navigation.findNavController(it).popBackStack()
 
-
-
+        }
+        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        mainViewModel.picture.observe(this, Observer { image ->
+            image?.let {
+                uploadImage(it)
+            }
+        })
     }
 
     fun chooseImage() {
@@ -153,7 +147,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         showProgress(show = false, hasShade = false)
         enableScreenOnUpdate(true)
         if (success) {
-
             view?.let {
                 Navigation.findNavController(it).navigate(R.id.goToHome)
             }
@@ -166,6 +159,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     private fun updateUser(data: UpdateUserRequest) {
+
         enableScreenOnUpdate(false)
         showProgress(show = true, hasShade = true)
         val firebaseApiManager: FirebaseApiManager by lazy {
@@ -186,6 +180,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
                         chooseImage()
+
                     }
                     if (report.isAnyPermissionPermanentlyDenied) {
                         // permission is denied permenantly, navigate user to app settings
@@ -247,7 +242,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     private fun uploadProfileImage(img: Bitmap) {
         val firebaseFilesManager = FirebaseFilesManager(this)
-        firebaseFilesManager.uploadProfileImage(img, "justFiveMinsProfile")
+        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
     }
 
     private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {

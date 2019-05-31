@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.location.Geocoder
 import android.net.Uri
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.justfivemins.api.ApiEventsListeners
@@ -14,10 +13,9 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainViewModel : ViewModel(),
-    ApiEventsListeners.OnDataChangedListener ,ApiEventsListeners.LocationDataListener{
+    ApiEventsListeners.OnDataChangedListener{
     val picture = MutableLiveData<Uri>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
@@ -52,7 +50,6 @@ class MainViewModel : ViewModel(),
     }
 
 
-
     fun listenUserData() {
         CurrentUser.firebaseUser?.let {
             firebaseApiManager.onUserDataChanged(it.uid)
@@ -65,44 +62,49 @@ class MainViewModel : ViewModel(),
             response.postValue(userResponse)
         }
     }
-    override fun isLocationUpdated(success: Boolean) {
-        if (success) {
-        } else {
-        }
-    }
-     fun getRandomLocation(context: Context) {
+
+    fun getRandomLocation(context: Context) {
         val location = LocationRequest()
         val geoCoder = Geocoder(context, Locale.getDefault())
-        val addresses = geoCoder.getFromLocation(getRandomLat(), getRandomLon(), 1)
-        if (addresses != null && addresses.size > 0) {
-            location.city = if (addresses[0].locality != null) addresses[0].locality else ""
-            location.country = if (addresses[0].countryName != null) addresses[0].countryName else "Country not found"
-            location.postalCode = if (addresses[0].postalCode != null) addresses[0].postalCode else ""
-            location.lat = addresses[0].latitude
-            location.lng = addresses[0].longitude
-            locationRequest.postValue(location)
-
-        }
+        var addresses = geoCoder.getFromLocation(getRandomLat(), getRandomLon(), 1)
 
 
-     }
-     fun updateLocation(data: LocationRequest,activity: Activity) {
+            while (addresses == null
+                || addresses.isEmpty()
+                || addresses[0].countryName == null
+            ) {
+                addresses = geoCoder.getFromLocation(getRandomLat(), getRandomLon(), 1)
+            }
+
+        location.city = ""
+        location.country = addresses[0].countryName
+        location.postalCode = ""
+        location.lat = addresses[0].latitude
+        location.lng = addresses[0].longitude
+        locationRequest.postValue(location)
+    }
+
+    fun updateLocation(data: LocationRequest, activity: Activity, listener: ApiEventsListeners.LocationDataListener) {
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
-                locationUpdateListener = this,
+                locationUpdateListener = listener ,
                 activity = activity
             )
         }
         firebaseApiManager.updateLocation(data, CurrentUser.firebaseUser!!.uid)
     }
-    fun getRandomLat(): Double{
+
+    private fun getRandomLat(): Double {
         val r = Random()
-        val i =  0 + r.nextDouble() * (90 - 0)
+        val i = 0 + r.nextDouble() * (90 - 0)
         return i
     }
-    fun getRandomLon(): Double{
+
+    fun getRandomLon(): Double {
         val r = Random()
-        return  0 + r.nextDouble() * (180 - 0)
+        return 0 + r.nextDouble() * (180 - 0)
     }
+
+
 
 }

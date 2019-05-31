@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
+import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
@@ -27,7 +28,16 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
-class HomeFragment : BaseFragment(), DrawerLocker {
+class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener  {
+
+    override fun isLocationUpdated(success: Boolean) {
+        menuNavigation.getHeaderView(0).tvLocation.isEnabled = true
+        showProgress(false,false)
+        if (success) {
+        } else {
+
+        }
+    }
 
 
     private var currentUser = User()
@@ -35,13 +45,15 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     private var menuOptions: ArrayList<DrawerItem> = ArrayList()
     private lateinit var drawerListAdapter: DrawerListAdapter
     private var users: ArrayList<User> = ArrayList()
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
+    }
+
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_home
     }
-
     override fun onStart() {
-        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
         super.onStart()
         mainViewModel.listenUserData()
 
@@ -49,17 +61,13 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
     override fun viewCreated(view: View?) {
 
-        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
+        mainViewModel.response.observe(this, Observer { response ->
+            response?.let {
+                setNewData(it)
+                showProgress(false)
 
-            mainViewModel.response.observe(this, Observer { response ->
-                response?.let {
-                    setNewData(it)
-                }
-            })
-
-
-        setMenuData(currentUser)
-
+            }
+        })
         setDrawerMenu()
         menuOptions.clear()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
@@ -67,13 +75,22 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
             this.findNavController().navigate(R.id.goToProfileData)
         }
-
-        showProgress(true, true)
         setToolbarTitle(getString(R.string.home).toUpperCase())
-        configurator?.hasToolbar = true
-        showProgress(false, false)
+
+        menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {textView ->
+            textView.isEnabled = false
+            mainViewModel.getRandomLocation(activity?.applicationContext!!)
+            mainViewModel.locationRequest.observe(this, Observer { locationRequest ->
+                locationRequest?.let {
+                    mainViewModel.updateLocation(it, activity!!,this)
+                }
+            })
+        }
+        setMenuData(currentUser)
+
 
     }
+
     private fun setDrawerMenu() {
         toggleHome = object : ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close) {
             override fun onDrawerOpened(drawerView: View) {
@@ -99,10 +116,8 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
     private fun setMenuListener() {
         drawerListAdapter = DrawerListAdapter(menuOptions) { menuItem ->
-            drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.type) {
                 DrawerViewModel.MenuItemType.MESSAGE -> {
-
                 }
                 DrawerViewModel.MenuItemType.MAP -> {
 //                    navigator.navigateToMap()
@@ -128,12 +143,18 @@ class HomeFragment : BaseFragment(), DrawerLocker {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        drawerLayout.closeDrawer(GravityCompat.START)
+        mainViewModel.listenUserData()
+    }
     @SuppressLint("SetTextI18n")
     fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
         menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.country?.capitalize()
 
-        if(user.profileImageUrl.isNotEmpty()){
+        if (user.profileImageUrl.isNotEmpty()) {
             Glide
                 .with(this)
                 .load(user.profileImageUrl)
@@ -145,11 +166,12 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
 
     }
-     fun showProgress(enable: Boolean) {
+
+    fun showProgress(enable: Boolean) {
         showProgress(enable, enable)
     }
 
-     fun setCurrentUser(user: User) {
+    fun setCurrentUser(user: User) {
         this.currentUser = user
     }
 
@@ -169,7 +191,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         setMenuData(currentUser)
     }
 
-     fun setUsers(user: ArrayList<User>) {
+    fun setUsers(user: ArrayList<User>) {
         users = user
     }
 

@@ -204,7 +204,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/btnNext"
                         android:enabled="false"
-                        android:background="@color/green"
                         android:layout_margin="10dp"
                         style="@style/roundButton"
                         android:textSize="@dimen/medium_font"

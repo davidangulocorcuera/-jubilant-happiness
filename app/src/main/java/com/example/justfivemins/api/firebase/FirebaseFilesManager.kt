@@ -13,11 +13,11 @@ class FirebaseFilesManager( private val uploadImageListener: FilesEventsListener
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
-    override fun uploadProfileImage(img: Bitmap, idImg: String) {
+    override fun uploadProfileImage(img: Bitmap, userPath: String , imageName: String) {
 
-        val profileImagesRef = storageRef.child("usersImages/profilePictures/$idImg.jpg")
+        val profileImagesRef = storageRef.child("usersImages/$userPath/$imageName.jpg")
         val baos = ByteArrayOutputStream()
-        img.compress(Bitmap.CompressFormat.JPEG, 20, baos)
+        img.compress(Bitmap.CompressFormat.WEBP, 20, baos)
         val data = baos.toByteArray()
         val uploadTask = profileImagesRef.putBytes(data)
         uploadTask.addOnFailureListener {

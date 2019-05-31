@@ -2,13 +2,12 @@ package com.example.justfivemins.modules.home
 
 
 import android.content.Intent
-import android.graphics.ColorFilter
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
@@ -33,9 +32,10 @@ class MainActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
-        val sharedViewModel = ViewModelProviders.of(this).get(MainViewModel()::class.java)
-        sharedViewModel.picture.postValue(data?.data)
+        val mainViewModel = ViewModelProviders.of(this).get(MainViewModel()::class.java)
+        mainViewModel.picture.postValue(data?.data)
     }
+
 
 
 
