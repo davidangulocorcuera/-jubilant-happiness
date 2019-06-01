@@ -24,6 +24,7 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_profile_data.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
@@ -81,7 +82,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {
             this.findNavController().navigate(R.id.goToMapFragment)
         }
-        setMenuData(currentUser)
+        setMenuData()
 
 
     }
@@ -146,23 +147,25 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     }
 
     @SuppressLint("SetTextI18n")
-    fun setMenuData(user: User) {
-        menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
+    fun setMenuData() {
+        menuNavigation.getHeaderView(0).tvMenuUsername.text = CurrentUser.user?.name!!.capitalize()
         if (CurrentUser.user?.currentLocation?.city == "") {
             menuNavigation.getHeaderView(0).tvLocation.text = getString(R.string.add_address).capitalize()
         } else {
-            menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
+            menuNavigation.getHeaderView(0).tvLocation.text = CurrentUser.user?.currentLocation?.city?.capitalize()
 
         }
         if (CurrentUser.user?.profileImageUrl!!.isNotEmpty()) {
             Glide
                 .with(this)
-                .load(user.profileImageUrl)
+                .load(CurrentUser.user?.profileImageUrl)
                 .centerCrop()
                 .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
 
         }
-        CurrentUser.user = user
+        else {
+            menuNavigation.getHeaderView(0).ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
+        }
     }
 
 
@@ -186,8 +189,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         currentUser.universityName = userResponse.university
         currentUser.description = userResponse.description
         currentUser.profileImageUrl = userResponse.profileImageUrl
-
-        setMenuData(currentUser)
+        CurrentUser.user = currentUser
+        setMenuData()
     }
 
     fun setUsers(user: ArrayList<User>) {

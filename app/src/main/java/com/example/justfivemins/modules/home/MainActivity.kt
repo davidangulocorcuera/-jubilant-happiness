@@ -8,6 +8,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
+import android.provider.MediaStore
+import android.graphics.Bitmap
+
+
 
 
 class MainActivity : BaseActivity() {
@@ -33,7 +37,10 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
         val mainViewModel = ViewModelProviders.of(this).get(MainViewModel()::class.java)
-        mainViewModel.picture.postValue(data?.data)
+
+        val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, data?.data)
+
+        mainViewModel.picture.postValue(bitmap)
     }
 
 

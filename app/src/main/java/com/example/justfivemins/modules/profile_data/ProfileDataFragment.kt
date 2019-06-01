@@ -11,13 +11,11 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -37,7 +35,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_profile_data.*
 import org.aviran.cookiebar2.CookieBar
 import java.io.File
-import java.io.IOException
 
 
 class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener,
@@ -46,6 +43,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
     private var profileImageUrl = ""
+    private var bitmapSelected: Bitmap? = null
+
 
 
     override fun onCreateViewId(): Int {
@@ -54,6 +53,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     override fun onResume() {
         super.onResume()
+        enableScreenOnUpdate(true)
+        showProgress(false,false)
 
     }
 
@@ -78,6 +79,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         setTextViews()
         enableDrawerMenu(false)
         btnNext.setOnClickListener {
+            enableScreenOnUpdate(false)
+            showProgress(true,true)
             updateUser(retrieveRegisterData())
         }
         ivProfileImage.setOnClickListener {
@@ -91,7 +94,12 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         mainViewModel.picture.observe(this, Observer { image ->
             image?.let {
-                uploadImage(it)
+                Glide
+                    .with(this)
+                    .load(it)
+                    .centerCrop()
+                    .into(ivProfileImage)
+                bitmapSelected = it
             }
         })
     }
@@ -141,11 +149,11 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         tiDescription.isEnabled = enable
         tiSurname.isEnabled = enable
         tiUniversity.isEnabled = enable
+        ivProfileImage.isEnabled = enable
     }
 
     override fun isUserUpdated(success: Boolean) {
         showProgress(show = false, hasShade = false)
-        enableScreenOnUpdate(true)
         if (success) {
             view?.let {
                 Navigation.findNavController(it).navigate(R.id.goToHome)
@@ -159,9 +167,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     private fun updateUser(data: UpdateUserRequest) {
-
-        enableScreenOnUpdate(false)
-        showProgress(show = true, hasShade = true)
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
                 updateUserListener = this,
@@ -180,7 +185,11 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
                         chooseImage()
-
+                        enableScreenOnUpdate(false)
+                        showProgress(true,true)
+                        bitmapSelected?.let {
+                            uploadProfileImage(it)
+                        }
                     }
                     if (report.isAnyPermissionPermanentlyDenied) {
                         // permission is denied permenantly, navigate user to app settings
@@ -196,48 +205,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             })
             .onSameThread()
             .check()
-    }
-
-    fun uploadImage(selectedPicture: Uri) {
-        showProgress(show = true, hasShade = true)
-
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = activity?.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
-        cursor?.moveToFirst()
-
-        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
-        val picturePath = cursor?.getString(columnIndex!!)
-        cursor?.close()
-
-        var loadedBitmap = BitmapFactory.decodeFile(picturePath)
-
-        var exif: ExifInterface? = null
-        try {
-            val pictureFile = File(picturePath)
-            exif = ExifInterface(pictureFile.absolutePath)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        var orientation = ExifInterface.ORIENTATION_NORMAL
-        if (exif != null)
-            orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-
-        when (orientation) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> {
-                loadedBitmap = rotateBitmap(loadedBitmap, 90)
-            }
-            ExifInterface.ORIENTATION_ROTATE_180 -> {
-                loadedBitmap = rotateBitmap(loadedBitmap, 180)
-            }
-            ExifInterface.ORIENTATION_ROTATE_270 -> {
-                loadedBitmap = rotateBitmap(loadedBitmap, 270)
-            }
-        }
-
-        ivProfileImage.setImageBitmap(loadedBitmap)
-        uploadProfileImage(loadedBitmap)
-
-
     }
 
     private fun uploadProfileImage(img: Bitmap) {
@@ -262,8 +229,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
                 .show()
 
         } else {
-            enableScreenOnUpdate(true)
-            showProgress(show = false, hasShade = false)
             Toast.makeText(
                 activity?.applicationContext, "image Uploaded",
                 Toast.LENGTH_SHORT
@@ -272,11 +237,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun isUrlSaved(success: Boolean, url: String) {
-        showProgress(show = false, hasShade = false)
-        enableScreenOnUpdate(true)
         if (success) {
             profileImageUrl = url
-            Log.v("taag", url)
         } else {
             Toast.makeText(
                 activity?.applicationContext, "image Uploaded",

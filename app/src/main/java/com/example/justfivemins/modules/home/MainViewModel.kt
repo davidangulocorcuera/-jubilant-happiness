@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.home
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
@@ -17,7 +18,7 @@ import java.util.*
 
 class MainViewModel : ViewModel(),
     ApiEventsListeners.OnDataChangedListener{
-    val picture = MutableLiveData<Uri>()
+    val picture = MutableLiveData<Bitmap>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
     val locationRequest = MutableLiveData<LocationRequest>()
@@ -44,8 +45,8 @@ class MainViewModel : ViewModel(),
         }
     }
 
-    private val profileImage: MutableLiveData<Uri> by lazy {
-        MutableLiveData<Uri>().also {
+    private val profileImage: MutableLiveData<Bitmap> by lazy {
+        MutableLiveData<Bitmap>().also {
             picture
         }
     }
