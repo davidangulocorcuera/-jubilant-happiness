@@ -23,6 +23,9 @@ interface ApiEventsListeners{
     interface GetUsersListener{
         fun areUsersSaved(success: Boolean, users: ArrayList<UserResponse>)
     }
+    interface UserDataListener {
+        fun isUserDataSaved(success: Boolean, userResponse: UserResponse)
+    }
 
 }
 

@@ -191,12 +191,13 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     private fun goToNextScreen() {
         view?.let {
-            Navigation.findNavController(it).navigate(R.id.goToLocation)
+            Navigation.findNavController(it).navigate(R.id.goToDownloadFragment)
         }
     }
 
     private fun backToLogin() {
         view?.let {
+            Navigation.findNavController(it).popBackStack()
         }
     }
 

@@ -13,4 +13,6 @@ interface Api {
      fun updateUserData(updateUserRequest: UpdateUserRequest, userId: String)
      fun onUserDataChanged(userId: String)
      fun getAllUsers()
+     fun getUserData(currentUser: FirebaseUser)
+
 }

@@ -28,11 +28,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
-class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener  {
+class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener {
 
     override fun isLocationUpdated(success: Boolean) {
         menuNavigation.getHeaderView(0).tvLocation.isEnabled = true
-        showProgress(false,false)
+        showProgress(false, false)
         if (success) {
         } else {
 
@@ -53,6 +53,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     override fun onCreateViewId(): Int {
         return R.layout.fragment_home
     }
+
     override fun onStart() {
         super.onStart()
         mainViewModel.listenUserData()
@@ -77,14 +78,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         }
         setToolbarTitle(getString(R.string.home).toUpperCase())
 
-        menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {textView ->
-            textView.isEnabled = false
-            mainViewModel.getRandomLocation(activity?.applicationContext!!)
-            mainViewModel.locationRequest.observe(this, Observer { locationRequest ->
-                locationRequest?.let {
-                    mainViewModel.updateLocation(it, activity!!,this)
-                }
-            })
+        menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {
+            this.findNavController().navigate(R.id.goToMapFragment)
         }
         setMenuData(currentUser)
 
@@ -120,7 +115,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
                 DrawerViewModel.MenuItemType.MESSAGE -> {
                 }
                 DrawerViewModel.MenuItemType.MAP -> {
-//                    navigator.navigateToMap()
+                    this.findNavController().navigate(R.id.goToMapFragment)
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
                     this.findNavController().navigate(R.id.goToProfileData)
@@ -149,12 +144,17 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         drawerLayout.closeDrawer(GravityCompat.START)
         mainViewModel.listenUserData()
     }
+
     @SuppressLint("SetTextI18n")
     fun setMenuData(user: User) {
         menuNavigation.getHeaderView(0).tvMenuUsername.text = user.name.capitalize()
-        menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.country?.capitalize()
+        if (CurrentUser.user?.currentLocation?.city == "") {
+            menuNavigation.getHeaderView(0).tvLocation.text = getString(R.string.add_address).capitalize()
+        } else {
+            menuNavigation.getHeaderView(0).tvLocation.text = user.currentLocation?.city?.capitalize()
 
-        if (user.profileImageUrl.isNotEmpty()) {
+        }
+        if (CurrentUser.user?.profileImageUrl!!.isNotEmpty()) {
             Glide
                 .with(this)
                 .load(user.profileImageUrl)
@@ -163,9 +163,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
 
         }
         CurrentUser.user = user
-
-
     }
+
 
     fun showProgress(enable: Boolean) {
         showProgress(enable, enable)

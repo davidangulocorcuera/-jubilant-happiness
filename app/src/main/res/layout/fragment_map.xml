@@ -1,21 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context=".modules.location.MapFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".modules.location.MapFragment">
+    <fragment
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context=".modules.location.MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            map:layout_constraintTop_toTopOf="parent" map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintBottom_toBottomOf="parent"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="40dp"
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              xmlns:map="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:id="@+id/map"
-              tools:context=".modules.location.MapsActivity"
-              android:name="com.google.android.gms.maps.SupportMapFragment"
-              map:layout_constraintTop_toTopOf="parent" map:layout_constraintStart_toStartOf="parent"
-              map:layout_constraintEnd_toEndOf="parent"
-              map:layout_constraintBottom_toBottomOf="parent"/>
+            android:id="@+id/btnNext"
+            android:src="@drawable/ic_save"
+            app:backgroundTint="@color/colorPrimary"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="40dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabCustomSize="40dp"
+            android:id="@+id/btnBack"
+            android:src="@drawable/ic_back"
+            app:backgroundTint="@color/materialRed800"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnNext"
+            app:layout_constraintHorizontal_bias="0.903" android:layout_marginBottom="40dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

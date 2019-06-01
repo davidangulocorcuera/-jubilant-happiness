@@ -10,12 +10,11 @@
               android:label="fragmentLogin"
               tools:layout="@layout/fragment_login">
 
-        <action android:id="@+id/goToLocation"
-                app:destination="@id/locationFragment"
-
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim"
-                app:popUpTo="@+id/loginFragment" app:popEnterAnim="@anim/nav_default_enter_anim"
+        <action android:id="@+id/goToDownloadFragment"
+                app:destination="@id/downloadDataFragment"
+                app:launchSingleTop="false"
+                app:popUpTo="@+id/locationFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_enter_anim"
                 app:popExitAnim="@anim/nav_default_exit_anim"/>
 
         <action android:id="@+id/goToRegister"
@@ -31,25 +30,25 @@
               android:label="fragmentRegister"
               tools:layout="@layout/fragment_register">
 
-        <action android:id="@+id/goToLocation"
-                app:destination="@id/locationFragment"
-                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
-                app:popEnterAnim="@anim/slide_in_up" app:popExitAnim="@anim/slide_out_to_bottom"
-                app:popUpTo="@+id/loginFragment"/>
-
-    </fragment>
-
-    <fragment android:id="@+id/locationFragment"
-              android:name="com.example.justfivemins.modules.location.LocationFragment"
-              android:label="fragmentLocation"
-              tools:layout="@layout/fragment_location"
-    >
         <action android:id="@+id/goToDownloadFragment"
                 app:destination="@id/downloadDataFragment"
                 app:launchSingleTop="false"
                 app:popUpTo="@+id/locationFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_enter_anim"
                 app:popExitAnim="@anim/nav_default_exit_anim"/>
+
+    </fragment>
+    <fragment android:id="@+id/mapFragment"
+              android:name="com.example.justfivemins.modules.location.MapFragment"
+              android:label="mapFragment"
+              tools:layout="@layout/fragment_map">
+
+        <action android:id="@+id/goToHomeFragment"
+                app:destination="@id/homeFragment"
+                app:enterAnim="@anim/nav_default_enter_anim" app:exitAnim="@anim/nav_default_exit_anim"
+                app:popEnterAnim="@anim/slide_in_up" app:popExitAnim="@anim/slide_out_to_bottom"
+                app:popUpTo="@+id/loginFragment"/>
+
     </fragment>
     <fragment android:id="@+id/downloadDataFragment"
               android:name="com.example.justfivemins.modules.downloadingDataScreen.DownloadDataFragment"
@@ -68,6 +67,11 @@
 
     <action android:id="@+id/goToProfileData"
             app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_up" app:exitAnim="@anim/slide_out_to_bottom"
+            app:popEnterAnim="@anim/slide_in_up" app:popExitAnim="@anim/slide_out_to_bottom"/>
+
+    <action android:id="@+id/goToMapFragment"
+            app:destination="@id/mapFragment"
             app:enterAnim="@anim/slide_in_up" app:exitAnim="@anim/slide_out_to_bottom"
             app:popEnterAnim="@anim/slide_in_up" app:popExitAnim="@anim/slide_out_to_bottom"/>
 

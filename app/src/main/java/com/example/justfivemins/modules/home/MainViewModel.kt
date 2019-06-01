@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.home
 
 import android.app.Activity
 import android.content.Context
+import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
@@ -82,6 +83,30 @@ class MainViewModel : ViewModel(),
         location.lat = addresses[0].latitude
         location.lng = addresses[0].longitude
         locationRequest.postValue(location)
+    }
+
+    fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
+        val location = LocationRequest()
+        val geocoder = Geocoder(context, Locale.getDefault())
+        val addresses: List<Address>
+
+        addresses = geocoder.getFromLocation(lat, lon, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+        if (addresses != null
+            && addresses.isNotEmpty()
+            && addresses[0].locality != null
+            && addresses[0].postalCode != null
+            && addresses[0].countryName != null) {
+
+            location.city = addresses[0].locality
+            location.country = addresses[0].countryName
+            location.postalCode = addresses[0].postalCode
+            location.lat = addresses[0].latitude
+            location.lng = addresses[0].longitude
+        }
+        locationRequest.postValue(location)
+
+
     }
 
     fun updateLocation(data: LocationRequest, activity: Activity, listener: ApiEventsListeners.LocationDataListener) {

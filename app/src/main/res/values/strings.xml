@@ -43,9 +43,9 @@
     <string name="title">Title</string>
     <string name="terms_text">I accept the</string>
     <string name="terms_of_use">terms of use</string>
-    <string name="location_title">We need your location</string>
+    <string name="location_title">Welcome</string>
     <string name="location_subtitle">
-        To relate to people close to you we need your location, any user can see your location.
+        You will be restored to a random location, then you can change it, adding pin in map, by random location, or with your own location
     </string>
     <string name="accept_permissions">Accept Permissions</string>
     <string name="filter_by">Filter By</string>
@@ -78,6 +78,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_ok_info">Image uploaded!</string>
     <string name="save_personal_data">Save personal data</string>
+    <string name="input_name_error">Invalid name or empty</string>
 
 
 </resources>

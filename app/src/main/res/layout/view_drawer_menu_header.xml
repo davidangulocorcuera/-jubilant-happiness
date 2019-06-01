@@ -61,21 +61,21 @@
 
         <TextView
                 android:id="@+id/tvMenuUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 tools:text="@string/username"
                 android:layout_marginBottom="@dimen/space_smallest"
                 android:textColor="@color/white"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
 
         />
-        <TextView android:layout_width="wrap_content"
+        <TextView android:layout_width="120dp"
                   android:id="@+id/tvLocation"
                   android:layout_height="wrap_content"
                   tools:text="@string/location"
                   style="@style/Clickable"
                   android:textColor="@color/colorPrimary"
-                  android:drawableEnd="@drawable/ic_refresh"
+                  android:drawableStart="@drawable/ic_refresh"
                   android:drawableTint="@color/colorPrimary"
                   android:drawablePadding = "@dimen/space_smallest"
         />

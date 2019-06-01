@@ -46,7 +46,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     private fun goToLocation() {
         view?.let {
-            findNavController(it).navigate(R.id.goToLocation)
+            Navigation.findNavController(it).navigate(R.id.goToDownloadFragment)
         }
     }
 
