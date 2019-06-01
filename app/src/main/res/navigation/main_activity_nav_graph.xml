@@ -13,7 +13,7 @@
         <action android:id="@+id/goToDownloadFragment"
                 app:destination="@id/downloadDataFragment"
                 app:launchSingleTop="false"
-                app:popUpTo="@+id/locationFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_enter_anim"
                 app:popExitAnim="@anim/nav_default_exit_anim"/>
 
@@ -33,7 +33,7 @@
         <action android:id="@+id/goToDownloadFragment"
                 app:destination="@id/downloadDataFragment"
                 app:launchSingleTop="false"
-                app:popUpTo="@+id/locationFragment" app:enterAnim="@anim/nav_default_enter_anim"
+                app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_enter_anim"
                 app:popExitAnim="@anim/nav_default_exit_anim"/>
 
@@ -60,10 +60,13 @@
                 app:destination="@id/homeFragment" app:enterAnim="@anim/nav_default_enter_anim"
                 app:exitAnim="@anim/nav_default_exit_anim"
                 app:popEnterAnim="@anim/slide_in_up"
-                app:popExitAnim="@anim/slide_out_to_bottom"/>
-        <argument android:name="users" app:argType="com.example.justfivemins.model.User[]"/>
-        <argument android:name="user" app:argType="com.example.justfivemins.model.User"/>
+                android:name="confirmationAction"
+
+                app:popExitAnim="@anim/slide_out_to_bottom" app:popUpTo="@+id/loginFragment"/>
     </fragment>
+
+
+
 
     <action android:id="@+id/goToProfileData"
             app:destination="@id/profileFragment"
@@ -79,6 +82,11 @@
               android:name="com.example.justfivemins.modules.home.homeFragment.HomeFragment"
               android:label="fragment_detail"
               tools:layout="@layout/fragment_home">
+        <action android:id="@+id/goToShowUsersFragment"
+                app:destination="@id/showUsersFragment">
+        </action>
+
+
     </fragment>
 
 
@@ -98,5 +106,9 @@
     <fragment android:id="@+id/showUsersFragment"
               android:name="com.example.justfivemins.modules.showUsersScreen.ShowUsersFragment"
               android:label="fragment_showUsers"
-              tools:layout="@layout/fragment_show_users"/>
+              tools:layout="@layout/fragment_show_users">
+
+        <argument android:name="users" app:argType="com.example.justfivemins.model.User[]"/>
+    </fragment>
+
 </navigation>

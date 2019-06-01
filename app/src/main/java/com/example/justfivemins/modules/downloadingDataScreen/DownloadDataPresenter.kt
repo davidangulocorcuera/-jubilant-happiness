@@ -7,6 +7,7 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.MainMVP
+import com.example.justfivemins.modules.home.homeFragment.HomeFragmentDirections
 
 
 class DownloadDataPresenter(private val view: View, val activity: Activity? = null) : MainMVP.Presenter,
@@ -19,6 +20,7 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
             activity = activity!!
         )
     }
+
     private lateinit var user: User
 
 
@@ -33,7 +35,10 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
 
         if (users.isNotEmpty()) {
             view.setUsersList(users)
-            view.navigateToHome()
+            view.navigateToHome(user)
+
+
+
 
         } else {
 
@@ -67,7 +72,7 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
     interface View : MainMVP.View {
         fun setUsersList(response: ArrayList<UserResponse>)
         fun showProgress(enable: Boolean)
-        fun navigateToHome()
+        fun navigateToHome(user: User)
     }
 
 

@@ -24,7 +24,6 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_profile_data.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
@@ -58,18 +57,14 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     override fun onStart() {
         super.onStart()
         mainViewModel.listenUserData()
-
     }
 
     override fun viewCreated(view: View?) {
 
-        mainViewModel.response.observe(this, Observer { response ->
-            response?.let {
-                setNewData(it)
-                showProgress(false)
+        setObservers()
 
-            }
-        })
+
+
         setDrawerMenu()
         menuOptions.clear()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
@@ -83,7 +78,30 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             this.findNavController().navigate(R.id.goToMapFragment)
         }
         setMenuData()
+        setCardsOnClickListeners()
+    }
 
+    private fun setObservers() {
+        mainViewModel.response.observe(this, Observer { response ->
+            response?.let {
+                setNewData(it)
+                showProgress(false)
+
+            }
+        })
+        mainViewModel.users.observe(this, Observer { response ->
+            response?.let {
+                users = it
+                showProgress(false)
+            }
+        })
+    }
+
+    private fun setCardsOnClickListeners() {
+        cvFilterByCountry.setOnClickListener {
+            val action = HomeFragmentDirections.goToShowUsersFragment(users.toTypedArray())
+            this.findNavController().navigate(action)
+        }
 
     }
 
@@ -152,7 +170,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         if (CurrentUser.user?.currentLocation?.city == "") {
             menuNavigation.getHeaderView(0).tvLocation.text = getString(R.string.add_address).capitalize()
         } else {
-            menuNavigation.getHeaderView(0).tvLocation.text = CurrentUser.user?.currentLocation?.city?.capitalize()
+            menuNavigation.getHeaderView(0).tvLocation.text =
+                CurrentUser.user?.currentLocation?.country?.capitalize() + "," + CurrentUser.user?.currentLocation?.city?.capitalize()
 
         }
         if (CurrentUser.user?.profileImageUrl!!.isNotEmpty()) {
@@ -162,8 +181,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
                 .centerCrop()
                 .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
 
-        }
-        else {
+        } else {
             menuNavigation.getHeaderView(0).ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
         }
     }

@@ -43,9 +43,10 @@ class MainViewModel : ViewModel(),
     }
     val usersResponse: MutableLiveData<ArrayList<User>> by lazy {
         MutableLiveData<ArrayList<User>>().also {
-            response
+            users
         }
     }
+
 
     private val profileImageUrl: MutableLiveData<String> by lazy {
         MutableLiveData<String>().also {
@@ -65,27 +66,6 @@ class MainViewModel : ViewModel(),
         if (success) {
             response.postValue(userResponse)
         }
-    }
-
-    fun getRandomLocation(context: Context) {
-        val location = LocationRequest()
-        val geoCoder = Geocoder(context, Locale.getDefault())
-        var addresses = geoCoder.getFromLocation(getRandomLat(), getRandomLon(), 1)
-
-
-            while (addresses == null
-                || addresses.isEmpty()
-                || addresses[0].countryName == null
-            ) {
-                addresses = geoCoder.getFromLocation(getRandomLat(), getRandomLon(), 1)
-            }
-
-        location.city = ""
-        location.country = addresses[0].countryName
-        location.postalCode = ""
-        location.lat = addresses[0].latitude
-        location.lng = addresses[0].longitude
-        locationRequest.postValue(location)
     }
 
     fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
@@ -126,19 +106,5 @@ class MainViewModel : ViewModel(),
         val firebaseFilesManager = FirebaseFilesManager(listener)
         firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
     }
-
-
-    private fun getRandomLat(): Double {
-        val r = Random()
-        val i = 0 + r.nextDouble() * (90 - 0)
-        return i
-    }
-
-    fun getRandomLon(): Double {
-        val r = Random()
-        return 0 + r.nextDouble() * (180 - 0)
-    }
-
-
 
 }
