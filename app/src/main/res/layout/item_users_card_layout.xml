@@ -3,106 +3,80 @@
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="160dp"
-        android:layout_height="wrap_content"
+        android:layout_height="110dp"
         android:elevation="10dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="3dp"
         style="@style/card"
-> <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/ivProfileImage"
-        android:src="@drawable/no_profile_image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout2"/>
-    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                                 android:layout_height="match_parent">
+>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ivProfileImage"
+            android:scaleType="fitXY"
+            android:src="@drawable/no_profile_image"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout2"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:background="@color/lightBlack"
+                android:background="@color/materialGreen600Light"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" android:id="@+id/linearLayout2"
-                android:layout_height="match_parent">
+                app:layout_constraintStart_toStartOf="parent"
+                android:padding="4dp"
+                android:id="@+id/linearLayout2"
+                android:layout_height="wrap_content" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="1.0">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/name"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    style="@style/subtitle"
+                    android:id="@+id/tvName"
+                    android:layout_marginEnd="@dimen/space_small"
+
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@string/location"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    style="@style/subtitle"
+                    android:id="@+id/tvLocation"
+
+            />
 
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_marginTop="@dimen/space_biggest"
-                          android:layout_marginStart="@dimen/space_small"
-                          android:layout_marginEnd="@dimen/space_small"
-            >
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:text="@string/name"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/white"
-                        style="@style/bold"
-                        android:id="@+id/tvName"
-                />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12sp"
+                      android:text="@string/age"
+                      android:layout_marginStart="@dimen/space_small"
+                      android:id="@+id/tvAge"
+                      android:textColor="@color/white"
+                      style="@style/subtitle"
+            />
 
 
-                <TextView android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="12sp"
-                          android:text="@string/age"
-                          android:layout_marginStart="@dimen/space_small"
-                          android:id="@+id/tvAge"
-                          android:textColor="@color/white"
-                          style="@style/bold"
-                />
-            </LinearLayout>
-
-
-            <View android:layout_width="match_parent" android:layout_height="1dp"
-                  android:background="@color/white"
-                  android:layout_margin="@dimen/space_small"
-                  app:layout_constraintBottom_toBottomOf="@+id/imageView"/>
-
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:orientation="horizontal"
-                          android:layout_gravity="end"
-                          android:layout_marginBottom="@dimen/space_small"
-                          android:layout_marginEnd="@dimen/space_small"
-                          android:padding="@dimen/space_small"
-
-            >
-
-                <ImageButton android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/btnAddFriend"
-                             android:tint="@color/white"
-                             android:background="@android:color/transparent"
-                             android:src="@drawable/ic_add_friend"
-                             android:layout_marginStart="@dimen/space_small"
-                             android:layout_marginEnd="@dimen/space_smallest"
-                             style="@style/Clickable"
-
-                />
-                <ImageButton android:layout_width="wrap_content"
-                             android:layout_height="wrap_content"
-                             android:id="@+id/btnSendMessage"
-                             android:tint="@color/white"
-                             android:background="@android:color/transparent"
-                             android:src="@drawable/ic_messages"
-                             android:layout_marginStart="@dimen/space_small"
-                             style="@style/Clickable"
-
-                />
-
-
-            </LinearLayout>
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

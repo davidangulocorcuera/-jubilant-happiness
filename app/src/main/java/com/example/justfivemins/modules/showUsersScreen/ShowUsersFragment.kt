@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.showUsersScreen
 
 
 import android.view.View
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,13 +16,15 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
     private val usersPresenter: ShowUsersPresenter by lazy { ShowUsersPresenter(this) }
     private lateinit var usersListAdapter: ShowUsersListAdapter
     private var users: ArrayList<User> = ArrayList()
+    private val args: ShowUsersFragmentArgs by navArgs()
 
 
     override fun viewCreated(view: View?) {
         initUsersList()
-        val args: ShowUsersFragmentArgs by navArgs()
         usersPresenter.init(args)
-
+        btnBack.setOnClickListener {
+            Navigation.findNavController(it).popBackStack()
+        }
     }
 
     override fun onCreateViewId(): Int {
@@ -40,4 +43,9 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
         usersListAdapter.notifyDataSetChanged()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initUsersList()
+        usersPresenter.init(args)
+    }
 }

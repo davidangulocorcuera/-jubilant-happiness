@@ -51,7 +51,10 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
-        mainViewModel.uploadProfileImage(adjustaProfilePicture(data?.data!!),this)
+        data?.data?.let {
+            mainViewModel.uploadProfileImage(adjustaProfilePicture(it),this)
+
+        }
     }
 
     override fun isUrlSaved(success: Boolean, url: String) {

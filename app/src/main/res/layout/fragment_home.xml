@@ -138,6 +138,8 @@
                             android:layout_height="110dp"
                             app:cardCornerRadius="2dp"
                             android:elevation="@dimen/space_medium"
+                            android:id="@+id/cvFilterByPostalCode"
+
 
                     >
                         <androidx.constraintlayout.widget.ConstraintLayout
@@ -179,6 +181,8 @@
                             android:layout_height="110dp"
                             app:cardCornerRadius="2dp"
                             android:elevation="@dimen/space_medium"
+                            android:id="@+id/cvRandomUsers"
+
 
                     >
                         <androidx.constraintlayout.widget.ConstraintLayout

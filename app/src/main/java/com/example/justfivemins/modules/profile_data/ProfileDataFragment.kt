@@ -32,7 +32,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
-    private var profileImageUrl = ""
 
 
     override fun onCreateViewId(): Int {
@@ -193,12 +192,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             .onSameThread()
             .check()
     }
-
-//    private fun uploadProfileImage(img: Bitmap) {
-//        val firebaseFilesManager = FirebaseFilesManager(this)
-//        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
-//    }
-
 
     override fun showNameError(error: Boolean) {
         if (error) {

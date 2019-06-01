@@ -97,8 +97,43 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         })
     }
 
+    private lateinit var usersFilteredList: List<User>
+    private lateinit var usersFilteredArray: Array<User>
+    private lateinit var usersFilteredArrayList: ArrayList<User>
+
     private fun setCardsOnClickListeners() {
+
         cvFilterByCountry.setOnClickListener {
+            usersFilteredList = users.filter {
+                it.currentLocation?.country == CurrentUser.user?.currentLocation!!.country
+            }
+             usersFilteredArrayList = ArrayList(usersFilteredList)
+             usersFilteredArray = usersFilteredArrayList.toTypedArray()
+
+            val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
+            this.findNavController().navigate(action)
+        }
+        cvFilterByCity.setOnClickListener {
+            usersFilteredList = users.filter {
+                it.currentLocation?.city == CurrentUser.user?.currentLocation!!.city
+            }
+            usersFilteredArrayList = ArrayList(usersFilteredList)
+            usersFilteredArray = usersFilteredArrayList.toTypedArray()
+
+            val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
+            this.findNavController().navigate(action)
+        }
+        cvFilterByPostalCode.setOnClickListener {
+            usersFilteredList = users.filter {
+                it.currentLocation?.postalCode == CurrentUser.user?.currentLocation!!.postalCode
+            }
+            usersFilteredArrayList = ArrayList(usersFilteredList)
+            usersFilteredArray = usersFilteredArrayList.toTypedArray()
+
+            val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
+            this.findNavController().navigate(action)
+        }
+        cvRandomUsers.setOnClickListener {
             val action = HomeFragmentDirections.goToShowUsersFragment(users.toTypedArray())
             this.findNavController().navigate(action)
         }

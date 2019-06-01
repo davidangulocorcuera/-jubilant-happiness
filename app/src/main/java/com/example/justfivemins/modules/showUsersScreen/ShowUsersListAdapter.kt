@@ -40,13 +40,20 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
         private fun setValues() {
             view.tvName.text = current.name
             view.tvAge.text = current.age.toString()
-            Glide
-                .with(activity)
-                .load(current.profileImageUrl)
-                .centerCrop()
-                .into(view.ivProfileImage)
+            view.tvLocation.text = current.currentLocation?.country
+            if (current.profileImageUrl.isNotEmpty()) {
+                Glide
+                    .with(activity)
+                    .load(current.profileImageUrl)
+                    .centerCrop()
+                    .into(view.ivProfileImage)
+
+            } else {
+                view.ivProfileImage.setImageResource(R.drawable.no_profile_image)
+            }
 
         }
+
 
     }
 }
