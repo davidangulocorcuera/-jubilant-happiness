@@ -3,12 +3,6 @@ package com.example.justfivemins.modules.profile_data
 
 import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
-import android.net.Uri
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -19,9 +13,7 @@ import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
-import com.example.justfivemins.api.filesManager.FilesEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
-import com.example.justfivemins.api.firebase.FirebaseFilesManager
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
@@ -34,17 +26,13 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.fragment_profile_data.*
 import org.aviran.cookiebar2.CookieBar
-import java.io.File
 
 
-class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener,
-    FilesEventsListeners.UploadProfileImageListener {
+class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener {
 
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
     private var profileImageUrl = ""
-    private var bitmapSelected: Bitmap? = null
-
 
 
     override fun onCreateViewId(): Int {
@@ -54,7 +42,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     override fun onResume() {
         super.onResume()
         enableScreenOnUpdate(true)
-        showProgress(false,false)
+        showProgress(false, false)
 
     }
 
@@ -80,7 +68,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         enableDrawerMenu(false)
         btnNext.setOnClickListener {
             enableScreenOnUpdate(false)
-            showProgress(true,true)
+            showProgress(true, true)
             updateUser(retrieveRegisterData())
         }
         ivProfileImage.setOnClickListener {
@@ -92,14 +80,13 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
         }
         val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
-        mainViewModel.picture.observe(this, Observer { image ->
-            image?.let {
+        mainViewModel.url.observe(this, Observer { url ->
+            url?.let {
                 Glide
                     .with(this)
-                    .load(it)
+                    .load(url)
                     .centerCrop()
                     .into(ivProfileImage)
-                bitmapSelected = it
             }
         })
     }
@@ -137,7 +124,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         updateUserRequest.description = etDescription.text.toString()
         updateUserRequest.university = etUniversity.text.toString()
         updateUserRequest.job = etJob.text.toString()
-        updateUserRequest.profileImageUrl = profileImageUrl
+        updateUserRequest.profileImageUrl = CurrentUser.user?.profileImageUrl!!
         return updateUserRequest
     }
 
@@ -153,16 +140,21 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun isUserUpdated(success: Boolean) {
-        showProgress(show = false, hasShade = false)
+        showProgress(false, false)
         if (success) {
-            view?.let {
-                Navigation.findNavController(it).navigate(R.id.goToHome)
-            }
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setBackgroundColor(R.color.green_notification)
+                .setMessage("Data saved!")
+                .show()
+            enableScreenOnUpdate(true)
         } else {
-            Toast.makeText(
-                activity?.applicationContext, "Register failed.",
-                Toast.LENGTH_SHORT
-            ).show()
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setBackgroundColor(R.color.green_notification)
+                .setMessage("Error saving data , maybe because you don´´ have internet connection")
+                .show()
+            enableScreenOnUpdate(true)
         }
     }
 
@@ -185,11 +177,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
                 override fun onPermissionsChecked(report: MultiplePermissionsReport) {
                     if (report.areAllPermissionsGranted()) {
                         chooseImage()
-                        enableScreenOnUpdate(false)
-                        showProgress(true,true)
-                        bitmapSelected?.let {
-                            uploadProfileImage(it)
-                        }
                     }
                     if (report.isAnyPermissionPermanentlyDenied) {
                         // permission is denied permenantly, navigate user to app settings
@@ -207,46 +194,11 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             .check()
     }
 
-    private fun uploadProfileImage(img: Bitmap) {
-        val firebaseFilesManager = FirebaseFilesManager(this)
-        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
-    }
+//    private fun uploadProfileImage(img: Bitmap) {
+//        val firebaseFilesManager = FirebaseFilesManager(this)
+//        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
+//    }
 
-    private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
-        val matrix: Matrix = Matrix()
-        matrix.postRotate(degrees.toFloat())
-        return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
-
-    override fun isImageUploaded(success: Boolean) {
-        if (success) {
-            CookieBar.build(activity)
-                .setCookiePosition(CookieBar.BOTTOM)
-                .setSwipeToDismiss(false)
-                .setTitle(getString(R.string.image_ok_info))
-                .setBackgroundColor(R.color.green_notification)
-                .setDuration(500L)
-                .show()
-
-        } else {
-            Toast.makeText(
-                activity?.applicationContext, "image Uploaded",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    override fun isUrlSaved(success: Boolean, url: String) {
-        if (success) {
-            profileImageUrl = url
-        } else {
-            Toast.makeText(
-                activity?.applicationContext, "image Uploaded",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-    }
 
     override fun showNameError(error: Boolean) {
         if (error) {

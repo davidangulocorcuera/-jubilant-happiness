@@ -9,7 +9,9 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.justfivemins.api.ApiEventsListeners
+import com.example.justfivemins.api.filesManager.FilesEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
+import com.example.justfivemins.api.firebase.FirebaseFilesManager
 import com.example.justfivemins.api.requests.LocationRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
@@ -18,7 +20,7 @@ import java.util.*
 
 class MainViewModel : ViewModel(),
     ApiEventsListeners.OnDataChangedListener{
-    val picture = MutableLiveData<Bitmap>()
+    val url = MutableLiveData<String>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
     val locationRequest = MutableLiveData<LocationRequest>()
@@ -45,9 +47,9 @@ class MainViewModel : ViewModel(),
         }
     }
 
-    private val profileImage: MutableLiveData<Bitmap> by lazy {
-        MutableLiveData<Bitmap>().also {
-            picture
+    private val profileImageUrl: MutableLiveData<String> by lazy {
+        MutableLiveData<String>().also {
+            url
         }
     }
 
@@ -119,6 +121,12 @@ class MainViewModel : ViewModel(),
         }
         firebaseApiManager.updateLocation(data, CurrentUser.firebaseUser!!.uid)
     }
+
+     fun uploadProfileImage(img: Bitmap , listener: FilesEventsListeners.UploadProfileImageListener) {
+        val firebaseFilesManager = FirebaseFilesManager(listener)
+        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
+    }
+
 
     private fun getRandomLat(): Double {
         val r = Random()

@@ -15,7 +15,20 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             map:layout_constraintTop_toTopOf="parent" map:layout_constraintStart_toStartOf="parent"
             map:layout_constraintEnd_toEndOf="parent"
-            map:layout_constraintBottom_toBottomOf="parent"/>
+            map:layout_constraintBottom_toBottomOf="parent" map:layout_constraintHorizontal_bias="1.0"
+            map:layout_constraintVertical_bias="1.0"/>
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="@string/add_marker_info"
+              android:background="@color/lightBlack"
+              style="@style/subtitle"
+              android:gravity="center"
+              android:textColor="@color/white"
+              android:padding="@dimen/space_big"
+              app:layout_constraintTop_toTopOf="@+id/map"
+              app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+              />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

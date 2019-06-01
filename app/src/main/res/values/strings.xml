@@ -79,6 +79,7 @@
     <string name="image_ok_info">Image uploaded!</string>
     <string name="save_personal_data">Save personal data</string>
     <string name="input_name_error">Invalid name or empty</string>
+    <string name="add_marker_info">Hold on to add a new location</string>
 
 
 </resources>
