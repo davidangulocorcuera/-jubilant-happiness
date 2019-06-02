@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="160dp"
+        android:layout_height="140dp"
+        android:layout_margin="@dimen/space_small"
+        style="@style/card"
+        android:elevation="@dimen/space_medium">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+    >
+
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:src="@drawable/no_profile_image"
+                   android:scaleType="fitXY"
+                   android:id="@+id/ivProfileImage"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        />
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:scaleType="fitXY"
+                   android:id="@+id/viewDark"
+                   android:background="@color/lightBlackDark"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                   app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_small"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:orientation="vertical"
+                          android:layout_height="wrap_content">
+
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/name"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/white"
+                        style="@style/title_medium"
+                        android:textSize="@dimen/big_font"
+                        android:id="@+id/tvName"
+                        android:layout_marginEnd="@dimen/space_medium"
+
+                />
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/medium_font"
+                        android:text="@string/location"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/white"
+                        style="@style/subtitle"
+                        android:id="@+id/tvLocation"
+
+                />
+            </LinearLayout>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/medium_font"
+                    android:text="00"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    style="@style/subtitle"
+                    android:id="@+id/tvAge"/>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+
+

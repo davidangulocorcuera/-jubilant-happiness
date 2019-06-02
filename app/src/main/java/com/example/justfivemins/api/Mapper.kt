@@ -45,15 +45,15 @@ object Mapper {
 
       if(response.isNotEmpty()){
           response.let {
-              userResponse.name = it["name"] as String
+              userResponse.name = (it["name"] as String).capitalize()
               userResponse.birthday = it["birthday"] as String
               userResponse.email = it["email"] as String
               userResponse.age = Integer.parseInt(it["age"].toString())
               userResponse.gender = User.Gender.valueOf(it["gender"].toString())
               userResponse.job = it["job"] as String
               userResponse.university = it["university"] as String
-              userResponse.surname = it["surname"] as String
-              userResponse.description = it["description"] as String
+              userResponse.surname = (it["surname"] as String).capitalize()
+              userResponse.description = (it["description"] as String).capitalize()
               userResponse.profileImageUrl = it["profileImageUrl"] as String
 
 
@@ -64,8 +64,8 @@ object Mapper {
                       location.lng = locationMap["lng"] as Double
                       location.lat = locationMap["lat"] as Double
                       location.postalCode = locationMap["postalCode"] as String
-                      location.city = locationMap["city"] as String
-                      location.country = locationMap["country"] as String
+                      location.city = (locationMap["city"] as String).capitalize()
+                      location.country = (locationMap["country"] as String).capitalize()
                   }
               }
               userResponse.location = location

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
@@ -32,8 +33,8 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
     }
 
     private fun initUsersList() {
-        val layoutManager = GridLayoutManager(activity, 2)
-        rvUsers.layoutManager = layoutManager as RecyclerView.LayoutManager?
+        val layoutManager = GridLayoutManager(activity,2)
+        rvUsers.layoutManager = layoutManager
         usersListAdapter =
             ShowUsersListAdapter(activity = activity!!)
         rvUsers.adapter = usersListAdapter

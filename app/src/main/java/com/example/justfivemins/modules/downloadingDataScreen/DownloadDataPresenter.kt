@@ -7,7 +7,6 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.MainMVP
-import com.example.justfivemins.modules.home.homeFragment.HomeFragmentDirections
 
 
 class DownloadDataPresenter(private val view: View, val activity: Activity? = null) : MainMVP.Presenter,
@@ -36,10 +35,6 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
         if (users.isNotEmpty()) {
             view.setUsersList(users)
             view.navigateToHome(user)
-
-
-
-
         } else {
 
         }

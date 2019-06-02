@@ -2,81 +2,80 @@
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
-        android:layout_width="160dp"
-        android:layout_height="110dp"
-        android:elevation="10dp"
+        android:layout_width="380dp"
+        android:layout_height="550dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="@dimen/space_medium"
+        style="@style/Clickable"
+        android:backgroundTint="@color/lightGrey"
         android:layout_margin="10dp"
-        app:cardCornerRadius="3dp"
-        style="@style/card"
 >
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/ivProfileImage"
-            android:scaleType="fitXY"
-            android:src="@drawable/no_profile_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/space_medium"
+            android:src="@drawable/ic_add_friend"
+            android:tint="@color/white"
+            android:elevation="@dimen/space_small"
+    />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+        <ImageView android:layout_width="match_parent"
+                   android:layout_height="350dp"
+                   android:src="@drawable/no_profile_image"
+                   android:scaleType="fitXY"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   android:id="@+id/ivProfileImage"
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
+        />
         <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:background="@color/materialGreen600Light"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:padding="4dp"
-                android:id="@+id/linearLayout2"
-                android:layout_height="wrap_content" app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintVertical_bias="1.0">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/space_medium_big"
+                android:background="@color/white"
+        >
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center"
+                          android:orientation="vertical"
+                          android:padding="@dimen/space_medium"
 
-            <TextView
-                    android:layout_width="wrap_content"
+            >  <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15sp"
                     android:text="@string/name"
                     android:gravity="center_vertical"
-                    android:textColor="@color/white"
-                    style="@style/subtitle"
+                    android:textColor="@color/lightBlackDark"
+                    style="@style/title_medium"
+                    android:textSize="@dimen/biggest_font"
                     android:id="@+id/tvName"
                     android:layout_marginEnd="@dimen/space_small"
 
-            />
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="@string/location"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/white"
-                    style="@style/subtitle"
-                    android:id="@+id/tvLocation"
 
             />
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/big_font"
+                        android:text="@string/location"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/lightBlackDark"
+                        style="@style/subtitle"
+                        android:id="@+id/tvLocation"
+
+                />
 
 
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="12sp"
-                      android:text="@string/age"
-                      android:layout_marginStart="@dimen/space_small"
-                      android:id="@+id/tvAge"
-                      android:textColor="@color/white"
-                      style="@style/subtitle"
-            />
 
 
-
+            </LinearLayout>
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

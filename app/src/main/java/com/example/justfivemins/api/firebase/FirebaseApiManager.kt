@@ -14,10 +14,7 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.*
 
 
 class FirebaseApiManager(
@@ -26,7 +23,8 @@ class FirebaseApiManager(
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
     , private val userDataListener: ApiEventsListeners.UserDataListener? = null
-    , private val onUserDataChangedListenerListener: ApiEventsListeners.OnDataChangedListener? = null
+    , private val onUserUserDataChangedListener: ApiEventsListeners.OnUserDataChangedListener? = null
+    , private val onDataChangedListener: ApiEventsListeners.OnDataChangedListener? = null
     , private val onGetUsersListener: ApiEventsListeners.GetUsersListener? = null
     , private val activity: Activity? = null
 ) : Api {
@@ -119,16 +117,36 @@ class FirebaseApiManager(
                 @Nullable e: FirebaseFirestoreException?
             ) {
                 if (e != null) {
-                    onUserDataChangedListenerListener?.isUserDataChanged(false, UserResponse())
+                    onUserUserDataChangedListener?.isUserDataChanged(false, UserResponse())
                     return
                 }
 
                 if (snapshot != null && snapshot.exists()) {
                     val user = Mapper.userResponseMapper(snapshot.data!!)
-                    onUserDataChangedListenerListener?.isUserDataChanged(true, user)
+                    onUserUserDataChangedListener?.isUserDataChanged(true, user)
 
                 } else {
-                    onUserDataChangedListenerListener?.isUserDataChanged(false, UserResponse())
+                    onUserUserDataChangedListener?.isUserDataChanged(false, UserResponse())
+                }
+            }
+        })
+    }
+    override fun onDataChanged() {
+        val docRef = db.collection("users")
+        docRef.addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(
+                @Nullable snapshot: QuerySnapshot?,
+                @Nullable e: FirebaseFirestoreException?
+            ) {
+                if (e != null) {
+                    onDataChangedListener?.isDataChanged(false, ArrayList())
+                    return
+                }
+                if (snapshot != null) {
+                    onDataChangedListener?.isDataChanged(true, Mapper.mapAllUsers(snapshot))
+
+                } else {
+                    onDataChangedListener?.isDataChanged(false, ArrayList())
                 }
             }
         })
@@ -139,8 +157,6 @@ class FirebaseApiManager(
 
         docRef.get()
             .addOnSuccessListener { document ->
-
-
                 if (document != null) {
                     onGetUsersListener?.areUsersSaved(
                         true,

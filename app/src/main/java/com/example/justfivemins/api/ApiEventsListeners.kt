@@ -17,7 +17,7 @@ interface ApiEventsListeners{
     interface UpdateUserListener {
         fun isUserUpdated(success: Boolean)
     }
-    interface OnDataChangedListener{
+    interface OnUserDataChangedListener{
         fun isUserDataChanged(success: Boolean, userResponse: UserResponse)
     }
     interface GetUsersListener{
@@ -25,6 +25,9 @@ interface ApiEventsListeners{
     }
     interface UserDataListener {
         fun isUserDataSaved(success: Boolean, userResponse: UserResponse)
+    }
+    interface OnDataChangedListener{
+        fun isDataChanged(success: Boolean, users: ArrayList<UserResponse>)
     }
 
 }

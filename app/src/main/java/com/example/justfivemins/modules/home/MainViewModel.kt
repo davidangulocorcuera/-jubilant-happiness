@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
-import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.justfivemins.api.ApiEventsListeners
@@ -17,18 +16,23 @@ import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainViewModel : ViewModel(),
-    ApiEventsListeners.OnDataChangedListener{
+    ApiEventsListeners.OnUserDataChangedListener,ApiEventsListeners.OnDataChangedListener{
+
+
     val url = MutableLiveData<String>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
+    val usersUpdatedResponse = MutableLiveData<ArrayList<User>>()
     val locationRequest = MutableLiveData<LocationRequest>()
 
 
     val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
-            onUserDataChangedListenerListener = this
+            onUserUserDataChangedListener = this,
+            onDataChangedListener = this
         )
     }
     val locationMutable: MutableLiveData<LocationRequest> by lazy {
@@ -46,14 +50,17 @@ class MainViewModel : ViewModel(),
             users
         }
     }
+    val usersUpdated: MutableLiveData<ArrayList<User>> by lazy {
+        MutableLiveData<ArrayList<User>>().also {
+            usersUpdatedResponse
+        }
+    }
 
-
-    private val profileImageUrl: MutableLiveData<String> by lazy {
+    val profileImageUrl: MutableLiveData<String> by lazy {
         MutableLiveData<String>().also {
             url
         }
     }
-
 
     fun listenUserData() {
         CurrentUser.firebaseUser?.let {
@@ -62,10 +69,11 @@ class MainViewModel : ViewModel(),
 
     }
 
-    override fun isUserDataChanged(success: Boolean, userResponse: UserResponse) {
-        if (success) {
-            response.postValue(userResponse)
+    fun listenUsersData() {
+        CurrentUser.firebaseUser?.let {
+            firebaseApiManager.onDataChanged()
         }
+
     }
 
     fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
@@ -106,5 +114,42 @@ class MainViewModel : ViewModel(),
         val firebaseFilesManager = FirebaseFilesManager(listener)
         firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
     }
+
+
+    override fun isUserDataChanged(success: Boolean, userResponse: UserResponse) {
+        if (success) {
+            response.postValue(userResponse)
+        }
+    }
+
+    override fun isDataChanged(success: Boolean, users: ArrayList<UserResponse>) {
+        if (success) {
+            this.usersUpdatedResponse.postValue(setUsersList(users))
+        }
+    }
+
+    private fun setUsersList(response: ArrayList<UserResponse>): ArrayList<User> {
+        var unknownUser: User = User()
+        val usersList: ArrayList<User> = ArrayList()
+        response.forEach { userResponse ->
+            unknownUser.name = userResponse.name
+            unknownUser.email = userResponse.email
+            unknownUser.birthday = userResponse.birthday
+            unknownUser.currentLocation = userResponse.location
+            unknownUser.age = userResponse.age
+
+            unknownUser.surname = userResponse.surname
+            unknownUser.jobName = userResponse.job
+            unknownUser.universityName = userResponse.university
+            unknownUser.description = userResponse.description
+            unknownUser.profileImageUrl = userResponse.profileImageUrl
+
+
+            usersList.add(unknownUser)
+            unknownUser = User()
+        }
+        return usersList
+    }
+
 
 }

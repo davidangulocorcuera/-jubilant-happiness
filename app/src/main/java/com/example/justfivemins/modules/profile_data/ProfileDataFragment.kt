@@ -32,6 +32,9 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
+    }
 
 
     override fun onCreateViewId(): Int {
@@ -64,7 +67,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         })
 
         setTextViews()
-        enableDrawerMenu(false)
+
+
         btnNext.setOnClickListener {
             enableScreenOnUpdate(false)
             showProgress(true, true)
@@ -78,7 +82,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             Navigation.findNavController(it).popBackStack()
 
         }
-        val mainViewModel = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
         mainViewModel.url.observe(this, Observer { url ->
             url?.let {
                 Glide
@@ -210,8 +213,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
     override fun onDestroy() {
         super.onDestroy()
-        enableDrawerMenu(true)
-        showToolbar()
         CookieBar.dismiss(activity)
     }
 

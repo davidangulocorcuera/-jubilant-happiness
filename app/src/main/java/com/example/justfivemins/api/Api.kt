@@ -14,5 +14,5 @@ interface Api {
      fun onUserDataChanged(userId: String)
      fun getAllUsers()
      fun getUserData(currentUser: FirebaseUser)
-
+     fun onDataChanged()
 }

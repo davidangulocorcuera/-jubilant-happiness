@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.home.homeFragment
 
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -30,14 +31,6 @@ import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener {
 
-    override fun isLocationUpdated(success: Boolean) {
-        menuNavigation.getHeaderView(0).tvLocation.isEnabled = true
-        showProgress(false, false)
-        if (success) {
-        } else {
-
-        }
-    }
 
 
     private var currentUser = User()
@@ -48,23 +41,18 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
     }
+    private lateinit var usersFilteredList: List<User>
+    private lateinit var usersFilteredArray: Array<User>
+    private lateinit var usersFilteredArrayList: ArrayList<User>
 
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_home
     }
 
-    override fun onStart() {
-        super.onStart()
-        mainViewModel.listenUserData()
-    }
-
     override fun viewCreated(view: View?) {
 
         setObservers()
-
-
-
         setDrawerMenu()
         menuOptions.clear()
         menuOptions = DrawerItem.addMenuOptions(menuOptions)
@@ -79,6 +67,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         }
         setMenuData()
         setCardsOnClickListeners()
+        mainViewModel.listenUsersData()
+
     }
 
     private fun setObservers() {
@@ -95,11 +85,14 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
                 showProgress(false)
             }
         })
+        mainViewModel.usersUpdatedResponse.observe(this, Observer { response ->
+            response?.let {
+                users = it
+                Log.v("taag",users.size.toString())
+                showProgress(false)
+            }
+        })
     }
-
-    private lateinit var usersFilteredList: List<User>
-    private lateinit var usersFilteredArray: Array<User>
-    private lateinit var usersFilteredArrayList: ArrayList<User>
 
     private fun setCardsOnClickListeners() {
 
@@ -258,6 +251,20 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         drawerLayout.setDrawerLockMode(lockMode)
 
         toggleHome.isDrawerIndicatorEnabled = enabled
+    }
+
+    override fun isLocationUpdated(success: Boolean) {
+        menuNavigation.getHeaderView(0).tvLocation.isEnabled = true
+        showProgress(false, false)
+        if (success) {
+        } else {
+
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mainViewModel.listenUserData()
     }
 
 }
