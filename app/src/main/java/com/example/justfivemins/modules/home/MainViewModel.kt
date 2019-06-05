@@ -116,11 +116,19 @@ class MainViewModel : ViewModel(),
     }
 
 
+    /**
+     * post current user with changes when collection have changes
+     * */
+
     override fun isUserDataChanged(success: Boolean, userResponse: UserResponse) {
         if (success) {
             response.postValue(userResponse)
         }
     }
+
+    /**
+     * post all users with changes when collection have changes
+     * */
 
     override fun isDataChanged(success: Boolean, users: ArrayList<UserResponse>) {
         if (success) {

@@ -126,6 +126,26 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+        cvFilterByJob.setOnClickListener {
+            usersFilteredList = users.filter {
+                it.jobName == CurrentUser.user?.jobName
+            }
+            usersFilteredArrayList = ArrayList(usersFilteredList)
+            usersFilteredArray = usersFilteredArrayList.toTypedArray()
+
+            val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
+            this.findNavController().navigate(action)
+        }
+        cvFilterByUniversity.setOnClickListener {
+            usersFilteredList = users.filter {
+                it.universityName == CurrentUser.user?.universityName
+            }
+            usersFilteredArrayList = ArrayList(usersFilteredList)
+            usersFilteredArray = usersFilteredArrayList.toTypedArray()
+
+            val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
+            this.findNavController().navigate(action)
+        }
         cvRandomUsers.setOnClickListener {
             val action = HomeFragmentDirections.goToShowUsersFragment(users.toTypedArray())
             this.findNavController().navigate(action)
@@ -169,7 +189,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
 
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
-//                    navigator.addExtra("users",users).addExtra("currentUser",currentUser).navigateToFilterFragment()
+                    drawerLayout.closeDrawer(GravityCompat.START)
+
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
 //                    navigator.navigateToMain()
@@ -219,9 +240,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         showProgress(enable, enable)
     }
 
-    fun setCurrentUser(user: User) {
-        this.currentUser = user
-    }
 
     fun setNewData(userResponse: UserResponse) {
         currentUser.name = userResponse.name
@@ -237,10 +255,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         currentUser.profileImageUrl = userResponse.profileImageUrl
         CurrentUser.user = currentUser
         setMenuData()
-    }
-
-    fun setUsers(user: ArrayList<User>) {
-        users = user
     }
 
     override fun setDrawerEnabled(enabled: Boolean) {

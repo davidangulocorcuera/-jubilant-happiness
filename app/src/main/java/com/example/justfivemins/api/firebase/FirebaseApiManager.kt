@@ -17,6 +17,10 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
 
 
+/**
+ * Firebase api
+ * */
+
 class FirebaseApiManager(
     private val loginListener: ApiEventsListeners.LoginListener? = null
     , private val registerListener: ApiEventsListeners.RegisterListener? = null

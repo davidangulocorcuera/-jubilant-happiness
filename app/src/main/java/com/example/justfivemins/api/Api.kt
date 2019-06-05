@@ -6,6 +6,10 @@ import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.google.firebase.auth.FirebaseUser
 
+/**
+ * Implement this interface if you gonna change the api service
+ * */
+
 interface Api {
      fun createUser(registerRequest: RegisterRequest)
      fun loginUser(loginRequest: LoginRequest)

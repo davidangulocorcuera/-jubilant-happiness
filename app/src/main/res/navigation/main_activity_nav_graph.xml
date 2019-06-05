@@ -111,4 +111,5 @@
         <argument android:name="users" app:argType="com.example.justfivemins.model.User[]"/>
     </fragment>
 
+
 </navigation>

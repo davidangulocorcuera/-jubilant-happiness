@@ -15,7 +15,8 @@ import com.example.justfivemins.R
 import kotlinx.android.synthetic.main.item_user_card.view.*
 
 
-class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activity: Activity) : BaseRecyclerAdapter<User, ShowUsersListAdapter.ViewHolder>() {
+class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activity: Activity,var onUserClick: (User) -> Unit) : BaseRecyclerAdapter<User, ShowUsersListAdapter.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_user_card, parent, false)
@@ -25,6 +26,7 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
 
     init {
         list = items
+
     }
 
 
@@ -32,16 +34,22 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
         private lateinit var current: User
 
 
+
+
         override fun bind(position: Int) {
             current = getItem(position)
             setValues()
 
+            view.setOnClickListener {
+                onUserClick(current)
+            }
         }
 
         private fun setValues() {
             view.tvName.text = current.name
             view.tvAge.text = current.age.toString()
             view.tvLocation.text = current.currentLocation?.country
+
 
             if (current.profileImageUrl.isNotEmpty()) {
                 Glide

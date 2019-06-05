@@ -1,6 +1,7 @@
 package com.example.justfivemins.modules.showUsersScreen
 
 
+import android.util.Log
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -35,9 +36,15 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
     private fun initUsersList() {
         val layoutManager = GridLayoutManager(activity,2)
         rvUsers.layoutManager = layoutManager
-        usersListAdapter =
-            ShowUsersListAdapter(activity = activity!!)
+        setListListener()
         rvUsers.adapter = usersListAdapter
+    }
+
+    private fun setListListener(){
+        usersListAdapter =
+            ShowUsersListAdapter(activity = activity!!){
+                Log.v("taag", it.name)
+            }
     }
     override fun setUsers(usersLoaded: ArrayList<User>) {
         usersListAdapter.addAll(usersLoaded)

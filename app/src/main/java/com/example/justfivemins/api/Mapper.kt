@@ -7,6 +7,9 @@ import com.example.justfivemins.model.User
 import com.google.firebase.firestore.QuerySnapshot
 
 
+/**
+ * Class for map data responses
+ * */
 object Mapper {
     fun registerRequestMapper(registerRequest: RegisterRequest): Map<String, Any> {
         val data = HashMap<String, Any>()

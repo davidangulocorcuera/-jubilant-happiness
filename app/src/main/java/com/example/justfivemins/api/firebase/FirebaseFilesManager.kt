@@ -15,7 +15,9 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 
-
+/**
+ * Firebase storage server
+ * */
 class FirebaseFilesManager( private val uploadImageListener: FilesEventsListeners.UploadProfileImageListener? = null, var activity: Activity? = null): FilesManager {
 
     private val storageRef = FirebaseStorage.getInstance().reference

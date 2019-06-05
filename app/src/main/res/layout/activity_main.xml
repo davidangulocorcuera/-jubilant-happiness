@@ -5,6 +5,8 @@
               tools:context=".modules.home.MainActivity"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
+
     <fragment
             android:id="@+id/navHostActivity"
             android:name="androidx.navigation.fragment.NavHostFragment"
