@@ -1,0 +1,84 @@
+<resources>
+    <string name="app_name">FINWO</string>
+    <string name="open">DrawerOpen</string>
+    <string name="close">DraweClose</string>
+    <string name="e_mail">E-mail</string>
+    <string name="validate_password">Validar Contraseña</string>
+    <string name="complete_the_form">Completa el formulario</string>
+    <string name="next">Siguiente</string>
+    <string name="back">Volver</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="my_profile">Mi perfil</string>
+    <string name="people">Gente</string>
+    <string name="places">Lugares</string>
+    <string name="info">Informacion</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Acceder</string>
+    <string name="register">Registrarse</string>
+    <string name="exit">Salir</string>
+
+    <string name="location">Localización</string>
+    <string name="add_address">Añadir dirección</string>
+    <string name="Address">Dirección</string>
+    <string name="locations">Localizaciones</string>
+    <string name="personal_data">Datos personales</string>
+    <string name="edit">Editar</string>
+    <string name="name">Nombre</string>
+    <string name="surname">Apellido</string>
+    <string name="second_surname">Segundo Apellido</string>
+    <string name="user_age">Edad</string>
+    <string name="madrid">Madrid</string>
+    <string name="phone_number">Número de teléfono</string>
+    <string name="profiles_title">PERFILES</string>
+    <string name="map_title">MAPA</string>
+    <string name="my_data_title">MIS DATOS</string>
+    <string name="home">Inicio</string>
+    <string name="view_profile">Ver perfil</string>
+    <string name="age">Edad</string>
+    <string name="messages">Mensajes</string>
+    <string name="my_photos">Mis fotos</string>
+    <string name="friends">Amigos</string>
+    <string name="featured_profiles">Perfiles mas vistos</string>
+    <string name="recommended_profiles">Perfiles recomendados</string>
+    <string name="title">Título</string>
+    <string name="terms_text">Acepto los</string>
+    <string name="terms_of_use">Términos de uso</string>
+    <string name="location_title">Bienvenido</string>
+    <string name="location_subtitle">
+        You will be restored to a random location, then you can change it, adding pin in map, by random location, or with your own location
+    </string>
+    <string name="accept_permissions">Aceptar permisos</string>
+    <string name="filter_by">Filtrar por</string>
+    <string name="country">País</string>
+    <string name="choose_an_option">Elije una opción</string>
+    <string name="postal_code">Código postal</string>
+    <string name="city">Ciudad</string>
+    <string name="random_users">Usuarios Aleatorios</string>
+    <string name="birthday">Cumpleaños</string>
+    <string name="years">Años</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+    <string name="other">Otro</string>
+    <string name="gender">Género</string>
+    <string name="password_info">La contraseña debe tener al menos 6 caracteres y un número, las dos contraseñas deben coincidir
+    </string>
+    <string name="description">Descripción</string>
+    <string name="university">Universidad</string>
+    <string name="job">Trabajo</string>
+    <string name="login_error_info">Email o contraseña incorrectos
+    </string>
+    <string name="register_error_message">Este usuario ya existe
+    </string>
+    <string name="invalid_access">Acceso inválido</string>
+    <string name="location_update_error_message">Error guardando los datos</string>
+
+    <string name="image_ok_info">Imagen guardada</string>
+    <string name="save_personal_data">Guardar datos personales</string>
+    <string name="input_name_error">El nombre no ouede estar vacío</string>
+    <string name="add_marker_info">Mantén pulsado para añadir una nueva localización</string>
+    <string name="toolbar_text">elije una opción</string>
+
+
+</resources>

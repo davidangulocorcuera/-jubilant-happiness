@@ -55,7 +55,9 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         setObservers()
         setDrawerMenu()
         menuOptions.clear()
-        menuOptions = DrawerItem.addMenuOptions(menuOptions)
+        context?.let {
+            menuOptions = DrawerItem.addMenuOptions(menuOptions, it)
+        }
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
             this.findNavController().navigate(R.id.goToProfileData)
@@ -67,7 +69,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         }
         setMenuData()
         setCardsOnClickListeners()
-        mainViewModel.listenUsersData()
 
     }
 
@@ -93,6 +94,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             }
         })
     }
+
+
 
     private fun setCardsOnClickListeners() {
 
@@ -186,20 +189,15 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
                 }
                 DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
                     this.findNavController().navigate(R.id.goToProfileData)
-
                 }
                 DrawerViewModel.MenuItemType.HOME -> {
                     drawerLayout.closeDrawer(GravityCompat.START)
-
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
-//                    navigator.navigateToMain()
                 }
                 DrawerViewModel.MenuItemType.FRIENDS -> {
-//                    navigator.navigateToFriends()
                 }
                 DrawerViewModel.MenuItemType.MY_PICTURES -> {
-//                    navigator.navigateToGallery()
                 }
                 DrawerViewModel.MenuItemType.CONTACT -> {
                 }
@@ -247,7 +245,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         currentUser.birthday = userResponse.birthday
         currentUser.currentLocation = userResponse.location
         currentUser.age = userResponse.age
-
         currentUser.surname = userResponse.surname
         currentUser.jobName = userResponse.job
         currentUser.universityName = userResponse.university
@@ -279,6 +276,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     override fun onStart() {
         super.onStart()
         mainViewModel.listenUserData()
+        mainViewModel.listenUsersData()
     }
 
 }

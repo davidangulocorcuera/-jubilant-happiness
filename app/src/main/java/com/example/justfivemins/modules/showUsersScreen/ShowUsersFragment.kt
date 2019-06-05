@@ -1,16 +1,15 @@
 package com.example.justfivemins.modules.showUsersScreen
 
 
-import android.util.Log
+import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
+import com.example.justfivemins.modules.showUsersScreen.userDetail.UserDetailDialog
 import kotlinx.android.synthetic.main.fragment_show_users.*
 
 
@@ -34,18 +33,19 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
     }
 
     private fun initUsersList() {
-        val layoutManager = GridLayoutManager(activity,2)
+        val layoutManager = GridLayoutManager(activity, 2)
         rvUsers.layoutManager = layoutManager
         setListListener()
         rvUsers.adapter = usersListAdapter
     }
 
-    private fun setListListener(){
+    private fun setListListener() {
         usersListAdapter =
-            ShowUsersListAdapter(activity = activity!!){
-                Log.v("taag", it.name)
+            ShowUsersListAdapter(activity = activity!!) {
+                showUserDialog(it)
             }
     }
+
     override fun setUsers(usersLoaded: ArrayList<User>) {
         usersListAdapter.addAll(usersLoaded)
         usersListAdapter.notifyDataSetChanged()
@@ -55,5 +55,15 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
         super.onResume()
         initUsersList()
         usersPresenter.init(args)
+    }
+
+    private fun showUserDialog(user: User) {
+        val dialogFragment = UserDetailDialog()
+        val args = Bundle()
+        args.putParcelable("user", user)
+        dialogFragment.arguments = args
+        activity?.supportFragmentManager?.let {
+            dialogFragment.show(it, "user")
+        }
     }
 }

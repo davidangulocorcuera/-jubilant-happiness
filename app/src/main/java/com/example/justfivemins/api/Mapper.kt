@@ -33,10 +33,10 @@ object Mapper {
         }
 
         data["location"] = registerRequest.location
-        data["job"] = ""
-        data["university"] = ""
-        data["description"] = ""
-        data["surname"] = ""
+        data["job"] = "No job"
+        data["university"] = "No university"
+        data["description"] = "No description"
+        data["surname"] = "No surname"
         data["profileImageUrl"] = ""
 
         return data

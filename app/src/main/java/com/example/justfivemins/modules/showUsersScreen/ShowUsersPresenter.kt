@@ -18,6 +18,7 @@ class ShowUsersPresenter(private val view: View) : MainMVP.Presenter {
     }
     interface View : MainMVP.View {
         fun setUsers(usersLoaded: ArrayList<User>)
+
     }
 }
 

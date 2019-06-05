@@ -7,32 +7,31 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:layout_marginStart="0dp"
-        android:contentInsetStart="0dp"
-        android:contentInsetLeft="0dp"
-        android:contentInsetEnd="0dp"
-        android:contentInsetRight="0dp"
-        android:paddingEnd="72dp"
-        android:paddingStart="0dp"
-        android:paddingTop="5dp"
         android:theme="@style/ToolbarTheme"
-        app:contentInsetEnd="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetStart="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPrimary"
         tools:ignore="RtlSymmetry">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
 
 
         <TextView
+                android:layout_marginEnd="72dp"
+                android:visibility="gone"
                 android:id="@+id/toolbar_title"
-                style="@style/title_medium"
-                android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                tools:text="THE TITLE"
-                android:gravity="center"
-                tools:visibility="visible"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/subtitle"
+                android:textSize="@dimen/big_font"
+                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+                android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+
+
 </androidx.appcompat.widget.Toolbar>

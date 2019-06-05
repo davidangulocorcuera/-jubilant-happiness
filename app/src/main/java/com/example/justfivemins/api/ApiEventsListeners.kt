@@ -6,6 +6,7 @@ import com.example.justfivemins.model.User
 /**
  * Implement this methods for listen api responses
  * */
+
 interface ApiEventsListeners{
     interface LoginListener {
         fun isLogged(success: Boolean)

@@ -17,20 +17,21 @@ import com.example.justfivemins.api.filesManager.FilesEventsListeners
 import com.example.justfivemins.model.CurrentUser
 import java.io.File
 import java.io.IOException
+import java.util.*
+import android.widget.Toast
+import android.util.DisplayMetrics
+
+
 
 
 class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageListener  {
-    override fun isImageUploaded(success: Boolean) {
-        if (success) {
-
-        } else {
-
-        }
-    }
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel()::class.java)
     }
+    lateinit var myLocale: Locale
+    var currentLanguage = "es"
+    lateinit var currentLang: String
 
     override fun onCreateViewId(): Int {
         return R.layout.activity_main
@@ -39,7 +40,9 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-       window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+       // currentLanguage = intent.getStringExtra(currentLang)
+        setLocale("es")
 
     }
 
@@ -111,8 +114,29 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         matrix.postRotate(degrees.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
+    override fun isImageUploaded(success: Boolean) {
+        if (success) {
 
+        } else {
 
+        }
+    }
+
+    fun setLocale(localeName: String) {
+        if (localeName != currentLanguage) {
+            myLocale = Locale(localeName)
+            val res = resources
+            val dm = res.displayMetrics
+            val conf = res.configuration
+            conf.locale = myLocale
+            res.updateConfiguration(conf, dm)
+            val refresh = Intent(this, MainActivity::class.java)
+            refresh.putExtra(currentLang, localeName)
+            startActivity(refresh)
+        } else {
+            Toast.makeText(this@MainActivity, "Language already selected!", Toast.LENGTH_SHORT).show()
+        }
+    }
 
 
 }
