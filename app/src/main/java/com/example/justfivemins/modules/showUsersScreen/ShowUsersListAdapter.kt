@@ -29,7 +29,6 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
 
     }
 
-
     inner class ViewHolder(var view: View) : BaseRecyclerAdapter.ViewHolder(view) {
         private lateinit var current: User
 

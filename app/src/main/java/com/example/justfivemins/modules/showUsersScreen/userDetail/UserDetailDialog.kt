@@ -3,6 +3,7 @@ package com.example.justfivemins.modules.showUsersScreen.userDetail
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.fragment.app.DialogFragment
@@ -37,7 +38,7 @@ class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
     }
     @SuppressLint("SetTextI18n")
     override fun loadUser(user: User) {
-
+        Log.v("taag", user.gender.toString())
         tvName.text = user.name
         tvAge.text = user.age.toString()
         user.currentLocation?.apply {

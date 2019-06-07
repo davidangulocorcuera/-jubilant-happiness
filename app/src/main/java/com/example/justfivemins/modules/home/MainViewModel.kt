@@ -155,7 +155,6 @@ class MainViewModel : ViewModel(),
             if(userResponse.id != CurrentUser.firebaseUser?.uid){
                 usersList.add(unknownUser)
             }
-
             unknownUser = User()
         }
         return usersList

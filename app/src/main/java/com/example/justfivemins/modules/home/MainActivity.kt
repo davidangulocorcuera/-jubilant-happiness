@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
 
-        setLocale("es")
+//        setLocale("es")
 
     }
 
@@ -67,7 +67,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
 
     }
 
-    fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
+    private fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
 
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = this.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)

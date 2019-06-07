@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">JustFiveMins</string>
+    <string name="app_name">Finwo</string>
     <string name="open">DrawerOpen</string>
     <string name="close">DraweClose</string>
     <string name="e_mail">E-mail</string>
@@ -32,10 +32,10 @@
     <string name="profiles_title">PROFILES</string>
     <string name="map_title">MAP</string>
     <string name="my_data_title">MY DATA</string>
-    <string name="home">home</string>
+    <string name="home">Home</string>
     <string name="view_profile">View Profile</string>
     <string name="age">Age</string>
-    <string name="messages">messages</string>
+    <string name="messages">Messages</string>
     <string name="my_photos">My Photos</string>
     <string name="friends">Friends</string>
     <string name="featured_profiles">Featured profiles</string>
@@ -85,7 +85,7 @@
     <string name="email_error">Invalid e-mail or empty</string>
     <string name="password_error">Invalid Password or empty</string>
     <string name="name_error">Invalid name or empty</string>
-    <string name="age_error">sorry this app is only for adults, go play to the park</string>
+    <string name="age_error">Sorry this app is only for adults, go play to the park</string>
     <string name="register_error">Fail signing up</string>
     <string name="no_users">There are no users here</string>
     <string name="send_message">Send message</string>

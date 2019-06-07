@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
-import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
@@ -30,7 +29,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
-class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener {
+class HomeFragment : BaseFragment(), DrawerLocker {
 
 
     private var currentUser = User()
@@ -94,8 +93,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         })
     }
 
-
     private fun setCardsOnClickListeners() {
+
+        /**
+         * Filter by country
+         * */
 
         cvFilterByCountry.setOnClickListener {
             usersFilteredList = users.filter {
@@ -107,6 +109,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+
+        /**
+         * Filter by city
+         * */
+
         cvFilterByCity.setOnClickListener {
             usersFilteredList = users.filter {
                 it.currentLocation?.city == CurrentUser.user?.currentLocation!!.city
@@ -117,6 +124,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+
+        /**
+         * Filter by postal code
+         * */
+
         cvFilterByPostalCode.setOnClickListener {
             usersFilteredList = users.filter {
                 it.currentLocation?.postalCode == CurrentUser.user?.currentLocation!!.postalCode
@@ -127,6 +139,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+
+        /**
+         * Filter by job
+         * */
+
         cvFilterByJob.setOnClickListener {
             usersFilteredList = users.filter {
                 it.jobName == CurrentUser.user?.jobName
@@ -137,6 +154,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+
+        /**
+         * Filter by university
+         * */
+
         cvFilterByUniversity.setOnClickListener {
             usersFilteredList = users.filter {
                 it.universityName == CurrentUser.user?.universityName
@@ -147,6 +169,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
         }
+
+        /**
+         * Filter by random
+         * */
+
         cvRandomUsers.setOnClickListener {
             val action = HomeFragmentDirections.goToShowUsersFragment(users.toTypedArray())
             this.findNavController().navigate(action)
@@ -209,7 +236,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     override fun onResume() {
         super.onResume()
         drawerLayout.closeDrawer(GravityCompat.START)
-        mainViewModel.listenUserData()
     }
 
     @SuppressLint("SetTextI18n")
@@ -240,7 +266,7 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     }
 
 
-    fun setNewData(userResponse: UserResponse) {
+    private fun setNewData(userResponse: UserResponse) {
         currentUser.name = userResponse.name
         currentUser.email = userResponse.email
         currentUser.birthday = userResponse.birthday
@@ -267,14 +293,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         toggleHome.isDrawerIndicatorEnabled = enabled
     }
 
-    override fun isLocationUpdated(success: Boolean) {
-        menuNavigation.getHeaderView(0).tvLocation.isEnabled = true
-        showProgress(false, false)
-        if (success) {
-        } else {
-
-        }
-    }
 
     override fun onStart() {
         super.onStart()
