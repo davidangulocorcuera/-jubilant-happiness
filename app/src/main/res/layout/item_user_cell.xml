@@ -7,7 +7,7 @@
 >
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/friendImage"
+                android:id="@+id/ivFriendImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 style="@style/Clickable"
@@ -21,6 +21,8 @@
                   android:layout_height="wrap_content"
                   android:id="@+id/tvFriendUsername"
                   android:text="@string/username"
+                  android:textColor="@color/black"
+                  android:fontFamily="@font/roboto_light"
                   android:layout_gravity="center_vertical"
                   android:layout_marginStart="@dimen/space_big"
                   android:layout_weight="0.1"

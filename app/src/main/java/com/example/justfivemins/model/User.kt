@@ -2,6 +2,7 @@ package com.example.justfivemins.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.justfivemins.model.chat.Message
 
 class User(
     var email: String = ""

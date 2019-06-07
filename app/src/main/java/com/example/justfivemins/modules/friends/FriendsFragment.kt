@@ -2,9 +2,10 @@ package com.example.justfivemins.modules.friends
 
 
 
+import android.util.Log
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
@@ -12,9 +13,11 @@ import com.example.justfivemins.modules.friends.friends_list_adapter.FriendsList
 import kotlinx.android.synthetic.main.fragment_friends.*
 
 
-class FriendsFragment : BaseFragment() {
+class FriendsFragment : BaseFragment(),FriendsPresenter.View {
     private lateinit var friendsListAdapter: FriendsListAdapter
     private var users: ArrayList<User> = ArrayList()
+    private val presenter: FriendsPresenter by lazy { FriendsPresenter(this) }
+
 
 
     override fun onCreateViewId(): Int {
@@ -25,7 +28,7 @@ class FriendsFragment : BaseFragment() {
         setToolbarTitle(getString(R.string.friends).toUpperCase())
         users.addAll(
             arrayOf(
-
+                User()
             )
         )
         initUsersList()
@@ -34,10 +37,17 @@ class FriendsFragment : BaseFragment() {
 
     private fun initUsersList() {
         val layoutManager = GridLayoutManager(activity, 1)
-        rvFriends.layoutManager = layoutManager as RecyclerView.LayoutManager?
-        friendsListAdapter =
-            FriendsListAdapter(users)
+        rvFriends.layoutManager = layoutManager
+        setListListener()
         rvFriends.adapter = friendsListAdapter
+    }
+
+    private fun setListListener() {
+        friendsListAdapter =
+                FriendsListAdapter(context = context!!,items = users) {
+                    Log.v("taag", "users")
+
+            }
     }
 
 

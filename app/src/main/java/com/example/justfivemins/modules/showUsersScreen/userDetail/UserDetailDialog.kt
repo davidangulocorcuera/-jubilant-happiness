@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseDialogFragment
+import com.example.justfivemins.modules.friends.FriendsFragmentDirections
 import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.item_user_detail.*
 
@@ -19,6 +21,7 @@ class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
 
 
     private val presenter: UsersDetailPresenter by lazy { UsersDetailPresenter(this) }
+    private lateinit var userLoaded: User
 
     override fun onCreateViewId(): Int {
        return R.layout.item_user_detail
@@ -34,10 +37,17 @@ class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
         btnClose.setOnClickListener {
             dialog?.dismiss()
         }
+        btnChat.setOnClickListener {
+            val action = FriendsFragmentDirections.goToMessages(userLoaded)
+            dialog?.dismiss()
+            this.findNavController().navigate(action)
+        }
+
 
     }
     @SuppressLint("SetTextI18n")
     override fun loadUser(user: User) {
+        userLoaded = user
         Log.v("taag", user.gender.toString())
         tvName.text = user.name
         tvAge.text = user.age.toString()

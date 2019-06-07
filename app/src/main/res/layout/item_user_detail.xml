@@ -144,6 +144,7 @@
                     <Button android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/space_small"
+                            android:id="@+id/btnChat"
                             android:fontFamily="@font/roboto_light"
                             android:text="@string/send_message"
                             android:textColor="@color/colorPrimary"

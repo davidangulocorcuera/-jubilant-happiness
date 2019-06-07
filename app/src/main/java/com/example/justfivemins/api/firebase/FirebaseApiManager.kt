@@ -1,6 +1,7 @@
 package com.example.justfivemins.api.firebase
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import androidx.annotation.Nullable
 import com.example.justfivemins.api.Api
@@ -12,9 +13,14 @@ import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
+import com.example.justfivemins.model.chat.ChatChannel
+import com.example.justfivemins.model.chat.Message
+import com.example.justfivemins.model.chat.TextMessage
+import com.example.justfivemins.model.chat.TextMessageItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
+import com.xwray.groupie.kotlinandroidextensions.Item
 
 
 /**
@@ -36,6 +42,11 @@ class FirebaseApiManager(
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
     var db = FirebaseFirestore.getInstance()
+    private val chatChannelsColectionRef = db.collection("chatChannels")
+    private val currentUserDocRef: DocumentReference
+        get() = db.document(
+            "users/${FirebaseAuth.getInstance().currentUser?.uid ?: throw NullPointerException("UID is null")}"
+        )
 
 
     override fun createUser(registerRequest: RegisterRequest) {
@@ -136,6 +147,7 @@ class FirebaseApiManager(
             }
         })
     }
+
     override fun onDataChanged() {
         val docRef = db.collection("users")
         docRef.addSnapshotListener(object : EventListener<QuerySnapshot> {
@@ -189,7 +201,7 @@ class FirebaseApiManager(
             .addOnSuccessListener { document ->
                 if (document != null) {
                     user = Mapper.userResponseMapper(document.data!!)
-                    userDataListener?.isUserDataSaved(true,user)
+                    userDataListener?.isUserDataSaved(true, user)
 
                 } else {
                     Log.d("taag", "No such document")
@@ -199,9 +211,56 @@ class FirebaseApiManager(
             }
             .addOnFailureListener { exception ->
                 Log.d("taag", "get failed with ", exception)
-                userDataListener?.isUserDataSaved(false ,UserResponse())
+                userDataListener?.isUserDataSaved(false, UserResponse())
 
             }
+    }
+
+    fun getOrCreateChatChannel(
+        otherUserId: String,
+        onComplete: (channelId: String) -> Unit
+    ) {
+        currentUserDocRef.collection("engagedChatChannels")
+            .document(otherUserId).get().addOnSuccessListener {
+                if(it.exists()){
+                    onComplete(it["channelId"] as String)
+                    return@addOnSuccessListener
+                }
+                val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
+                val newChannel = chatChannelsColectionRef.document()
+                newChannel.set(ChatChannel(mutableListOf(currentUserId,otherUserId)))
+
+                currentUserDocRef.collection("engagedChatChannels")
+                    .document(otherUserId)
+                    .set(mapOf("channelId" to newChannel.id))
+
+                db.collection("users")
+                    .document(otherUserId)
+                    .collection("engagedChatChannels")
+                    .document(currentUserId)
+                    .set(mapOf("channelId" to newChannel))
+
+                onComplete(newChannel.id)
+
+            }
+    }
+
+    fun addChatMessagesListener(channelId: String, context: Context, onListen: (List<TextMessageItem>) -> Unit): ListenerRegistration{
+
+            return chatChannelsColectionRef.document(channelId).collection("messages")
+                .orderBy("time")
+                .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
+                    if(firebaseFirestoreException != null){
+                        return@addSnapshotListener
+                    }
+
+                    val items = mutableListOf<TextMessageItem>()
+
+                    querySnapshot?.documents?.forEach{
+                        items.add(TextMessageItem(it.toObject(TextMessage::class.java)!!,context))
+                    }
+                    onListen(items)
+                }
     }
 
 

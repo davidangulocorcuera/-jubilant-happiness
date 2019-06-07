@@ -236,6 +236,8 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
                 }
                 DrawerViewModel.MenuItemType.FRIENDS -> {
+                    this.findNavController().navigate(R.id.goToFriends)
+
                 }
                 DrawerViewModel.MenuItemType.MY_PICTURES -> {
                 }
