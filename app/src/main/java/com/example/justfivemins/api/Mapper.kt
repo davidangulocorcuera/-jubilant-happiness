@@ -29,8 +29,6 @@ object Mapper {
                 locationMap["country"] = country
                 locationMap["lng"] = postalCode
                 locationMap["countryCode"] = countryCode
-
-
             }
         }
         data["id"] = registerRequest.id
@@ -62,9 +60,6 @@ object Mapper {
               userResponse.profileImageUrl = it["profileImageUrl"] as String
               userResponse.id = it["id"] as String
 
-
-
-
               if (response["location"] != null) {
                   val locationMap: HashMap<String, Any> = response["location"] as HashMap<String, Any>
                   if (locationMap.size > 0) {
@@ -74,13 +69,11 @@ object Mapper {
                       location.city = (locationMap["city"] as String).capitalize()
                       location.country = (locationMap["country"] as String).capitalize()
                       location.countryCode = (locationMap["countryCode"] as String).capitalize()
-
                   }
               }
               userResponse.location = location
           }
       }
-
         return userResponse
     }
 
@@ -90,8 +83,6 @@ object Mapper {
             if (it.data != null) {
                 users.add(userResponseMapper(it.data!!))
             }
-
-
         }
         return users
     }

@@ -86,7 +86,7 @@
                     android:layout_marginBottom="@dimen/space_big"
                     android:text="@string/login"
                     android:enabled="false"
-                    style="@style/roundButton"
+                    style="@style/roundWhiteButton"
                     android:fontFamily="@font/roboto_medium"
                     android:layout_gravity="center"
                     android:id="@+id/btnLogin"
@@ -100,7 +100,7 @@
                     android:layout_gravity="center"
                     android:text="@string/register"
                     android:fontFamily="@font/roboto_regular"
-                    style="@style/roundWhiteButton"
+                    style="@style/roundButton"
                     android:id="@+id/btnRegister"
                     android:layout_marginBottom="@dimen/space_biggest"
 

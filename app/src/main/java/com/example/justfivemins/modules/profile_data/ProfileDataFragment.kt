@@ -54,7 +54,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 etName.postDelayed({
-
                     presenter.isValidName(p0.toString())
                     presenter.onChange(retrieveRegisterData())
                 }, 400)
@@ -73,10 +72,17 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
         btnNext.setOnClickListener {
             enableScreenOnUpdate(false)
-            profileBitmap?.let {
-                mainViewModel.uploadProfileImage(it, this)
-                showProgress(true, true)
+            if(profileBitmap != null){
+                profileBitmap?.let {
+                    mainViewModel.uploadProfileImage(it, this)
+                    showProgress(true, true)
+                }
             }
+            else{
+                updateUser(retrieveRegisterData())
+            }
+
+
         }
         ivProfileImage.setOnClickListener {
             showProgress(true, true)
@@ -134,6 +140,8 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
 
     }
+
+
 
     private fun retrieveRegisterData(): UpdateUserRequest {
         val updateUserRequest = UpdateUserRequest()
@@ -204,6 +212,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         CookieBar.dismiss(activity)
     }
     override fun isImageUploaded(success: Boolean) {
+
     }
 
     override fun isUserUpdated(success: Boolean) {
@@ -228,6 +237,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             CurrentUser.user?.profileImageUrl = url
             updateUser(retrieveRegisterData())
         } else {
+            enableScreenOnUpdate(true)
 
         }
 

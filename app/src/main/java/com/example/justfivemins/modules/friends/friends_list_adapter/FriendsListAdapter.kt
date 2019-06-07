@@ -8,13 +8,13 @@ import com.example.justfivemins.model.User
 
 
 import com.example.justfivemins.modules.base.BaseRecyclerAdapter
-import kotlinx.android.synthetic.main.friends_cell_item.view.*
+import kotlinx.android.synthetic.main.item_user_cell.view.*
 
 
 class FriendsListAdapter(val items: ArrayList<User>) : BaseRecyclerAdapter<User, FriendsListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.friends_cell_item, parent, false)
+            .inflate(R.layout.item_user_cell, parent, false)
 
         return ViewHolder(v)
     }

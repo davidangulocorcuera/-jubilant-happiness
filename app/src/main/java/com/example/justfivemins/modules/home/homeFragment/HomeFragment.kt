@@ -3,6 +3,9 @@ package com.example.justfivemins.modules.home.homeFragment
 
 import android.annotation.SuppressLint
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -27,6 +30,14 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
+import android.widget.Toast
+
+
+
+
+
+
+
 
 
 class HomeFragment : BaseFragment(), DrawerLocker {
@@ -50,6 +61,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     }
 
     override fun viewCreated(view: View?) {
+        setHasOptionsMenu(true)
         setObservers()
         setDrawerMenu()
         menuOptions.clear()
@@ -299,7 +311,17 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         mainViewModel.listenUserData()
         mainViewModel.listenUsersData()
     }
-
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.navigation, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.english -> Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
+            R.id.spanish -> Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
 
 

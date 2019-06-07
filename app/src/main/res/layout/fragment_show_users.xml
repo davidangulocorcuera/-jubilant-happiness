@@ -30,11 +30,12 @@
 
     >
 
-        <ImageView android:layout_width="48dp"
-                   android:src="@drawable/ic_no_location"
-                   android:tint="@color/materialRed800"
+        <TextView android:layout_width="wrap_content"
                    android:layout_gravity="center"
-                   android:layout_height="48dp"/>
+                  android:text=":("
+                  android:textColor="@color/colorPrimary"
+                  android:textSize="@dimen/biggest_font"
+                   android:layout_height="wrap_content"/>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:fontFamily="@font/roboto_italic"

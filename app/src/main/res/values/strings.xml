@@ -91,6 +91,8 @@
     <string name="send_message">Send message</string>
     <string name="error_saving_data">Error saving data , maybe because you don´t have internet connection</string>
     <string name="welcome">Welcome</string>
+    <string name="spanish">Spanish</string>
+    <string name="english">English</string>
 
 
 </resources>

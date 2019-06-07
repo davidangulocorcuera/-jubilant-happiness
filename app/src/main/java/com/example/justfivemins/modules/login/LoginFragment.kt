@@ -14,6 +14,7 @@ import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.aviran.cookiebar2.CookieBar
 
@@ -94,6 +95,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     }
 
     override fun viewCreated(view: View?) {
+
         etEmail.setOnLongClickListener {
             autofill()
             true

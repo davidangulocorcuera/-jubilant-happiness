@@ -13,10 +13,14 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
 import android.provider.MediaStore
+import android.view.Menu
 import java.io.File
 import java.io.IOException
 import java.util.*
 import android.widget.Toast
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : BaseActivity() {
@@ -40,6 +44,7 @@ class MainActivity : BaseActivity() {
 //        setLocale("es")
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -114,6 +119,7 @@ class MainActivity : BaseActivity() {
             Toast.makeText(this@MainActivity, "Language already selected!", Toast.LENGTH_SHORT).show()
         }
     }
+
 
 
 }
