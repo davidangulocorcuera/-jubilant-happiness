@@ -24,13 +24,13 @@ import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
 import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
 class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDataListener {
-
 
 
     private var currentUser = User()
@@ -51,7 +51,6 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
     }
 
     override fun viewCreated(view: View?) {
-
         setObservers()
         setDrawerMenu()
         menuOptions.clear()
@@ -89,12 +88,11 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         mainViewModel.usersUpdatedResponse.observe(this, Observer { response ->
             response?.let {
                 users = it
-                Log.v("taag",users.size.toString())
+                Log.v("taag", users.size.toString())
                 showProgress(false)
             }
         })
     }
-
 
 
     private fun setCardsOnClickListeners() {
@@ -103,8 +101,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
             usersFilteredList = users.filter {
                 it.currentLocation?.country == CurrentUser.user?.currentLocation!!.country
             }
-             usersFilteredArrayList = ArrayList(usersFilteredList)
-             usersFilteredArray = usersFilteredArrayList.toTypedArray()
+            usersFilteredArrayList = ArrayList(usersFilteredList)
+            usersFilteredArray = usersFilteredArrayList.toTypedArray()
 
             val action = HomeFragmentDirections.goToShowUsersFragment(usersFilteredArray)
             this.findNavController().navigate(action)
@@ -194,6 +192,9 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
                     drawerLayout.closeDrawer(GravityCompat.START)
                 }
                 DrawerViewModel.MenuItemType.LOG_OUT -> {
+                    FirebaseAuth.getInstance().signOut()
+                    this.findNavController().popBackStack()
+
                 }
                 DrawerViewModel.MenuItemType.FRIENDS -> {
                 }
@@ -250,6 +251,8 @@ class HomeFragment : BaseFragment(), DrawerLocker, ApiEventsListeners.LocationDa
         currentUser.universityName = userResponse.university
         currentUser.description = userResponse.description
         currentUser.profileImageUrl = userResponse.profileImageUrl
+        currentUser.id = userResponse.id
+
         CurrentUser.user = currentUser
         setMenuData()
     }

@@ -81,6 +81,14 @@
     <string name="add_marker_info">Hold on to add a new location</string>
     <string name="toolbar_text">Choose one option</string>
     <string name="exit">Close session</string>
+    <string name="close_dialog">Close</string>
+    <string name="email_error">Invalid e-mail or empty</string>
+    <string name="password_error">Invalid Password or empty</string>
+    <string name="name_error">Invalid name or empty</string>
+    <string name="age_error">sorry this app is only for adults, go play to the park</string>
+    <string name="register_error">Fail signing up</string>
+    <string name="no_users">There are no users here</string>
+    <string name="send_message">Send message</string>
 
 
 </resources>

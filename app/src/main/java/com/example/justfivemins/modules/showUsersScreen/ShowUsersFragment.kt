@@ -10,10 +10,12 @@ import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.showUsersScreen.userDetail.UserDetailDialog
+import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_show_users.*
 
 
 class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
+
     private val usersPresenter: ShowUsersPresenter by lazy { ShowUsersPresenter(this) }
     private lateinit var usersListAdapter: ShowUsersListAdapter
     private var users: ArrayList<User> = ArrayList()
@@ -65,5 +67,9 @@ class ShowUsersFragment : BaseFragment(), ShowUsersPresenter.View {
         activity?.supportFragmentManager?.let {
             dialogFragment.show(it, "user")
         }
+    }
+
+    override fun showError() {
+        errorContainer.setVisible(true)
     }
 }

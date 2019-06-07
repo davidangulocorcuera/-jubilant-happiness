@@ -2,7 +2,6 @@ package com.example.justfivemins.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.io.Serializable
 
 class Location (var city: String = "", var country: String = ""
                 , var postalCode: String = "", var lat: Double = 2.1 , var lng: Double = 1.1): Parcelable {
@@ -12,8 +11,7 @@ class Location (var city: String = "", var country: String = ""
         parcel.readString(),
         parcel.readDouble(),
         parcel.readDouble()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(city)

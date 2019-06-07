@@ -11,7 +11,6 @@ import com.example.justfivemins.modules.base.MainMVP
 
 class DownloadDataPresenter(private val view: View, val activity: Activity? = null) : MainMVP.Presenter,
     ApiEventsListeners.GetUsersListener, ApiEventsListeners.UserDataListener {
-
     private val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
             onGetUsersListener = this,
@@ -19,7 +18,6 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
             activity = activity!!
         )
     }
-
     private lateinit var user: User
 
 
@@ -28,6 +26,20 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
         firebaseApiManager.getUserData(CurrentUser.firebaseUser!!)
     }
 
+    fun setUserData(userResponse: UserResponse) {
+        user = User()
+        user.profileImageUrl = userResponse.profileImageUrl
+        user.age = userResponse.age
+        user.birthday = userResponse.birthday
+        user.currentLocation = userResponse.location
+        user.email = userResponse.email
+        user.name = userResponse.name
+        user.description = userResponse.description
+        user.gender = userResponse.gender
+        user.jobName = userResponse.name
+
+        CurrentUser.user = user
+    }
 
     override fun areUsersSaved(success: Boolean, users: ArrayList<UserResponse>) {
         view.showProgress(false)
@@ -47,21 +59,6 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
             firebaseApiManager.getAllUsers()
 
         }
-    }
-
-    fun setUserData(userResponse: UserResponse) {
-        user = User()
-        user.profileImageUrl = userResponse.profileImageUrl
-        user.age = userResponse.age
-        user.birthday = userResponse.birthday
-        user.currentLocation = userResponse.location
-        user.email = userResponse.email
-        user.name = userResponse.name
-        user.description = userResponse.description
-        user.gender = userResponse.gender
-        user.jobName = userResponse.name
-
-        CurrentUser.user = user
     }
 
     interface View : MainMVP.View {

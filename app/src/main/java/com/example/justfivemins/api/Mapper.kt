@@ -31,12 +31,12 @@ object Mapper {
 
             }
         }
-
+        data["id"] = registerRequest.id
         data["location"] = registerRequest.location
-        data["job"] = "No job"
-        data["university"] = "No university"
-        data["description"] = "No description"
-        data["surname"] = "No surname"
+        data["job"] = ""
+        data["university"] = ""
+        data["description"] = ""
+        data["surname"] = ""
         data["profileImageUrl"] = ""
 
         return data
@@ -58,6 +58,8 @@ object Mapper {
               userResponse.surname = (it["surname"] as String).capitalize()
               userResponse.description = (it["description"] as String).capitalize()
               userResponse.profileImageUrl = it["profileImageUrl"] as String
+              userResponse.id = it["id"] as String
+
 
 
 

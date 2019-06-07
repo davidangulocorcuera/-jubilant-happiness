@@ -7,6 +7,7 @@ import java.io.Serializable
 
 class RegisterRequest: Serializable {
     var email: String = ""
+    var id: String = ""
     var password: String = ""
     var name: String = ""
     var confirmPassword: String = ""

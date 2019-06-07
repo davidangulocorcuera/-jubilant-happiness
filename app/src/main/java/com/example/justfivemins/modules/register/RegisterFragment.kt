@@ -212,7 +212,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun showEmailError(error: Boolean) {
         if (error) {
-            tiEmail.error = "Invalid e-mail or empty"
+            tiEmail.error = getString(R.string.email_error)
         }
 
         tiEmail.showError(error)
@@ -220,7 +220,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun showPasswordError(error: Boolean) {
         if (error) {
-            tiPassword.error = "Invalid Password or empty"
+            tiPassword.error = getString(R.string.password_error)
         }
         tiPassword.showError(error)
     }
@@ -232,14 +232,14 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     override fun showPasswordConfirmError(error: Boolean) {
         if (error) {
-            tiPasswordRepeat.error = "Invalid Password or empty"
+            tiPasswordRepeat.error = getString(R.string.password_error)
         }
         tiPasswordRepeat.showError(error)
     }
 
     override fun showNameError(error: Boolean) {
         if (error) {
-            tiName.error = "Invalid name or empty"
+            tiName.error = getString(R.string.name_error)
         }
 
         tiName.showError(error)
@@ -247,7 +247,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
     override fun showBirthdayError(error: Boolean) {
-        if (error) tiBirthday.error = "sorry this app is only for adults, go play to the park"
+        if (error) tiBirthday.error = getString(R.string.age_error)
         tiBirthday.showError(error)
     }
 
@@ -265,7 +265,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
                 .setSwipeToDismiss(false)
                 .setEnableAutoDismiss(false)
-                .setTitle("Fail signing up")
+                .setTitle(getString(R.string.register_error))
                 .setBackgroundColor(R.color.materialRed800)
                 .setMessage(getString(R.string.register_error_message))
                 .show()

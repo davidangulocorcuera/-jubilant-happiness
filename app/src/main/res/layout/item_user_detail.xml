@@ -1,121 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:clickable="false"
         style="@style/card"
->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabCustomSize="40dp"
-            android:src="@drawable/ic_messages"
-            android:tint="@color/white"
-            style="@style/Clickable"
-            app:elevation="@dimen/space_medium"
-            android:layout_margin="@dimen/space_medium"
-    />
-    <ScrollView android:layout_width="match_parent"
-                android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/colorPrimary"
-                      android:orientation="vertical">
-            <ImageView android:layout_width="match_parent"
-                       android:layout_height="300dp"
-                       android:src="@drawable/no_profile_image"
-                       android:scaleType="fitXY"
-                       app:layout_constraintStart_toStartOf="parent"
-                       app:layout_constraintEnd_toEndOf="parent"
-                       android:id="@+id/ivProfileImage"
+        android:id="@+id/cardView">
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+    >
 
-            />
+        <ImageView android:layout_width="350dp"
+                   android:layout_height="200dp"
+                   android:layout_gravity="center"
+                   android:src="@drawable/no_profile_image"
+                   android:scaleType="fitXY"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintEnd_toEndOf="parent"
+                   android:id="@+id/ivProfileImage"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"/>
+        <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
+                          android:layout_height="match_parent"
                           android:orientation="vertical"
-                          android:padding="@dimen/space_medium"
-                          android:background="@color/colorPrimary"
             >
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/name"
-                        android:textColor="@color/white"
-                        style="@style/title"
-                        android:textSize="@dimen/big_font"
-                        android:layout_marginBottom="@dimen/space_medium"
-                        android:id="@+id/tvName"
 
 
-                />
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:layout_gravity="center"
+                              android:padding="@dimen/space_medium"
+                >
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/name"
+                            android:fontFamily="@font/roboto_black_italic"
+                            android:textColor="@color/lightBlackDark"
+                            style="@style/title"
+                            android:textSize="@dimen/big_font"
+                            android:id="@+id/tvName"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/age"
+                            android:fontFamily="@font/roboto_thin"
+                            android:layout_marginStart="@dimen/space_small"
+                            android:textColor="@color/lightBlackDark"
+                            style="@style/regular"
+                            android:textSize="@dimen/big_font"
+                            android:id="@+id/tvAge"/>
+
+
+                </LinearLayout>
+
+
                 <TextView
                         android:layout_width="match_parent"
+                        android:layout_margin="@dimen/space_medium"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/medium_font"
+                        android:text="@string/description"
+                        android:visibility="gone"
+                        android:textColor="@color/black"
+                        style="@style/subtitle"
+                        android:fontFamily="@font/roboto_light"
+                        tools:visibility="visible"
+                        android:id="@+id/tvDescription"
+                        android:padding="@dimen/space_medium"
+                />
+                <View android:layout_width="match_parent"
+                      android:layout_height="1dp"
+                      android:layout_margin="@dimen/space_medium"
+                      android:background="@color/lightBlack"/>
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/space_medium"
+                        android:textSize="@dimen/medium_font"
                         android:text="@string/location"
-                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_light"
+                        tools:visibility="visible"
+                        android:textColor="@color/colorPrimary"
                         style="@style/subtitle"
                         android:id="@+id/tvLocation"
                         android:drawableStart="@drawable/ic_location"
                         android:drawablePadding="@dimen/space_small"
-
+                        android:drawableTint="@color/colorPrimary"
                 />
 
-            </LinearLayout>
-
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/white"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/medium_font"
-                    android:text="@string/description"
-                    android:textColor="@color/lightBlackDark"
-                    android:background="@color/white"
-                    style="@style/subtitle"
-                    android:id="@+id/tvDescription"
-                    android:padding="@dimen/space_medium"
-            />
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/white"/>
-            <LinearLayout android:layout_width="match_parent"
-                          android:orientation="vertical"
-                          android:padding="@dimen/space_medium"
-                          android:background="@color/white"
-                          android:layout_height="wrap_content">
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="@dimen/space_medium"
                         android:textSize="@dimen/medium_font"
                         android:text="@string/job"
-                        android:textColor="@color/lightBlackDark"
-                        android:layout_marginBottom="@dimen/space_medium"
+                        android:visibility="gone"
+                        android:textColor="@color/colorPrimary"
                         style="@style/subtitle"
                         android:id="@+id/tvJob"
-                        android:drawableTint="@color/lightBlackDark"
+                        android:fontFamily="@font/roboto_light"
+                        tools:visibility="visible"
+                        android:drawableTint="@color/colorPrimary"
                         android:drawableStart="@drawable/ic_job"
                         android:drawablePadding="@dimen/space_small"
-
                 />
                 <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/medium_font"
                         android:text="@string/university"
-                        android:textColor="@color/lightBlackDark"
+                        android:padding="@dimen/space_medium"
+                        android:textColor="@color/colorPrimary"
                         style="@style/subtitle"
+                        android:fontFamily="@font/roboto_light"
+                        tools:visibility="visible"
+                        android:drawableTint="@color/colorPrimary"
+                        android:visibility="gone"
                         android:id="@+id/tvUniversity"
                         android:drawableStart="@drawable/ic_university"
-                        android:drawablePadding="@dimen/space_small"
-                        android:drawableTint="@color/lightBlackDark"
-                />
-            </LinearLayout>
-        </LinearLayout>
+                        android:drawablePadding="@dimen/space_small"/>
 
-    </ScrollView>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="end"
+                              android:layout_margin="@dimen/space_medium"
+                >
+                    <Button android:layout_width="wrap_content"
+                            android:background="@color/transparent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/close_dialog"
+                            android:textSize="@dimen/medium_font"
+                            android:padding="@dimen/space_small"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/materialRed800"
+                            android:id="@+id/btnClose"
+                            style="@style/Clickable"
+                            android:layout_marginEnd="@dimen/space_medium"
+                    />
+                    <Button android:layout_width="wrap_content"
+                            android:background="@color/transparent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/space_small"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="@string/send_message"
+                            android:textSize="@dimen/medium_font"
+                            android:textColor="@color/materialGreen800"
+                            style="@style/Clickable"
+                            android:layout_marginEnd="@dimen/space_medium"
+                    />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

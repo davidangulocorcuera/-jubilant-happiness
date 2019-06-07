@@ -145,15 +145,17 @@ class MainViewModel : ViewModel(),
             unknownUser.birthday = userResponse.birthday
             unknownUser.currentLocation = userResponse.location
             unknownUser.age = userResponse.age
-
             unknownUser.surname = userResponse.surname
             unknownUser.jobName = userResponse.job
             unknownUser.universityName = userResponse.university
             unknownUser.description = userResponse.description
             unknownUser.profileImageUrl = userResponse.profileImageUrl
+            unknownUser.id = userResponse.id
 
+            if(userResponse.id != CurrentUser.firebaseUser?.uid){
+                usersList.add(unknownUser)
+            }
 
-            usersList.add(unknownUser)
             unknownUser = User()
         }
         return usersList

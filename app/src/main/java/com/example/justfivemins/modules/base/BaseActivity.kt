@@ -60,7 +60,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
                 current.setTitleTextColor(getResourceColor(titleColor))
 
             this.currentToolbar = current
-//            toolbar_title = currentToolbar?.findViewById(R.id.toolbar_title)
+            toolbar_title = currentToolbar?.findViewById(R.id.toolbar_title)
             supportActionBar?.show()
         }
     }

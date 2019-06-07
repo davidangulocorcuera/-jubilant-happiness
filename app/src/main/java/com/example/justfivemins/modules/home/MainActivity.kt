@@ -19,9 +19,6 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import android.widget.Toast
-import android.util.DisplayMetrics
-
-
 
 
 class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageListener  {
@@ -41,7 +38,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
 
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-       // currentLanguage = intent.getStringExtra(currentLang)
+
         setLocale("es")
 
     }
@@ -55,7 +52,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
         data?.data?.let {
-            mainViewModel.uploadProfileImage(adjustaProfilePicture(it),this)
+            mainViewModel.uploadProfileImage(adjustProfilePicture(it),this)
 
         }
     }
@@ -70,7 +67,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
 
     }
 
-    fun adjustaProfilePicture(selectedPicture: Uri): Bitmap {
+    fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
 
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = this.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
@@ -122,7 +119,7 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         }
     }
 
-    fun setLocale(localeName: String) {
+    private fun setLocale(localeName: String) {
         if (localeName != currentLanguage) {
             myLocale = Locale(localeName)
             val res = resources

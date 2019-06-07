@@ -13,11 +13,15 @@ class ShowUsersPresenter(private val view: View) : MainMVP.Presenter {
                 val userFilteredList = usersFilteredArray.toList()
                 val usersFilteredArrayList = ArrayList(userFilteredList)
                 view.setUsers(usersFilteredArrayList)
+            } else {
+                view.showError()
             }
         }
     }
+
     interface View : MainMVP.View {
         fun setUsers(usersLoaded: ArrayList<User>)
+        fun showError()
 
     }
 }

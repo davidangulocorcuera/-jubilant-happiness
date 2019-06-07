@@ -46,6 +46,7 @@ class FirebaseApiManager(
                         val user = auth.currentUser
                         if (user != null) {
                             CurrentUser.firebaseUser = user
+                            registerRequest.id = user.uid
                             db.collection("users").document(user.uid)
                                 .set(Mapper.registerRequestMapper(registerRequest))
                                 .addOnFailureListener { e ->

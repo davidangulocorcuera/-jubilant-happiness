@@ -79,6 +79,14 @@
     <string name="input_name_error">El nombre no ouede estar vacío</string>
     <string name="add_marker_info">Mantén pulsado para añadir una nueva localización</string>
     <string name="toolbar_text">elije una opción</string>
+    <string name="close_dialog">Cerrar</string>
+    <string name="email_error">Este email no es válido</string>
+    <string name="password_error">Esta contraseña no es válida</string>
+    <string name="name_error">El nombre no puede estar vacío</string>
+    <string name="age_error">Debes de ser mayor de edad para poder registrarte</string>
+    <string name="register_error">Fallo registrando tu cuenta</string>
+    <string name="no_users">No se han encontrado usuarios</string>
+    <string name="send_message">Enviar mensaje</string>
 
 
 </resources>

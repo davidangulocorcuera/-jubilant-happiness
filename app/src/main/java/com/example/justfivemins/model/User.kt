@@ -2,27 +2,29 @@ package com.example.justfivemins.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.example.justfivemins.R
-import java.io.Serializable
 
 class User(
     var email: String = ""
     , var name: String = ""
     , var description: String = ""
     , var surname: String = ""
-    , var age: Int = 27
+    , var age: Int = 0
     , var birthday: String = ""
     , var gender: Gender = Gender.OTHER
     , var phoneNumber: String = ""
-    , var locations: ArrayList<Location> = ArrayList(),
-      var profileImageUrl: String = ""
+    , var locations: ArrayList<Location> = ArrayList()
+    , var profileImageUrl: String = ""
     , var images: ArrayList<Int> = ArrayList()
     , var friends: ArrayList<User> = ArrayList()
     , var numLikes: Int = 0
     , var universityName: String = ""
-    , var jobName: String = "",
-      var currentLocation: Location? = null
-) : Parcelable{
+    , var jobName: String = ""
+    , var currentLocation: Location? = null
+    , var id: String = ""
+    , var messages: ArrayList<Message> = ArrayList()
+
+) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),
@@ -39,12 +41,14 @@ class User(
         parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readParcelable(Location::class.java.classLoader)
+        parcel.readParcelable(Location::class.java.classLoader),
+        parcel.readString(),
+        TODO("messages")
     ) {
     }
 
     enum class Gender {
-       MALE,
+        MALE,
         FEMALE,
         OTHER
     }
@@ -62,6 +66,7 @@ class User(
         parcel.writeString(universityName)
         parcel.writeString(jobName)
         parcel.writeParcelable(currentLocation, flags)
+        parcel.writeString(id)
     }
 
     override fun describeContents(): Int {
@@ -77,4 +82,5 @@ class User(
             return arrayOfNulls(size)
         }
     }
+
 }

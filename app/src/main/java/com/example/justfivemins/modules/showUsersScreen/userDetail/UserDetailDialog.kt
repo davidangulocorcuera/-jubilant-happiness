@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseDialogFragment
+import com.example.justfivemins.utils.setVisible
 import kotlinx.android.synthetic.main.item_user_detail.*
 
 class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
@@ -29,15 +30,19 @@ class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setStyle(STYLE_NO_FRAME, android.R.style.Theme)
         }
+        btnClose.setOnClickListener {
+            dialog?.dismiss()
+        }
 
     }
     @SuppressLint("SetTextI18n")
     override fun loadUser(user: User) {
+
         tvName.text = user.name
+        tvAge.text = user.age.toString()
         user.currentLocation?.apply {
             tvLocation.text = "$country,$city"
         }
-        tvDescription.text = user.description
         if (user.profileImageUrl.isNotEmpty()) {
             Glide
                 .with(activity!!)
@@ -48,8 +53,18 @@ class UserDetailDialog: BaseDialogFragment(),UsersDetailPresenter.View {
         } else {
             ivProfileImage.setImageResource(R.drawable.no_profile_image)
         }
-        tvJob.text = user.jobName
-        tvUniversity.text = user.universityName
+        if(user.jobName.isNotEmpty()){
+            tvJob.text = user.jobName
+            tvJob.setVisible(true)
+        }
+        if(user.universityName.isNotEmpty()){
+            tvUniversity.text = user.universityName
+            tvUniversity.setVisible(true)
+        }
+        if(user.description.isNotEmpty()){
+            tvDescription.text = user.description
+            tvDescription.setVisible(true)
+        }
     }
 
 }

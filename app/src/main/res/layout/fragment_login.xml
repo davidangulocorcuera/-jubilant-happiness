@@ -82,6 +82,7 @@
                     android:text="@string/login"
                     android:enabled="false"
                     style="@style/roundButton"
+                    android:fontFamily="@font/roboto_regular"
                     android:layout_gravity="center"
                     android:id="@+id/btnLogin"
             />
@@ -93,6 +94,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:text="@string/register"
+                    android:fontFamily="@font/roboto_regular"
                     style="@style/roundWhiteButton"
                     android:id="@+id/btnRegister"
                     android:layout_marginBottom="@dimen/space_biggest"
