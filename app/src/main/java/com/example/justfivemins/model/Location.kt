@@ -3,9 +3,10 @@ package com.example.justfivemins.model
 import android.os.Parcel
 import android.os.Parcelable
 
-class Location (var city: String = "", var country: String = ""
-                , var postalCode: String = "", var lat: Double = 2.1 , var lng: Double = 1.1): Parcelable {
+class Location (var city: String = "", var country: String = "", var countryCode:String = "",
+                var postalCode: String = "", var lat: Double = 2.1 , var lng: Double = 1.1): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -16,6 +17,7 @@ class Location (var city: String = "", var country: String = ""
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(city)
         parcel.writeString(country)
+        parcel.writeString(countryCode)
         parcel.writeString(postalCode)
         parcel.writeDouble(lat)
         parcel.writeDouble(lng)

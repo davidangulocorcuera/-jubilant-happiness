@@ -3,16 +3,17 @@ package com.example.justfivemins.modules.profile_data
 
 import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
+import com.example.justfivemins.api.filesManager.FilesEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.model.CurrentUser
@@ -28,14 +29,15 @@ import kotlinx.android.synthetic.main.fragment_profile_data.*
 import org.aviran.cookiebar2.CookieBar
 
 
-class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener {
+class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEventsListeners.UpdateUserListener,
+    FilesEventsListeners.UploadProfileImageListener {
 
     private val presenter: ProfileDataPresenter by lazy { ProfileDataPresenter(this) }
     private val PICK_IMAGE_REQUEST = 1
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
     }
-
+    private var profileBitmap: Bitmap? = null
 
     override fun onCreateViewId(): Int {
         return R.layout.fragment_profile_data
@@ -71,10 +73,13 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
 
         btnNext.setOnClickListener {
             enableScreenOnUpdate(false)
-            showProgress(true, true)
-            updateUser(retrieveRegisterData())
+            profileBitmap?.let {
+                mainViewModel.uploadProfileImage(it, this)
+                showProgress(true, true)
+            }
         }
         ivProfileImage.setOnClickListener {
+            showProgress(true, true)
             requestPermissions()
         }
         btnBack.setOnClickListener {
@@ -82,23 +87,34 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             Navigation.findNavController(it).popBackStack()
 
         }
-        mainViewModel.url.observe(this, Observer { url ->
-            url?.let {
+        mainViewModel.profileImageBitmap.observe(this, Observer { bitmap ->
+            bitmap?.let {
+                profileBitmap = it
                 Glide
                     .with(this)
-                    .load(url)
+                    .load(bitmap)
                     .centerCrop()
                     .into(ivProfileImage)
+                showProgress(false, false)
             }
         })
     }
 
-    fun chooseImage() {
+    private fun chooseImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         activity?.startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
+    private fun updateUser(data: UpdateUserRequest) {
+        val firebaseApiManager: FirebaseApiManager by lazy {
+            FirebaseApiManager(
+                updateUserListener = this,
+                activity = activity!!
+            )
+        }
+        firebaseApiManager.updateUserData(data, CurrentUser.firebaseUser!!.uid)
+    }
 
     private fun setTextViews() {
         etName.setText(CurrentUser.user?.name)
@@ -141,34 +157,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         ivProfileImage.isEnabled = enable
     }
 
-    override fun isUserUpdated(success: Boolean) {
-        showProgress(false, false)
-        if (success) {
-            CookieBar.build(activity)
-                .setCookiePosition(CookieBar.BOTTOM)
-                .setBackgroundColor(R.color.green_notification)
-                .setMessage("Data saved!")
-                .show()
-            enableScreenOnUpdate(true)
-        } else {
-            CookieBar.build(activity)
-                .setCookiePosition(CookieBar.BOTTOM)
-                .setBackgroundColor(R.color.green_notification)
-                .setMessage("Error saving data , maybe because you don´´ have internet connection")
-                .show()
-            enableScreenOnUpdate(true)
-        }
-    }
-
-    private fun updateUser(data: UpdateUserRequest) {
-        val firebaseApiManager: FirebaseApiManager by lazy {
-            FirebaseApiManager(
-                updateUserListener = this,
-                activity = activity!!
-            )
-        }
-        return firebaseApiManager.updateUserData(data, CurrentUser.firebaseUser!!.uid)
-    }
 
     private fun requestPermissions() {
         Dexter.withActivity(activity)
@@ -215,6 +203,36 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         super.onDestroy()
         CookieBar.dismiss(activity)
     }
+    override fun isImageUploaded(success: Boolean) {
+    }
+
+    override fun isUserUpdated(success: Boolean) {
+        showProgress(false, false)
+        if (success) {
+            view?.let {
+                Navigation.findNavController(it).popBackStack()
+            }
+            enableScreenOnUpdate(true)
+        } else {
+            CookieBar.build(activity)
+                .setCookiePosition(CookieBar.BOTTOM)
+                .setBackgroundColor(R.color.green_notification)
+                .setMessage(getString(R.string.error_saving_data))
+                .show()
+            enableScreenOnUpdate(true)
+        }
+    }
+
+    override fun isUrlSaved(success: Boolean, url: String) {
+        if (success) {
+            CurrentUser.user?.profileImageUrl = url
+            updateUser(retrieveRegisterData())
+        } else {
+
+        }
+
+    }
+
 
 
 }

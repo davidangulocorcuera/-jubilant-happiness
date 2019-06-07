@@ -70,7 +70,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.Locat
                                 mainViewModel.updateLocation(it, activity,this)
                             }
                         })
-                        Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
                     }
                 }
 
@@ -81,6 +80,9 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.Locat
     override fun isLocationUpdated(success: Boolean) {
         if (success) {
             showProgress(false,false)
+            view?.let{
+                Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
+            }
         } else {
             showProgress(false,false)
 

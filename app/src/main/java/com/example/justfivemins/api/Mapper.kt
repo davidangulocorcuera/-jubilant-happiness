@@ -28,6 +28,8 @@ object Mapper {
                 locationMap["city"] = city
                 locationMap["country"] = country
                 locationMap["lng"] = postalCode
+                locationMap["countryCode"] = countryCode
+
 
             }
         }
@@ -71,6 +73,8 @@ object Mapper {
                       location.postalCode = locationMap["postalCode"] as String
                       location.city = (locationMap["city"] as String).capitalize()
                       location.country = (locationMap["country"] as String).capitalize()
+                      location.countryCode = (locationMap["countryCode"] as String).capitalize()
+
                   }
               }
               userResponse.location = location

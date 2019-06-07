@@ -13,15 +13,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
 import android.provider.MediaStore
-import com.example.justfivemins.api.filesManager.FilesEventsListeners
-import com.example.justfivemins.model.CurrentUser
 import java.io.File
 import java.io.IOException
 import java.util.*
 import android.widget.Toast
 
 
-class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageListener  {
+class MainActivity : BaseActivity() {
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel()::class.java)
@@ -52,19 +50,8 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
         data?.data?.let {
-            mainViewModel.uploadProfileImage(adjustProfilePicture(it),this)
-
+            mainViewModel.profileImageBitmap.postValue(adjustProfilePicture(it))
         }
-    }
-
-    override fun isUrlSaved(success: Boolean, url: String) {
-        if (success) {
-             mainViewModel.url.postValue(url)
-            CurrentUser.user?.profileImageUrl = url
-        } else {
-
-        }
-
     }
 
     private fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
@@ -110,13 +97,6 @@ class MainActivity : BaseActivity(),  FilesEventsListeners.UploadProfileImageLis
         val matrix: Matrix = Matrix()
         matrix.postRotate(degrees.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
-    }
-    override fun isImageUploaded(success: Boolean) {
-        if (success) {
-
-        } else {
-
-        }
     }
 
     private fun setLocale(localeName: String) {

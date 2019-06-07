@@ -87,6 +87,8 @@
     <string name="register_error">Fallo registrando tu cuenta</string>
     <string name="no_users">No se han encontrado usuarios</string>
     <string name="send_message">Enviar mensaje</string>
+    <string name="error_saving_data">Error Actualizando datos , comprueba tu comexión a internet</string>
+    <string name="welcome">Bienvenido</string>
 
 
 </resources>

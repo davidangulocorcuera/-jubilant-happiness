@@ -23,6 +23,7 @@ class MainViewModel : ViewModel(),
 
 
     val url = MutableLiveData<String>()
+    val profilePicture = MutableLiveData<Bitmap>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
     val usersUpdatedResponse = MutableLiveData<ArrayList<User>>()
@@ -61,6 +62,11 @@ class MainViewModel : ViewModel(),
             url
         }
     }
+    val profileImageBitmap: MutableLiveData<Bitmap> by lazy {
+        MutableLiveData<Bitmap>().also {
+            profilePicture
+        }
+    }
 
     fun listenUserData() {
         CurrentUser.firebaseUser?.let {
@@ -78,7 +84,7 @@ class MainViewModel : ViewModel(),
 
     fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
         val location = LocationRequest()
-        val geocoder = Geocoder(context, Locale.getDefault())
+        val geocoder = Geocoder(context, Locale.ENGLISH)
         val addresses: List<Address>
 
         addresses = geocoder.getFromLocation(lat, lon, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
@@ -87,6 +93,7 @@ class MainViewModel : ViewModel(),
             && addresses.isNotEmpty()
             && addresses[0].locality != null
             && addresses[0].postalCode != null
+            && addresses[0].countryCode != null
             && addresses[0].countryName != null) {
 
             location.city = addresses[0].locality
@@ -94,6 +101,8 @@ class MainViewModel : ViewModel(),
             location.postalCode = addresses[0].postalCode
             location.lat = addresses[0].latitude
             location.lng = addresses[0].longitude
+            location.countryCode = addresses[0].countryCode
+
         }
         locationRequest.postValue(location)
 

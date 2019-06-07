@@ -101,7 +101,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
         cvFilterByCountry.setOnClickListener {
             usersFilteredList = users.filter {
-                it.currentLocation?.country == CurrentUser.user?.currentLocation!!.country
+                it.currentLocation?.countryCode == CurrentUser.user?.currentLocation!!.countryCode
             }
             usersFilteredArrayList = ArrayList(usersFilteredList)
             usersFilteredArray = usersFilteredArrayList.toTypedArray()
