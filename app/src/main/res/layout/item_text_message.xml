@@ -4,20 +4,21 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:background="@drawable/rect_oval_primary"
-              android:padding="@dimen/space_medium"
+              android:padding="@dimen/space_small"
               android:layout_gravity="end"
               android:id="@+id/messageRoot"
-              android:layout_margin="@dimen/space_medium"
+              android:elevation="@dimen/space_medium"
 
 >
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/tvMessage"
               android:textColor="@color/white"
+              android:layout_marginBottom="@dimen/space_small"
               android:text="@string/error_saving_data"
               android:maxWidth="250dp"
               android:minWidth="120dp"
-              android:padding="@dimen/space_small"/>
+             />
 
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -25,7 +26,6 @@
               android:id="@+id/tvMessageDate"
               android:text="@string/home"
               android:layout_gravity="end"
-              android:padding="@dimen/space_small"
               android:layout_marginEnd="@dimen/space_medium"
     />
 

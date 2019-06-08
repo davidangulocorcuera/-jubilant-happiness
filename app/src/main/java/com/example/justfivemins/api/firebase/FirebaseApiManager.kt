@@ -237,7 +237,7 @@ class FirebaseApiManager(
                     .document(otherUserId)
                     .collection("engagedChatChannels")
                     .document(currentUserId)
-                    .set(mapOf("channelId" to newChannel))
+                    .set(mapOf("channelId" to newChannel.id))
 
                 onComplete(newChannel.id)
 

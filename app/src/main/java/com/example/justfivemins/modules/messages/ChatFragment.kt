@@ -45,13 +45,16 @@ class ChatFragment : BaseFragment(), ChatPresenter.View {
                 firebaseApiManager.addChatMessagesListener(channelId, context!!, this::updateRecyclerView)
 
             btnSend.setOnClickListener {
-                val messageToSend = TextMessage(
-                    etChatText.text.toString(),
-                    Calendar.getInstance().time,
-                    FirebaseAuth.getInstance().currentUser?.uid!!
-                )
-                etChatText.setText("")
-                firebaseApiManager.sendMessage(messageToSend, channelId)
+                if(etChatText.text.toString().isNotEmpty()){
+                    val messageToSend = TextMessage(
+                        etChatText.text.toString(),
+                        Calendar.getInstance().time,
+                        FirebaseAuth.getInstance().currentUser?.uid!!
+                    )
+                    etChatText.setText("")
+                    firebaseApiManager.sendMessage(messageToSend, channelId)
+                }
+
             }
         }
 

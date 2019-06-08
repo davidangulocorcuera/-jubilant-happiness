@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/colorPrimary"/>
     <corners
-            android:topLeftRadius="@dimen/space_big"
-            android:topRightRadius="@dimen/space_big"
-            android:bottomLeftRadius="@dimen/space_big"
-            android:bottomRightRadius="@dimen/space_big"/>
+            android:topLeftRadius="@dimen/space_medium_big"
+            android:topRightRadius="@dimen/space_medium_big"
+            android:bottomLeftRadius="@dimen/space_medium_big"
+            android:bottomRightRadius="@dimen/space_medium_big"/>
 
 </shape>

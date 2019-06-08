@@ -33,6 +33,7 @@
                 <EditText
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:id="@+id/etEmail"
+                        android:maxLines="1"
                         android:layout_height="match_parent"
                         android:layout_width="match_parent" android:hint="@string/e_mail"
                 />
@@ -56,6 +57,7 @@
                         android:layout_height="match_parent"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/password"
+                        android:maxLines="1"
                         android:inputType="textPassword"
                 />
             </com.google.android.material.textfield.TextInputLayout>
@@ -80,6 +82,7 @@
                         android:layout_height="match_parent"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:hint="@string/validate_password"
+                        android:maxLines="1"
                         android:inputType="textPassword"
                 />
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,8 +91,8 @@
                     android:layout_marginStart="@dimen/space_medium"
                     android:layout_marginEnd="@dimen/space_medium"
                     android:padding="@dimen/space_small"
-                    android:textColor="@color/lightBlackDark"
-                    android:fontFamily="@font/roboto_thin"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/roboto_light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/password_info"

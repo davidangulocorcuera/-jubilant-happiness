@@ -63,7 +63,7 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
             val matrix = ColorMatrix()
             matrix.setSaturation(0f)
             val filter = ColorMatrixColorFilter(matrix)
-            view.ivProfileImage.setColorFilter(filter)
+            view.ivProfileImage.colorFilter = filter
 
 
         }
