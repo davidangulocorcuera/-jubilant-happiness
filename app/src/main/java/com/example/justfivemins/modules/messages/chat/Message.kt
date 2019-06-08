@@ -1,4 +1,4 @@
-package com.example.justfivemins.model.chat
+package com.example.justfivemins.modules.messages.chat
 
 import java.util.*
 

@@ -1,7 +1,7 @@
 package com.example.justfivemins.api.responses
 
 import com.example.justfivemins.model.Location
-import com.example.justfivemins.model.chat.Message
+import com.example.justfivemins.modules.messages.chat.Message
 import com.example.justfivemins.model.User
 import java.io.Serializable
 

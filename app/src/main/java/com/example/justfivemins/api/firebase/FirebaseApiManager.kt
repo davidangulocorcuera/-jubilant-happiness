@@ -13,14 +13,13 @@ import com.example.justfivemins.api.requests.RegisterRequest
 import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
-import com.example.justfivemins.model.chat.ChatChannel
-import com.example.justfivemins.model.chat.Message
-import com.example.justfivemins.model.chat.TextMessage
-import com.example.justfivemins.model.chat.TextMessageItem
+import com.example.justfivemins.modules.messages.chat.ChatChannel
+import com.example.justfivemins.modules.messages.chat.Message
+import com.example.justfivemins.modules.messages.chat.TextMessage
+import com.example.justfivemins.modules.messages.chat.TextMessageItem
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
-import com.xwray.groupie.kotlinandroidextensions.Item
 
 
 /**
@@ -261,6 +260,13 @@ class FirebaseApiManager(
                     }
                     onListen(items)
                 }
+    }
+
+    fun sendMessage(message: Message, channelId: String){
+        chatChannelsColectionRef.document(channelId)
+            .collection("messages")
+            .add(message)
+
     }
 
 

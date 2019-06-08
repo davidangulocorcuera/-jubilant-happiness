@@ -139,11 +139,11 @@
     </fragment>
 
     <fragment android:id="@+id/messageFragment"
-              android:name="com.example.justfivemins.modules.messages.MessageFragment"
+              android:name="com.example.justfivemins.modules.messages.ChatFragment"
               android:label="fragmentMessage"
-              tools:layout="@layout/fragment_messages">
-
+              tools:layout="@layout/fragment_chat">
         <argument android:name="user" app:argType="com.example.justfivemins.model.User"/>
+
     </fragment>
 
 

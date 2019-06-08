@@ -93,6 +93,7 @@
     <string name="welcome">Welcome</string>
     <string name="spanish">Spanish</string>
     <string name="english">English</string>
+    <string name="chat_write">Write your message here</string>
 
 
 </resources>
