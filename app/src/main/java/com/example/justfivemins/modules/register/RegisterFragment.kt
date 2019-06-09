@@ -46,7 +46,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     override fun viewCreated(view: View?) {
 
         presenter.init()
-        hideToolbar()
         etBirthday.setOnClickListener {
             showDatePickerDialog()
         }
@@ -65,7 +64,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             autoFill()
             true
         }
-        setToolbarTitle(getString(R.string.home).toUpperCase())
         setListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword, etPasswordRepeat, etName, etBirthday)
 

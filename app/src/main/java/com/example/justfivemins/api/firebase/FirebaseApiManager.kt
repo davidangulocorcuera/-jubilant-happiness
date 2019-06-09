@@ -106,16 +106,22 @@ class FirebaseApiManager(
     }
 
     override fun updateLocation(locationRequest: LocationRequest, userId: String) {
-        db.collection("users").document(userId)
-            .update("location", locationRequest)
-            .addOnCompleteListener {
-                locationUpdateListener?.isLocationUpdated(true)
+        if(locationRequest.city.isNotEmpty()){
+            db.collection("users").document(userId)
+                .update("location", locationRequest)
+                .addOnCompleteListener {
+                    locationUpdateListener?.isLocationUpdated(true)
 
-            }
-            .addOnFailureListener {
-                Log.v("errortag", it.localizedMessage)
-                locationUpdateListener?.isLocationUpdated(false)
-            }
+                }
+                .addOnFailureListener {
+                    Log.v("errortag", it.localizedMessage)
+                    locationUpdateListener?.isLocationUpdated(false)
+                }
+        }
+        else{
+            locationUpdateListener?.isLocationUpdated(false)
+        }
+
 
 
     }

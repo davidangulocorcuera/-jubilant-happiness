@@ -120,7 +120,6 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tvResetPassword.setOnClickListener {
             showResetPasswordDialog()
         }
-        hideToolbar()
         presenter.init()
         setButtonsListeners()
         val fields = arrayListOf<EditText>(etEmail, etPassword)
@@ -161,7 +160,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     override fun showEmailError(error: Boolean) {
         if (error) {
-            tiEmail.error = "Invalid e-mail or empty"
+            tiEmail.error = getString(R.string.email_error)
         }
 
         tiEmail.showError(error)
@@ -169,7 +168,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     override fun showPasswordError(error: Boolean) {
         if (error) {
-            tiPassword.error = "Invalid Password or empty"
+            tiPassword.error = getString(R.string.password_error)
         }
         tiPassword.showError(error)
     }
@@ -190,6 +189,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         CookieBar.dismiss(activity)
     }
 
+  
     private fun showResetPasswordDialog() {
         MaterialDialog(context!!).show {
             title(R.string.reset_password_info)
@@ -200,7 +200,9 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
                     inputField.error = if (isValid) null else getString(R.string.email_error)
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
                     positiveButton {
-                        sendEmailForResetPassword(text.toString())
+                        if(isValid){
+                            sendEmailForResetPassword(text.toString())
+                        }
                     }
                 }
             }
@@ -219,6 +221,8 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
         firebaseApiManager.sendPasswordEmail(email)
     }
+
+
 
 
 }

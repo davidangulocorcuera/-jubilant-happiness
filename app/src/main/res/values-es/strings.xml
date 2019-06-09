@@ -90,14 +90,15 @@
     <string name="spanish">Español</string>
     <string name="english">Inglés</string>
     <string name="chat_write">Escribe tu mensaje aquí</string>
-    <string name="password_reset">Pulsa aquí para restablecer tu contraseña</string>
+    <string name="password_reset">Pulsa aquí si has olvidado tu contraseña</string>
     <string name="reset_password_info">Se enviará un enlace a tu email donde podrás restablecer tu contraseña.</string>
     <string name="reset_password_title">Resetea tu contraseña</string>
     <string name="delete_account">Borrar cuenta</string>
     <string name="delete_account_info">Valida tu usuario para borrar la cuenta</string>
     <string name="email_sent">E-mail enviado, comprueba tu correo electrónico</string>
     <string name="email_sent_error">Este e-mail no es válido</string>
-
+    <string name="location_updated">Localización actualizada</string>
+    <string name="location_404">Aún no tenemos esa ciudad en nuestra base de datos, prueba con otro destino</string>
 
 
 </resources>

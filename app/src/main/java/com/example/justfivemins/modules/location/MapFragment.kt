@@ -20,14 +20,10 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import es.dmoral.toasty.Toasty
 
 
-
-
-
-
-
-class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.LocationDataListener  {
+class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.LocationDataListener {
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
@@ -60,14 +56,18 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.Locat
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLon, 0.5f))
 
             btnNext.setOnClickListener {
-                showProgress(true,true)
+                showProgress(true, true)
 
                 view?.let {
                     activity?.let { activity ->
-                        mainViewModel.getAddressFromCoordinates(latLon.latitude, latLon.longitude ,activity.applicationContext)
+                        mainViewModel.getAddressFromCoordinates(
+                            latLon.latitude,
+                            latLon.longitude,
+                            activity.applicationContext
+                        )
                         mainViewModel.locationRequest.observe(this, Observer { locationRequest ->
                             locationRequest?.let {
-                                mainViewModel.updateLocation(it, activity,this)
+                                mainViewModel.updateLocation(it, activity, this)
                             }
                         })
                     }
@@ -77,15 +77,18 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.Locat
         }
 
     }
+
     override fun isLocationUpdated(success: Boolean) {
         if (success) {
-            showProgress(false,false)
-            view?.let{
+            showProgress(false, false)
+            view?.let {
                 Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
+                Toasty.success(context!!, getString(R.string.location_updated), 2000, true).show()
+
             }
         } else {
-            showProgress(false,false)
-
+            showProgress(false, false)
+            Toasty.error(context!!, getString(R.string.location_404), 2000, true).show()
         }
     }
 

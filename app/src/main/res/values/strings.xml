@@ -102,6 +102,8 @@
     <string name="delete_account_info">If you really want to delete your account please write your password</string>
     <string name="email_sent">E-mail sent</string>
     <string name="email_sent_error">this user does not exist</string>
+    <string name="location_updated">Location updated</string>
+    <string name="location_404">Please try another place</string>
 
 
 </resources>

@@ -29,7 +29,6 @@
                        android:layout_gravity="center_horizontal"
                        style="@style/title"
                        android:src="@drawable/finwo_logo"
-                       android:layout_marginBottom="@dimen/space_big"
             />
             <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

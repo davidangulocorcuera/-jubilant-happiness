@@ -25,15 +25,12 @@ class MainViewModel : ViewModel(),
 
     val isUserRemoved = MutableLiveData<Boolean>()
     val isUserReAuth = MutableLiveData<Boolean>()
-
     val url = MutableLiveData<String>()
     val profilePicture = MutableLiveData<Bitmap>()
     val response = MutableLiveData<UserResponse>()
     val users = MutableLiveData<ArrayList<User>>()
     val usersUpdatedResponse = MutableLiveData<ArrayList<User>>()
     val locationRequest = MutableLiveData<LocationRequest>()
-
-
     val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
             onUserDataChangedListener = this,
@@ -99,7 +96,7 @@ class MainViewModel : ViewModel(),
     }
 
     fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
-        val location = LocationRequest()
+        val location: LocationRequest = LocationRequest()
         val geocoder = Geocoder(context, Locale.ENGLISH)
         val addresses: List<Address>
 
