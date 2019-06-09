@@ -5,11 +5,18 @@ import android.Manifest
 import android.content.Intent
 import android.graphics.Bitmap
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
@@ -19,6 +26,7 @@ import com.example.justfivemins.api.requests.UpdateUserRequest
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.home.MainViewModel
+import com.example.justfivemins.utils.Valid
 import com.example.justfivemins.utils.showError
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -51,6 +59,98 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
     }
 
     override fun viewCreated(view: View?) {
+        setDeleteAccountListener()
+        setEditTextListener()
+        setTextViews()
+        setButtonNextListener()
+        setProfileImageListener()
+        setButtonBackListener()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        mainViewModel.profileImageBitmap.observe(this, Observer { bitmap ->
+            bitmap?.let {
+                profileBitmap = it
+                Glide
+                    .with(this)
+                    .load(bitmap)
+                    .centerCrop()
+                    .into(ivProfileImage)
+                showProgress(false, false)
+            }
+        })
+
+        mainViewModel.userRemoved.observe(this, Observer { removedResponse ->
+            removedResponse?.let { success ->
+                showProgress(show = false, hasShade = false)
+                enableScreenOnUpdate(true)
+                if(success){
+                    // go to login
+                    view?.let {
+                        Navigation.findNavController(it).navigate(R.id.goToLogin)
+                    }                }
+                else{
+                    //onError()
+                }
+            }
+        })
+
+        mainViewModel.userReauth.observe(this, Observer { reAuthResponse ->
+            reAuthResponse?.let {
+                showProgress(false,false)
+                if(it){
+                    showProgress(show = true, hasShade = true)
+                    enableScreenOnUpdate(false)
+                    mainViewModel.removeUser()
+                }
+                else{
+                    //onError()
+
+                }
+            }
+        })
+    }
+
+    private fun setDeleteAccountListener(){
+        tvDeleteAccount.setOnClickListener {
+            showProgress(true,true)
+            showReAuthDialog()
+        }
+    }
+
+    private fun setProfileImageListener() {
+        ivProfileImage.setOnClickListener {
+            showProgress(true, true)
+            requestPermissions()
+        }
+    }
+
+    private fun setButtonBackListener() {
+        btnBack.setOnClickListener {
+            hideKeyboard()
+            Navigation.findNavController(it).popBackStack()
+
+        }
+    }
+
+    private fun setButtonNextListener() {
+        btnNext.setOnClickListener {
+            enableScreenOnUpdate(false)
+            if (profileBitmap != null) {
+                profileBitmap?.let {
+                    mainViewModel.uploadProfileImage(it, this)
+                    showProgress(true, true)
+                }
+            } else {
+                updateUser(retrieveRegisterData())
+            }
+
+
+        }
+    }
+
+    private fun setEditTextListener() {
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 etName.postDelayed({
@@ -64,44 +164,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-        })
-
-        setTextViews()
-
-
-        btnNext.setOnClickListener {
-            enableScreenOnUpdate(false)
-            if(profileBitmap != null){
-                profileBitmap?.let {
-                    mainViewModel.uploadProfileImage(it, this)
-                    showProgress(true, true)
-                }
-            }
-            else{
-                updateUser(retrieveRegisterData())
-            }
-
-
-        }
-        ivProfileImage.setOnClickListener {
-            showProgress(true, true)
-            requestPermissions()
-        }
-        btnBack.setOnClickListener {
-            hideKeyboard()
-            Navigation.findNavController(it).popBackStack()
-
-        }
-        mainViewModel.profileImageBitmap.observe(this, Observer { bitmap ->
-            bitmap?.let {
-                profileBitmap = it
-                Glide
-                    .with(this)
-                    .load(bitmap)
-                    .centerCrop()
-                    .into(ivProfileImage)
-                showProgress(false, false)
             }
         })
     }
@@ -140,7 +202,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
 
     }
-
 
 
     private fun retrieveRegisterData(): UpdateUserRequest {
@@ -191,6 +252,26 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             .onSameThread()
             .check()
     }
+    private fun showReAuthDialog() {
+        val type = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        MaterialDialog(context!!).show {
+            input( hintRes = R.string.password,inputType = type, waitForPositiveButton = false) { dialog, text ->
+                val inputField = dialog.getInputField()
+                val isValid = Valid.isPasswordValid(text.toString())
+                inputField.error = if (isValid) null else getString(R.string.password_error)
+                dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                positiveButton {
+                    mainViewModel.reAuthUser(text.toString())
+                }
+            }
+            positiveButton(R.string.next)
+            negativeButton(R.string.back) {
+                showProgress(false,false)
+            }
+            title(R.string.delete_account_info)
+
+        }
+    }
 
     override fun showNameError(error: Boolean) {
         if (error) {
@@ -211,6 +292,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         super.onDestroy()
         CookieBar.dismiss(activity)
     }
+
     override fun isImageUploaded(success: Boolean) {
 
     }
@@ -242,7 +324,6 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
         }
 
     }
-
 
 
 }

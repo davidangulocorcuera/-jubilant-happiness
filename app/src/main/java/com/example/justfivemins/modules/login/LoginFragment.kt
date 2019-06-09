@@ -1,6 +1,7 @@
 package com.example.justfivemins.modules.login
 
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
@@ -17,6 +18,11 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.aviran.cookiebar2.CookieBar
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.example.justfivemins.utils.Valid
 import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 
@@ -192,22 +198,26 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         CookieBar.dismiss(activity)
     }
 
-    fun showResetPasswordDialog() {
-        LovelyTextInputDialog(context, R.style.ThemeOverlay_MaterialComponents_TextInputEditText)
-            .setTopColorRes(R.color.white)
-            .setTitle(R.string.reset_password_title)
-            .setMessage(getString(R.string.reset_password_info))
-            .setIcon(R.drawable.ic_messages)
-            .setInputFilter(R.string.email_error,
-                LovelyTextInputDialog.TextFilter { text ->  Valid.isEmailValid(text)})
-            .setConfirmButton(android.R.string.ok,
-                LovelyTextInputDialog.OnTextInputConfirmListener { text ->
-                    sendEmailForResetPassword(text)
-                })
-            .show()
+    private fun showResetPasswordDialog() {
+        MaterialDialog(context!!).show {
+            title(R.string.reset_password_info)
+            input( hintRes = R.string.e_mail, waitForPositiveButton = false) { dialog, text ->
+                if(text.isNotEmpty()){
+                    val inputField = dialog.getInputField()
+                    val isValid = Valid.isEmailValid(text.toString())
+                    inputField.error = if (isValid) null else getString(R.string.email_error)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                    positiveButton {
+                        sendEmailForResetPassword(text.toString())
+                    }
+                }
+            }
+            positiveButton(R.string.next)
+            negativeButton(R.string.back)
+        }
     }
 
-    fun sendEmailForResetPassword(email: String) {
+    private fun sendEmailForResetPassword(email: String) {
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
                 this,

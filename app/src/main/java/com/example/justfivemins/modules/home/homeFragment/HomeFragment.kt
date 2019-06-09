@@ -32,8 +32,12 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import android.widget.Toast
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
+import com.afollestad.materialdialogs.input.getInputField
+import com.afollestad.materialdialogs.input.input
 import com.example.justfivemins.utils.Valid
-import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 
 
 class HomeFragment : BaseFragment(), DrawerLocker {
@@ -86,43 +90,20 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
             }
         })
-        mainViewModel.users.observe(this, Observer { response ->
-            response?.let {
+        mainViewModel.users.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
                 users = it
                 showProgress(false)
             }
         })
-        mainViewModel.usersUpdatedResponse.observe(this, Observer { response ->
-            response?.let {
+        mainViewModel.usersUpdatedResponse.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
                 users = it
                 Log.v("taag", users.size.toString())
                 showProgress(false)
             }
         })
 
-        mainViewModel.userRemoved.observe(this, Observer { response ->
-            response?.let {
-                showProgress(false,false)
-                if(it){
-                    this.findNavController().popBackStack()
-               }
-                else{
-
-               }
-            }
-        })
-
-        mainViewModel.userReauth.observe(this, Observer { response ->
-            response?.let {
-                showProgress(false,false)
-                if(it){
-                    mainViewModel.removeUser()
-                }
-                else{
-
-                }
-            }
-        })
     }
 
     private fun setCardsOnClickListeners() {
@@ -263,19 +244,9 @@ class HomeFragment : BaseFragment(), DrawerLocker {
                 }
                 DrawerViewModel.MenuItemType.CONTACT -> {
                 }
-                DrawerViewModel.MenuItemType.DELETE_ACCOUNT ->{
-                    showProgress(true,true)
-                    showResetPasswordDialog()
-
-                }
 
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     @SuppressLint("SetTextI18n")
@@ -305,7 +276,6 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         showProgress(enable, enable)
     }
 
-
     private fun setNewData(userResponse: UserResponse) {
         currentUser.name = userResponse.name
         currentUser.email = userResponse.email
@@ -321,6 +291,13 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
         CurrentUser.user = currentUser
         setMenuData()
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        showProgress(false,false)
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun setDrawerEnabled(enabled: Boolean) {
@@ -349,19 +326,6 @@ class HomeFragment : BaseFragment(), DrawerLocker {
             R.id.spanish -> Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun showResetPasswordDialog() {
-        LovelyTextInputDialog(context, R.style.ThemeOverlay_MaterialComponents_TextInputEditText)
-            .setTopColorRes(R.color.white)
-            .setTitle(getString(R.string.delete_account))
-            .setMessage(getString(R.string.delete_account_info))
-            .setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
-            .setConfirmButton(android.R.string.ok,
-                LovelyTextInputDialog.OnTextInputConfirmListener {
-                    mainViewModel.reAuthUser(it)
-                })
-            .show()
     }
 
 }

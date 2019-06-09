@@ -91,9 +91,11 @@
     <string name="english">Inglés</string>
     <string name="chat_write">Escribe tu mensaje aquí</string>
     <string name="password_reset">Pulsa aquí para restablecer tu contraseña</string>
-    <string name="reset_password_info">Escribe aquí tu email, se te mandará un link dónde podrás resetear tu contraseña.</string>
+    <string name="reset_password_info">Se enviará un enlace a tu email donde podrás restablecer tu contraseña.</string>
     <string name="reset_password_title">Resetea tu contraseña</string>
     <string name="delete_account">Borrar cuenta</string>
+    <string name="delete_account_info">Valida tu usuario para borrar la cuenta</string>
+
 
 
 </resources>

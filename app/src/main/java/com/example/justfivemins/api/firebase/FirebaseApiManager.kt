@@ -312,15 +312,18 @@ class FirebaseApiManager(
     override fun reAuthUser(request: String) {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
-            val credential = EmailAuthProvider
-                .getCredential(it.email!!, request)
-            it.reauthenticate(credential)
-                ?.addOnCompleteListener {
-                    reAuthUserListener?.isUserReAuth(true)
-                }
-                ?.addOnFailureListener{
-                    reAuthUserListener?.isUserReAuth(false)
-                }
+            it.email?.let { email ->
+                val credential = EmailAuthProvider
+                    .getCredential(email, request)
+                it.reauthenticate(credential)
+                    ?.addOnCompleteListener {
+                        reAuthUserListener?.isUserReAuth(true)
+                    }
+                    ?.addOnFailureListener{
+                        reAuthUserListener?.isUserReAuth(false)
+                    }
+            }
+
         }
     }
 

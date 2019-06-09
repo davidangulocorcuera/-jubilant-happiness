@@ -12,7 +12,9 @@
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scrollView2"
-               >
+               app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:orientation="vertical"
@@ -145,13 +147,18 @@
                             android:hint="@string/job"
                     />
                 </com.google.android.material.textfield.TextInputLayout>
-                <!--<Button-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:id="@+id/btnNext"-->
-                <!--android:textAllCaps="false"-->
-                <!--style="@style/button"-->
-                <!--android:text="@string/save_personal_data"-->
-                <!--android:layout_gravity="center"/>-->
+                <TextView
+                        android:id="@+id/tvDeleteAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/delete_account"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/white"
+                        style="@style/Clickable"
+                        android:background="@drawable/rect_oval_primary"
+                        android:backgroundTint="@color/materialRed800"
+                        android:padding="@dimen/space_medium"
+                />
             </LinearLayout>
 
         </LinearLayout>

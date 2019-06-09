@@ -99,9 +99,6 @@
     <string name="reset_password_info">Write your email here for reset your password</string>
     <string name="reset_password_title">Reset your password</string>
     <string name="delete_account">Delete account</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_account_info">If you really want to delete your account please write your password</string>
 
 
