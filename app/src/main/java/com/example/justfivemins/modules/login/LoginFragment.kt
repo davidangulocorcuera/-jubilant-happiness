@@ -24,17 +24,20 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.example.justfivemins.utils.Valid
-import com.yarolegovich.lovelydialog.LovelyTextInputDialog
+import es.dmoral.toasty.Toasty
 
 
 class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener,
     ApiEventsListeners.OnResetPasswordEmailSentListener {
     override fun isEmailSent(success: Boolean) {
-        Toast.makeText(
-            context,
-            "email enviado",
-            Toast.LENGTH_SHORT
-        ).show()
+
+                if(success) {
+                    Toasty.success(context!!, getString(R.string.email_sent), 2000, true).show()
+                }
+                else{
+                    Toasty.error(context!!, getString(R.string.email_sent_error), 2000, true).show()
+                }
+
     }
 
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
@@ -45,19 +48,8 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         if (success) {
             goToDownloadData()
         } else {
-            CookieBar.build(activity)
-                .setCookiePosition(CookieBar.BOTTOM)
-                .setAction("CLOSE") {
-                    enableScreen(true)
-                    CookieBar.dismiss(activity)
-                }
-
-                .setSwipeToDismiss(false)
-                .setEnableAutoDismiss(false)
-                .setTitle(getString(R.string.invalid_access))
-                .setBackgroundColor(R.color.materialRed800)
-                .setMessage(getString(R.string.login_error_info))
-                .show()
+            Toasty.error(context!!, getString(R.string.login_error_info), 2000, true).show()
+            enableScreen(true)
         }
     }
 

@@ -83,9 +83,12 @@ dependencies {
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
 
     // simply dialogs
-    implementation 'com.yarolegovich:lovely-dialog:1.1.0'
     implementation 'com.afollestad.material-dialogs:core:3.0.0-rc3'
     implementation 'com.afollestad.material-dialogs:input:3.0.0-rc3'
+
+    // toasts
+    implementation 'com.github.GrenderG:Toasty:1.4.2'
+
 
 
 }

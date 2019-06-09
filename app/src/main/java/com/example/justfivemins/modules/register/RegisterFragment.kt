@@ -17,6 +17,7 @@ import com.example.justfivemins.utils.DatePickerFragment
 import com.example.justfivemins.utils.DateUtils
 import com.example.justfivemins.utils.DateUtils.DATE_FORMAT_USER
 import com.example.justfivemins.utils.showError
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.aviran.cookiebar2.CookieBar
 import java.util.*
@@ -144,7 +145,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     private fun setListeners() {
         btnNext.setOnClickListener {
             showProgress(show = true, hasShade = true)
-            disableScreenOnRegister(false)
+            enableScreenOnRegister(false)
             registerUser(retrieveRegisterData())
         }
         btnBack.setOnClickListener {
@@ -175,7 +176,7 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
     }
 
 
-    private fun disableScreenOnRegister(enable: Boolean) {
+    private fun enableScreenOnRegister(enable: Boolean) {
         tiName.isEnabled = enable
         tiBirthday.isEnabled = enable
         tiPasswordRepeat.isEnabled = enable
@@ -256,19 +257,8 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
         if (success) {
             goToNextScreen()
         } else {
-            CookieBar.build(activity)
-                .setCookiePosition(CookieBar.BOTTOM)
-                .setAction("CLOSE") {
-                    disableScreenOnRegister(true)
-                    CookieBar.dismiss(activity)
-                }
-
-                .setSwipeToDismiss(false)
-                .setEnableAutoDismiss(false)
-                .setTitle(getString(R.string.register_error))
-                .setBackgroundColor(R.color.materialRed800)
-                .setMessage(getString(R.string.register_error_message))
-                .show()
+            Toasty.error(context!!,getString(R.string.register_error_message), 2000, true).show()
+            enableScreenOnRegister(true)
 
         }
 

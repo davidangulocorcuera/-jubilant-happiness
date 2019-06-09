@@ -292,6 +292,9 @@ class FirebaseApiManager(
                     onResetPasswordEmailSentListener?.isEmailSent(true)
                 }
             }
+            .addOnFailureListener {
+                onResetPasswordEmailSentListener?.isEmailSent(false)
+            }
     }
 
     override fun removeUser() {
@@ -304,6 +307,10 @@ class FirebaseApiManager(
                         FirebaseAuth.getInstance().signOut()
                         onUserRemovedListener?.isUserRemoved(true)
                     }
+                }
+                .addOnFailureListener {
+                    onUserRemovedListener?.isUserRemoved(false)
+
                 }
         }
 

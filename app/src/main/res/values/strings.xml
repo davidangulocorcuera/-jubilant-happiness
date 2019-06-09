@@ -100,6 +100,8 @@
     <string name="reset_password_title">Reset your password</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_account_info">If you really want to delete your account please write your password</string>
+    <string name="email_sent">E-mail sent</string>
+    <string name="email_sent_error">this user does not exist</string>
 
 
 </resources>

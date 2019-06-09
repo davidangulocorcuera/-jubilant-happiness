@@ -95,6 +95,8 @@
     <string name="reset_password_title">Resetea tu contraseña</string>
     <string name="delete_account">Borrar cuenta</string>
     <string name="delete_account_info">Valida tu usuario para borrar la cuenta</string>
+    <string name="email_sent">E-mail enviado, comprueba tu correo electrónico</string>
+    <string name="email_sent_error">Este e-mail no es válido</string>
 
 
 
