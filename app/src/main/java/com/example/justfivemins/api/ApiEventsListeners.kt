@@ -32,6 +32,15 @@ interface ApiEventsListeners{
     interface OnDataChangedListener{
         fun isDataChanged(success: Boolean, users: ArrayList<UserResponse>)
     }
+    interface OnResetPasswordEmailSentListener{
+        fun isEmailSent(success: Boolean)
+    }
+    interface OnUserRemovedListener{
+        fun isUserRemoved(success: Boolean)
+    }
+    interface ReAuthUserListener{
+        fun isUserReAuth(success: Boolean)
+    }
 
 }
 

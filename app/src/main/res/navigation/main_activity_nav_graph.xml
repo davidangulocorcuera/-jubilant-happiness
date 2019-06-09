@@ -107,8 +107,8 @@
         <action android:id="@+id/goToHome"
                 app:destination="@id/homeFragment"
                 app:enterAnim="@anim/slide_in_up"
-                app:exitAnim="@anim/slide_out_to_bottom" app:popEnterAnim="@anim/slide_in_up"
-                app:popExitAnim="@anim/slide_out_to_bottom"/>
+                app:exitAnim="@anim/slide_out_to_bottom"
+        />
     </fragment>
 
 

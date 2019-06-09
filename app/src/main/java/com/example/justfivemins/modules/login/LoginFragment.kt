@@ -4,22 +4,32 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.justfivemins.R
 import com.example.justfivemins.api.ApiEventsListeners
 import com.example.justfivemins.api.firebase.FirebaseApiManager
 import com.example.justfivemins.api.requests.LoginRequest
+import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.utils.showError
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.aviran.cookiebar2.CookieBar
+import android.widget.Toast
+import com.example.justfivemins.utils.Valid
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 
 
-class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener {
+class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener,
+    ApiEventsListeners.OnResetPasswordEmailSentListener {
+    override fun isEmailSent(success: Boolean) {
+        Toast.makeText(
+            context,
+            "email enviado",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 
     private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
 
@@ -27,7 +37,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     override fun isLogged(success: Boolean) {
         showProgress(show = false, hasShade = false)
         if (success) {
-            goToLocation()
+            goToDownloadData()
         } else {
             CookieBar.build(activity)
                 .setCookiePosition(CookieBar.BOTTOM)
@@ -45,7 +55,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
-    private fun goToLocation() {
+    private fun goToDownloadData() {
         view?.let {
             Navigation.findNavController(it).navigate(R.id.goToDownloadFragment)
         }
@@ -87,6 +97,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tiEmail.isEnabled = enable
         btnLogin.isEnabled = enable
         btnRegister.isEnabled = enable
+        tvResetPassword.isEnabled = enable
     }
 
 
@@ -94,11 +105,22 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         return R.layout.fragment_login
     }
 
-    override fun viewCreated(view: View?) {
+    private fun checkUserAuthState() {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            CurrentUser.firebaseUser = user
+            goToDownloadData()
+        }
+    }
 
+    override fun viewCreated(view: View?) {
+        checkUserAuthState()
         etEmail.setOnLongClickListener {
             autofill()
             true
+        }
+        tvResetPassword.setOnClickListener {
+            showResetPasswordDialog()
         }
         hideToolbar()
         presenter.init()
@@ -155,7 +177,7 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
     }
 
     override fun enableRegister(enable: Boolean) {
-        btnLogin.isEnabled = enable
+        btnLogin?.isEnabled = enable
     }
 
     override fun hideInputErrors() {
@@ -166,8 +188,34 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
 
     override fun onDestroy() {
         super.onDestroy()
-        showProgress(false,false)
+        showProgress(false, false)
         CookieBar.dismiss(activity)
+    }
+
+    fun showResetPasswordDialog() {
+        LovelyTextInputDialog(context, R.style.ThemeOverlay_MaterialComponents_TextInputEditText)
+            .setTopColorRes(R.color.white)
+            .setTitle(R.string.reset_password_title)
+            .setMessage(getString(R.string.reset_password_info))
+            .setIcon(R.drawable.ic_messages)
+            .setInputFilter(R.string.email_error,
+                LovelyTextInputDialog.TextFilter { text ->  Valid.isEmailValid(text)})
+            .setConfirmButton(android.R.string.ok,
+                LovelyTextInputDialog.OnTextInputConfirmListener { text ->
+                    sendEmailForResetPassword(text)
+                })
+            .show()
+    }
+
+    fun sendEmailForResetPassword(email: String) {
+        val firebaseApiManager: FirebaseApiManager by lazy {
+            FirebaseApiManager(
+                this,
+                activity = activity!!,
+                onResetPasswordEmailSentListener = this
+            )
+        }
+        firebaseApiManager.sendPasswordEmail(email)
     }
 
 

@@ -2,6 +2,7 @@ package com.example.justfivemins.modules.home.homeFragment
 
 
 import android.annotation.SuppressLint
+import android.text.InputType
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -31,13 +32,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 import android.widget.Toast
-
-
-
-
-
-
-
+import com.example.justfivemins.utils.Valid
+import com.yarolegovich.lovelydialog.LovelyTextInputDialog
 
 
 class HomeFragment : BaseFragment(), DrawerLocker {
@@ -101,6 +97,30 @@ class HomeFragment : BaseFragment(), DrawerLocker {
                 users = it
                 Log.v("taag", users.size.toString())
                 showProgress(false)
+            }
+        })
+
+        mainViewModel.userRemoved.observe(this, Observer { response ->
+            response?.let {
+                showProgress(false,false)
+                if(it){
+                    this.findNavController().popBackStack()
+               }
+                else{
+
+               }
+            }
+        })
+
+        mainViewModel.userReauth.observe(this, Observer { response ->
+            response?.let {
+                showProgress(false,false)
+                if(it){
+                    mainViewModel.removeUser()
+                }
+                else{
+
+                }
             }
         })
     }
@@ -243,6 +263,12 @@ class HomeFragment : BaseFragment(), DrawerLocker {
                 }
                 DrawerViewModel.MenuItemType.CONTACT -> {
                 }
+                DrawerViewModel.MenuItemType.DELETE_ACCOUNT ->{
+                    showProgress(true,true)
+                    showResetPasswordDialog()
+
+                }
+
             }
         }
     }
@@ -324,6 +350,20 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun showResetPasswordDialog() {
+        LovelyTextInputDialog(context, R.style.ThemeOverlay_MaterialComponents_TextInputEditText)
+            .setTopColorRes(R.color.white)
+            .setTitle(getString(R.string.delete_account))
+            .setMessage(getString(R.string.delete_account_info))
+            .setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD)
+            .setConfirmButton(android.R.string.ok,
+                LovelyTextInputDialog.OnTextInputConfirmListener {
+                    mainViewModel.reAuthUser(it)
+                })
+            .show()
+    }
+
 }
 
 

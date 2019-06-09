@@ -19,8 +19,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainViewModel : ViewModel(),
-    ApiEventsListeners.OnUserDataChangedListener,ApiEventsListeners.OnDataChangedListener{
+    ApiEventsListeners.OnUserDataChangedListener,ApiEventsListeners.OnDataChangedListener, ApiEventsListeners.OnUserRemovedListener,
+    ApiEventsListeners.ReAuthUserListener {
 
+
+    val isUserRemoved = MutableLiveData<Boolean>()
+    val isUserReAuth = MutableLiveData<Boolean>()
 
     val url = MutableLiveData<String>()
     val profilePicture = MutableLiveData<Bitmap>()
@@ -32,8 +36,10 @@ class MainViewModel : ViewModel(),
 
     val firebaseApiManager: FirebaseApiManager by lazy {
         FirebaseApiManager(
-            onUserUserDataChangedListener = this,
-            onDataChangedListener = this
+            onUserDataChangedListener = this,
+            onDataChangedListener = this,
+            onUserRemovedListener = this,
+            reAuthUserListener = this
         )
     }
     val locationMutable: MutableLiveData<LocationRequest> by lazy {
@@ -49,6 +55,16 @@ class MainViewModel : ViewModel(),
     val usersResponse: MutableLiveData<ArrayList<User>> by lazy {
         MutableLiveData<ArrayList<User>>().also {
             users
+        }
+    }
+    val userRemoved: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().also {
+            isUserRemoved
+        }
+    }
+    val userReauth: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().also {
+            isUserReAuth
         }
     }
     val usersUpdated: MutableLiveData<ArrayList<User>> by lazy {
@@ -124,6 +140,14 @@ class MainViewModel : ViewModel(),
         firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
     }
 
+    fun removeUser(){
+        firebaseApiManager.removeUser()
+    }
+
+    fun reAuthUser(request: String){
+        firebaseApiManager.reAuthUser(request)
+    }
+
 
     /**
      * post current user with changes when collection have changes
@@ -143,6 +167,20 @@ class MainViewModel : ViewModel(),
         if (success) {
             this.usersUpdatedResponse.postValue(setUsersList(users))
         }
+    }
+
+    /**
+     * post true or false if user is removed correctly
+     * */
+    override fun isUserRemoved(success: Boolean) {
+        this.userRemoved.postValue(success)
+    }
+
+    /**
+     * post true or false if user is reauth
+     * */
+    override fun isUserReAuth(success: Boolean) {
+        this.userReauth.postValue(success)
     }
 
     private fun setUsersList(response: ArrayList<UserResponse>): ArrayList<User> {

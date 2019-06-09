@@ -19,4 +19,8 @@ interface Api {
      fun getAllUsers()
      fun getUserData(currentUser: FirebaseUser)
      fun onDataChanged()
+     fun sendPasswordEmail(email: String)
+     fun removeUser()
+     fun reAuthUser(request: String)
+
 }

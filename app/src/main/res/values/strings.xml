@@ -45,7 +45,8 @@
     <string name="terms_of_use">terms of use</string>
     <string name="location_title">Welcome</string>
     <string name="location_subtitle">
-        You will be restored to a random location, then you can change it, adding pin in map, by random location, or with your own location
+        You will be restored to a random location, then you can change it, adding pin in map, by random location, or
+        with your own location
     </string>
     <string name="accept_permissions">Accept Permissions</string>
     <string name="filter_by">Filter By</string>
@@ -94,6 +95,14 @@
     <string name="spanish">Spanish</string>
     <string name="english">English</string>
     <string name="chat_write">Write your message here</string>
+    <string name="password_reset">Click here to reset your password</string>
+    <string name="reset_password_info">Write your email here for reset your password</string>
+    <string name="reset_password_title">Reset your password</string>
+    <string name="delete_account">Delete account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete_account_info">If you really want to delete your account please write your password</string>
 
 
 </resources>

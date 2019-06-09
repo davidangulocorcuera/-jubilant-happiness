@@ -18,7 +18,6 @@
     <string name="login">Acceder</string>
     <string name="register">Registrarse</string>
     <string name="exit">Salir</string>
-
     <string name="location">Localización</string>
     <string name="add_address">Añadir dirección</string>
     <string name="Address">Dirección</string>
@@ -73,7 +72,6 @@
     </string>
     <string name="invalid_access">Acceso inválido</string>
     <string name="location_update_error_message">Error guardando los datos</string>
-
     <string name="image_ok_info">Imagen guardada</string>
     <string name="save_personal_data">Guardar datos personales</string>
     <string name="input_name_error">El nombre no ouede estar vacío</string>
@@ -89,6 +87,13 @@
     <string name="send_message">Enviar mensaje</string>
     <string name="error_saving_data">Error Actualizando datos , comprueba tu comexión a internet</string>
     <string name="welcome">Bienvenido</string>
+    <string name="spanish">Español</string>
+    <string name="english">Inglés</string>
+    <string name="chat_write">Escribe tu mensaje aquí</string>
+    <string name="password_reset">Pulsa aquí para restablecer tu contraseña</string>
+    <string name="reset_password_info">Escribe aquí tu email, se te mandará un link dónde podrás resetear tu contraseña.</string>
+    <string name="reset_password_title">Resetea tu contraseña</string>
+    <string name="delete_account">Borrar cuenta</string>
 
 
 </resources>

@@ -29,15 +29,15 @@ class TextMessageItem(val message: TextMessage, val context: Context) : Item() {
 
     private fun setMessageRootGravity(viewHolder: ViewHolder) {
         if (message.senderId == FirebaseAuth.getInstance().currentUser?.uid) {
-            viewHolder.containerView.messageRoot.apply {
+            viewHolder.itemView.messageRoot.apply {
                 backgroundResource = R.drawable.rect_oval_white
-                viewHolder.containerView.tvMessageDate.textColor = R.color.black
-                viewHolder.containerView.tvMessage.textColor = R.color.black
+                viewHolder.itemView.tvMessageDate.textColor = R.color.black
+                viewHolder.itemView.tvMessage.textColor = R.color.black
                 val lParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.END)
                 this.layoutParams = lParams
             }
         } else {
-            viewHolder.containerView.messageRoot.apply {
+            viewHolder.itemView.messageRoot.apply {
                 backgroundResource = R.drawable.rect_oval_primary
                 val lParams = FrameLayout.LayoutParams(wrapContent, wrapContent, Gravity.START)
                 this.layoutParams = lParams
@@ -61,5 +61,11 @@ class TextMessageItem(val message: TextMessage, val context: Context) : Item() {
 
     override fun equals(other: Any?): Boolean {
        return isSameAs(other as? TextMessageItem)
+    }
+
+    override fun hashCode(): Int {
+        var result = message.hashCode()
+        result = 31 * result + context.hashCode()
+        return result
     }
 }

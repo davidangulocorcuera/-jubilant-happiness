@@ -54,6 +54,7 @@ class DrawerListAdapter(val items: ArrayList<DrawerItem>, var onMenuItemClick: (
                 DrawerViewModel.MenuItemType.FRIENDS -> { view.ivDrawerIcon.tint(R.color.light_blue)}
                 DrawerViewModel.MenuItemType.MY_PICTURES -> { view.ivDrawerIcon.tint(R.color.light_blue)}
                 DrawerViewModel.MenuItemType.CONTACT -> {view.ivDrawerIcon.tint(R.color.light_blue)}
+                DrawerViewModel.MenuItemType.DELETE_ACCOUNT -> {view.ivDrawerIcon.tint(R.color.light_blue)}
             }
 
         }

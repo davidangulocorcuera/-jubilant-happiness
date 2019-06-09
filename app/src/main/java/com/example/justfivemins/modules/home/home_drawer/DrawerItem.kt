@@ -17,6 +17,7 @@ class DrawerItem(var icon: Int = 0, var text: String? = "",
             menuOptions.add(DrawerItem(R.drawable.ic_settings,  context.getString(R.string.personal_data), isClickable = true,type = DrawerViewModel.MenuItemType.PERSONAL_DATA))
             menuOptions.add(DrawerItem(R.drawable.ic_contact, "Contact us", isClickable = true, type = DrawerViewModel.MenuItemType.CONTACT))
             menuOptions.add(DrawerItem(R.drawable.ic_exit,  context.getString(R.string.exit), isClickable = true, type = DrawerViewModel.MenuItemType.LOG_OUT))
+            menuOptions.add(DrawerItem(R.drawable.ic_remove_forever,  context.getString(R.string.delete_account), isClickable = true, type = DrawerViewModel.MenuItemType.DELETE_ACCOUNT))
             return menuOptions
 
         }

@@ -17,6 +17,7 @@ import com.example.justfivemins.modules.messages.chat.ChatChannel
 import com.example.justfivemins.modules.messages.chat.Message
 import com.example.justfivemins.modules.messages.chat.TextMessage
 import com.example.justfivemins.modules.messages.chat.TextMessageItem
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.*
@@ -32,9 +33,13 @@ class FirebaseApiManager(
     , private val locationUpdateListener: ApiEventsListeners.LocationDataListener? = null
     , private val updateUserListener: ApiEventsListeners.UpdateUserListener? = null
     , private val userDataListener: ApiEventsListeners.UserDataListener? = null
-    , private val onUserUserDataChangedListener: ApiEventsListeners.OnUserDataChangedListener? = null
+    , private val onUserDataChangedListener: ApiEventsListeners.OnUserDataChangedListener? = null
+    , private val onResetPasswordEmailSentListener: ApiEventsListeners.OnResetPasswordEmailSentListener? = null
+    , private val onUserRemovedListener: ApiEventsListeners.OnUserRemovedListener? = null
     , private val onDataChangedListener: ApiEventsListeners.OnDataChangedListener? = null
     , private val onGetUsersListener: ApiEventsListeners.GetUsersListener? = null
+    , private val reAuthUserListener: ApiEventsListeners.ReAuthUserListener? = null
+
     , private val activity: Activity? = null
 ) : Api {
 
@@ -44,7 +49,8 @@ class FirebaseApiManager(
     private val chatChannelsColectionRef = db.collection("chatChannels")
     private val currentUserDocRef: DocumentReference
         get() = db.document(
-            "users/${FirebaseAuth.getInstance().currentUser?.uid ?: throw NullPointerException("UID is null")}"
+            "users/${FirebaseAuth.getInstance().currentUser?.uid
+                ?: throw NullPointerException("UID is null") as Throwable}"
         )
 
 
@@ -64,6 +70,12 @@ class FirebaseApiManager(
                                     Log.v("taag", e.toString())
                                 }
                             registerListener?.isRegistered(true)
+                            user.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.v("taag", "email sended")
+                                    }
+                                }
                         }
 
                     } else {
@@ -132,16 +144,16 @@ class FirebaseApiManager(
                 @Nullable e: FirebaseFirestoreException?
             ) {
                 if (e != null) {
-                    onUserUserDataChangedListener?.isUserDataChanged(false, UserResponse())
+                    onUserDataChangedListener?.isUserDataChanged(false, UserResponse())
                     return
                 }
 
                 if (snapshot != null && snapshot.exists()) {
                     val user = Mapper.userResponseMapper(snapshot.data!!)
-                    onUserUserDataChangedListener?.isUserDataChanged(true, user)
+                    onUserDataChangedListener?.isUserDataChanged(true, user)
 
                 } else {
-                    onUserUserDataChangedListener?.isUserDataChanged(false, UserResponse())
+                    onUserDataChangedListener?.isUserDataChanged(false, UserResponse())
                 }
             }
         })
@@ -221,13 +233,13 @@ class FirebaseApiManager(
     ) {
         currentUserDocRef.collection("engagedChatChannels")
             .document(otherUserId).get().addOnSuccessListener {
-                if(it.exists()){
+                if (it.exists()) {
                     onComplete(it["channelId"] as String)
                     return@addOnSuccessListener
                 }
                 val currentUserId = FirebaseAuth.getInstance().currentUser!!.uid
                 val newChannel = chatChannelsColectionRef.document()
-                newChannel.set(ChatChannel(mutableListOf(currentUserId,otherUserId)))
+                newChannel.set(ChatChannel(mutableListOf(currentUserId, otherUserId)))
 
                 currentUserDocRef.collection("engagedChatChannels")
                     .document(otherUserId)
@@ -244,29 +256,72 @@ class FirebaseApiManager(
             }
     }
 
-    fun addChatMessagesListener(channelId: String, context: Context, onListen: (List<TextMessageItem>) -> Unit): ListenerRegistration{
+    fun addChatMessagesListener(
+        channelId: String,
+        context: Context,
+        onListen: (List<TextMessageItem>) -> Unit
+    ): ListenerRegistration {
 
-            return chatChannelsColectionRef.document(channelId).collection("messages")
-                .orderBy("time")
-                .addSnapshotListener{ querySnapshot, firebaseFirestoreException ->
-                    if(firebaseFirestoreException != null){
-                        return@addSnapshotListener
-                    }
-
-                    val items = mutableListOf<TextMessageItem>()
-
-                    querySnapshot?.documents?.forEach{
-                        items.add(TextMessageItem(it.toObject(TextMessage::class.java)!!,context))
-                    }
-                    onListen(items)
+        return chatChannelsColectionRef.document(channelId).collection("messages")
+            .orderBy("time")
+            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                if (firebaseFirestoreException != null) {
+                    return@addSnapshotListener
                 }
+
+                val items = mutableListOf<TextMessageItem>()
+
+                querySnapshot?.documents?.forEach {
+                    items.add(TextMessageItem(it.toObject(TextMessage::class.java)!!, context))
+                }
+                onListen(items)
+            }
     }
 
-    fun sendMessage(message: Message, channelId: String){
+    fun sendMessage(message: Message, channelId: String) {
         chatChannelsColectionRef.document(channelId)
             .collection("messages")
             .add(message)
 
+    }
+
+    override fun sendPasswordEmail(email: String) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onResetPasswordEmailSentListener?.isEmailSent(true)
+                }
+            }
+    }
+
+    override fun removeUser() {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            db.collection("users").document(it.uid).delete()
+            it.delete()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        FirebaseAuth.getInstance().signOut()
+                        onUserRemovedListener?.isUserRemoved(true)
+                    }
+                }
+        }
+
+    }
+
+    override fun reAuthUser(request: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            val credential = EmailAuthProvider
+                .getCredential(it.email!!, request)
+            it.reauthenticate(credential)
+                ?.addOnCompleteListener {
+                    reAuthUserListener?.isUserReAuth(true)
+                }
+                ?.addOnFailureListener{
+                    reAuthUserListener?.isUserReAuth(false)
+                }
+        }
     }
 
 
