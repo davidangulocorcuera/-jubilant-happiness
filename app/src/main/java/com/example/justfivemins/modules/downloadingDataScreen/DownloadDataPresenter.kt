@@ -21,6 +21,7 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
     private lateinit var user: User
 
 
+    /** change it to mvvm */
     fun downloadData() {
         view.showProgress(true)
         firebaseApiManager.getUserData(CurrentUser.firebaseUser!!)
@@ -48,7 +49,7 @@ class DownloadDataPresenter(private val view: View, val activity: Activity? = nu
             view.setUsersList(users)
             view.navigateToHome(user)
         } else {
-
+            /** error here */
         }
 
     }

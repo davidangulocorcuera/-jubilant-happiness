@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="@dimen/space_biggest"
                     android:layout_marginEnd="@dimen/space_biggest"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/space_biggest"
                     android:layout_gravity="center"
                     android:text="@string/register"
                     android:fontFamily="@font/roboto_regular"
@@ -116,8 +116,6 @@
                     android:layout_marginBottom="@dimen/space_big"
 
             />
-
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

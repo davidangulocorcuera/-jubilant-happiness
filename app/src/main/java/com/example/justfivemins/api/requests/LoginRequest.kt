@@ -11,6 +11,7 @@ class LoginRequest(): Serializable {
     var email: String = ""
     var password: String = ""
 
+    /** need to be implemented */
     enum class LoginType {
         NORMAL,
         GOOGLE,

@@ -37,11 +37,8 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
-
-//        setLocale("es")
 
     }
 
@@ -51,6 +48,7 @@ class MainActivity : BaseActivity() {
         showProgress(false, false)
     }
 
+    /** it catch the image and send it to the view model */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         showProgress(show = true, hasShade = true)
@@ -59,8 +57,9 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
 
+    /** temporal function for rotate the image */
+    private fun adjustProfilePicture(selectedPicture: Uri): Bitmap {
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = this.contentResolver?.query(selectedPicture, filePathColumn, null, null, null)
         cursor?.moveToFirst()
@@ -103,6 +102,10 @@ class MainActivity : BaseActivity() {
         matrix.postRotate(degrees.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
+
+
+    /**this function will be implemented for change language, need to be implemented, at the moment the app begin with the base mobile language,
+     *  is translated in english and spanish*/
 
     private fun setLocale(localeName: String) {
         if (localeName != currentLanguage) {

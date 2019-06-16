@@ -1,7 +1,6 @@
 package com.example.justfivemins.modules.login
 
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
@@ -17,7 +16,6 @@ import com.example.justfivemins.utils.showError
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.aviran.cookiebar2.CookieBar
-import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -27,29 +25,51 @@ import com.example.justfivemins.utils.Valid
 import es.dmoral.toasty.Toasty
 
 
-class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsListeners.LoginListener,
+class LoginFragment : BaseFragment(), LoginPresenter.View, ApiEventsListeners.LoginListener,
     ApiEventsListeners.OnResetPasswordEmailSentListener {
-    override fun isEmailSent(success: Boolean) {
 
-                if(success) {
-                    Toasty.success(context!!, getString(R.string.email_sent), 2000, true).show()
-                }
-                else{
-                    Toasty.error(context!!, getString(R.string.email_sent_error), 2000, true).show()
-                }
+    private val presenter: LoginPresenter by lazy { LoginPresenter(this) }
 
+
+    override fun onCreateViewId(): Int {
+        return R.layout.fragment_login
     }
+    override fun viewCreated(view: View?) {
+        checkUserAuthState()
+        etEmail.setOnLongClickListener {
+            autofill()
+            true
+        }
+        tvResetPassword.setOnClickListener {
+            showResetPasswordDialog()
+        }
+        setButtonsListeners()
+        val fields = arrayListOf<EditText>(etEmail, etPassword)
 
-    private val presenter: LoginFragmentPresenter by lazy { LoginFragmentPresenter(this) }
+        fields.forEach {
+            it.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                    it.postDelayed({
 
+                        if (it == etEmail) {
+                            presenter.isValidEmail(p0.toString())
+                        }
 
-    override fun isLogged(success: Boolean) {
-        showProgress(show = false, hasShade = false)
-        if (success) {
-            goToDownloadData()
-        } else {
-            Toasty.error(context!!, getString(R.string.login_error_info), 2000, true).show()
-            enableScreen(true)
+                        if (it == etPassword) {
+                            presenter.isValidPassword(p0.toString())
+                        }
+
+                        presenter.onChange(retrieveLoginData())
+                    }, 400)
+
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+            })
         }
     }
 
@@ -77,8 +97,6 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
             enableScreen(false)
             showProgress(show = true, hasShade = true)
             signUser(retrieveLoginData())
-
-
         }
         btnRegister.setOnClickListener {
             goToRegister()
@@ -98,9 +116,36 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         tvResetPassword.isEnabled = enable
     }
 
+    private fun showResetPasswordDialog() {
+        MaterialDialog(context!!).show {
+            title(R.string.reset_password_info)
+            input(hintRes = R.string.e_mail, waitForPositiveButton = false) { dialog, text ->
+                if (text.isNotEmpty()) {
+                    val inputField = dialog.getInputField()
+                    val isValid = Valid.isEmailValid(text.toString())
+                    inputField.error = if (isValid) null else getString(R.string.email_error)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
+                    positiveButton {
+                        if (isValid) {
+                            sendEmailForResetPassword(text.toString())
+                        }
+                    }
+                }
+            }
+            positiveButton(R.string.next)
+            negativeButton(R.string.back)
+        }
+    }
 
-    override fun onCreateViewId(): Int {
-        return R.layout.fragment_login
+    private fun sendEmailForResetPassword(email: String) {
+        val firebaseApiManager: FirebaseApiManager by lazy {
+            FirebaseApiManager(
+                this,
+                activity = activity!!,
+                onResetPasswordEmailSentListener = this
+            )
+        }
+        firebaseApiManager.sendPasswordEmail(email)
     }
 
     private fun checkUserAuthState() {
@@ -111,47 +156,6 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         }
     }
 
-    override fun viewCreated(view: View?) {
-        checkUserAuthState()
-        etEmail.setOnLongClickListener {
-            autofill()
-            true
-        }
-        tvResetPassword.setOnClickListener {
-            showResetPasswordDialog()
-        }
-        presenter.init()
-        setButtonsListeners()
-        val fields = arrayListOf<EditText>(etEmail, etPassword)
-
-        fields.forEach {
-            it.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                    it.postDelayed({
-
-
-                        if (it == etEmail) {
-                            presenter.isValidEmail(p0.toString())
-                        }
-
-                        if (it == etPassword) {
-                            presenter.isValidPassword(p0.toString())
-                        }
-
-
-                        presenter.onChange(retrieveLoginData())
-                    }, 400)
-
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-            })
-        }
-    }
 
 
     override fun goToRegister() {
@@ -189,40 +193,25 @@ class LoginFragment : BaseFragment(), LoginFragmentPresenter.View, ApiEventsList
         CookieBar.dismiss(activity)
     }
 
-  
-    private fun showResetPasswordDialog() {
-        MaterialDialog(context!!).show {
-            title(R.string.reset_password_info)
-            input( hintRes = R.string.e_mail, waitForPositiveButton = false) { dialog, text ->
-                if(text.isNotEmpty()){
-                    val inputField = dialog.getInputField()
-                    val isValid = Valid.isEmailValid(text.toString())
-                    inputField.error = if (isValid) null else getString(R.string.email_error)
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid)
-                    positiveButton {
-                        if(isValid){
-                            sendEmailForResetPassword(text.toString())
-                        }
-                    }
-                }
-            }
-            positiveButton(R.string.next)
-            negativeButton(R.string.back)
+    override fun isEmailSent(success: Boolean) {
+
+        if (success) {
+            Toasty.success(context!!, getString(R.string.email_sent), 2000, true).show()
+        } else {
+            Toasty.error(context!!, getString(R.string.email_sent_error), 2000, true).show()
         }
+
     }
 
-    private fun sendEmailForResetPassword(email: String) {
-        val firebaseApiManager: FirebaseApiManager by lazy {
-            FirebaseApiManager(
-                this,
-                activity = activity!!,
-                onResetPasswordEmailSentListener = this
-            )
+    override fun isLogged(success: Boolean) {
+        showProgress(show = false, hasShade = false)
+        if (success) {
+            goToDownloadData()
+        } else {
+            Toasty.error(context!!, getString(R.string.login_error_info), 2000, true).show()
+            enableScreen(true)
         }
-        firebaseApiManager.sendPasswordEmail(email)
     }
-
-
 
 
 }

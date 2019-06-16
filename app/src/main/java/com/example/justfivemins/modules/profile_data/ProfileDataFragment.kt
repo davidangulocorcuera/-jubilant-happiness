@@ -11,7 +11,6 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
@@ -96,7 +95,7 @@ class ProfileDataFragment : BaseFragment(), ProfileDataPresenter.View, ApiEvents
             }
         })
 
-        mainViewModel.userReauth.observe(this, Observer { reAuthResponse ->
+        mainViewModel.userReAuth.observe(this, Observer { reAuthResponse ->
             reAuthResponse?.let {
                 showProgress(false,false)
                 if(it){

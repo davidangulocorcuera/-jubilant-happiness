@@ -42,9 +42,9 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
 
 
+    /** it need to be cleaned! !!*/
 
     override fun viewCreated(view: View?) {
-
         presenter.init()
         etBirthday.setOnClickListener {
             showDatePickerDialog()
@@ -57,9 +57,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
             }
 
         }
-
-
-
         etName.setOnLongClickListener {
             autoFill()
             true

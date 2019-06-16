@@ -12,6 +12,7 @@ import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.friends.friends_list_adapter.FriendsListAdapter
 import kotlinx.android.synthetic.main.fragment_friends.*
 
+/**  Fragment for show all conversations that the user have open, need to be implemented */
 
 class FriendsFragment : BaseFragment(),FriendsPresenter.View {
     private lateinit var friendsListAdapter: FriendsListAdapter

@@ -5,13 +5,8 @@ import com.example.justfivemins.api.requests.LoginRequest
 import com.example.justfivemins.modules.base.MainMVP
 import com.example.justfivemins.utils.Valid
 
-class LoginFragmentPresenter(private val view: View) : MainMVP.Presenter {
+class LoginPresenter(private val view: View) : MainMVP.Presenter {
 
-    val LOG_TAG = LoginFragmentPresenter::class.java.simpleName
-
-    fun init() {
-
-    }
     fun onChange(loginRequest: LoginRequest) {
         val error = validate(false, loginRequest)
         if (!error) {

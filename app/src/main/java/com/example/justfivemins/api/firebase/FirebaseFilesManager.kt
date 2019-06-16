@@ -18,10 +18,14 @@ import java.io.IOException
 /**
  * Firebase storage server
  * */
-class FirebaseFilesManager( private val uploadImageListener: FilesEventsListeners.UploadProfileImageListener? = null, var activity: Activity? = null): FilesManager {
+class FirebaseFilesManager(
+    private val uploadImageListener: FilesEventsListeners.UploadProfileImageListener? = null
+    , var activity: Activity? = null): FilesManager {
 
     private val storageRef = FirebaseStorage.getInstance().reference
 
+
+    /** Function for upload image to the storage*/
     override fun uploadProfileImage(img: Bitmap, userPath: String , imageName: String) {
 
         val profileImagesRef = storageRef.child("usersImages/$userPath/$imageName.jpg")

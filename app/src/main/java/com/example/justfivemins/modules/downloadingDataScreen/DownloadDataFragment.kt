@@ -10,6 +10,9 @@ import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.home.MainViewModel
 
+/**  Fragment for get all the necesary data from the bbdd for run the application */
+
+
 class DownloadDataFragment : BaseFragment(), DownloadDataPresenter.View {
 
 

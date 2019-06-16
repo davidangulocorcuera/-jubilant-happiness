@@ -53,7 +53,7 @@ class FirebaseApiManager(
                 ?: throw NullPointerException("UID is null") as Throwable}"
         )
 
-
+    /** Function for create user */
     override fun createUser(registerRequest: RegisterRequest) {
         activity?.let {
             auth.createUserWithEmailAndPassword(registerRequest.email, registerRequest.password)
@@ -67,19 +67,19 @@ class FirebaseApiManager(
                                 .set(Mapper.registerRequestMapper(registerRequest))
                                 .addOnFailureListener { e ->
                                     registerListener?.isRegistered(false)
-                                    Log.v("taag", e.toString())
+                                    /** ERROR */
                                 }
                             registerListener?.isRegistered(true)
                             user.sendEmailVerification()
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
-                                        Log.v("taag", "email sended")
+                                        /** Verification email sended!*/
                                     }
                                 }
                         }
 
                     } else {
-                        Log.v("taag", task.exception.toString())
+                        /** ERROR */
                         registerListener?.isRegistered(false)
 
                     }
@@ -88,6 +88,7 @@ class FirebaseApiManager(
 
     }
 
+    /** Function for auth user */
     override fun loginUser(loginRequest: LoginRequest) {
         activity?.let {
             auth.signInWithEmailAndPassword(loginRequest.email, loginRequest.password)
@@ -105,6 +106,7 @@ class FirebaseApiManager(
 
     }
 
+    /** Function for update user location */
     override fun updateLocation(locationRequest: LocationRequest, userId: String) {
         if(locationRequest.city.isNotEmpty()){
             db.collection("users").document(userId)
@@ -114,18 +116,16 @@ class FirebaseApiManager(
 
                 }
                 .addOnFailureListener {
-                    Log.v("errortag", it.localizedMessage)
+                    /** ERROR */
                     locationUpdateListener?.isLocationUpdated(false)
                 }
         }
         else{
             locationUpdateListener?.isLocationUpdated(false)
         }
-
-
-
     }
 
+    /** Function for update user data */
     override fun updateUserData(updateUserRequest: UpdateUserRequest, userId: String) {
         db.collection("users").document(userId)
             .update(
@@ -139,9 +139,11 @@ class FirebaseApiManager(
                 updateUserListener?.isUserUpdated(true)
             }.addOnFailureListener {
                 updateUserListener?.isUserUpdated(false)
+                /** ERROR */
             }
     }
 
+    /** Function for listen changes in current user */
     override fun onUserDataChanged(userId: String) {
         val docRef = db.collection("users").document(userId)
         docRef.addSnapshotListener(object : EventListener<DocumentSnapshot> {
@@ -151,6 +153,7 @@ class FirebaseApiManager(
             ) {
                 if (e != null) {
                     onUserDataChangedListener?.isUserDataChanged(false, UserResponse())
+                    /** ERROR */
                     return
                 }
 
@@ -160,11 +163,13 @@ class FirebaseApiManager(
 
                 } else {
                     onUserDataChangedListener?.isUserDataChanged(false, UserResponse())
+                    /** ERROR */
                 }
             }
         })
     }
 
+    /** Function for listen changes in all users */
     override fun onDataChanged() {
         val docRef = db.collection("users")
         docRef.addSnapshotListener(object : EventListener<QuerySnapshot> {
@@ -174,6 +179,7 @@ class FirebaseApiManager(
             ) {
                 if (e != null) {
                     onDataChangedListener?.isDataChanged(false, ArrayList())
+                    /** ERROR */
                     return
                 }
                 if (snapshot != null) {
@@ -181,11 +187,13 @@ class FirebaseApiManager(
 
                 } else {
                     onDataChangedListener?.isDataChanged(false, ArrayList())
+                    /** ERROR */
                 }
             }
         })
     }
 
+    /** Function for get users collection */
     override fun getAllUsers() {
         val docRef = db.collection("users")
 
@@ -198,17 +206,16 @@ class FirebaseApiManager(
                     )
 
                 } else {
-                    Log.d("taag", "No such document")
+                    /** ERROR */
                     onGetUsersListener?.areUsersSaved(false, ArrayList())
 
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("taag", "get failed with ", exception)
+                /** ERROR */
                 onGetUsersListener?.areUsersSaved(false, ArrayList())
 
             }
-
     }
 
     override fun getUserData(currentUser: FirebaseUser) {
@@ -221,18 +228,19 @@ class FirebaseApiManager(
                     userDataListener?.isUserDataSaved(true, user)
 
                 } else {
-                    Log.d("taag", "No such document")
+                    /** ERROR */
                     userDataListener?.isUserDataSaved(false, UserResponse())
 
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("taag", "get failed with ", exception)
+                /** ERROR */
                 userDataListener?.isUserDataSaved(false, UserResponse())
 
             }
     }
 
+    /** Chat need to be implemented, just working for tests*/
     fun getOrCreateChatChannel(
         otherUserId: String,
         onComplete: (channelId: String) -> Unit
@@ -262,6 +270,7 @@ class FirebaseApiManager(
             }
     }
 
+    /** Chat need to be implemented, just working for tests*/
     fun addChatMessagesListener(
         channelId: String,
         context: Context,
@@ -284,6 +293,7 @@ class FirebaseApiManager(
             }
     }
 
+    /** Chat need to be implemented, just working for tests*/
     fun sendMessage(message: Message, channelId: String) {
         chatChannelsColectionRef.document(channelId)
             .collection("messages")
@@ -291,6 +301,7 @@ class FirebaseApiManager(
 
     }
 
+    /** Function for send an e-mail to the user when he will change the password*/
     override fun sendPasswordEmail(email: String) {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
@@ -300,9 +311,11 @@ class FirebaseApiManager(
             }
             .addOnFailureListener {
                 onResetPasswordEmailSentListener?.isEmailSent(false)
+                /** ERROR */
             }
     }
 
+    /** Function for remove user and all the data from the user*/
     override fun removeUser() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
@@ -316,12 +329,13 @@ class FirebaseApiManager(
                 }
                 .addOnFailureListener {
                     onUserRemovedListener?.isUserRemoved(false)
-
+                    /** ERROR */
                 }
         }
 
     }
 
+    /** Function for revalidate user token */
     override fun reAuthUser(request: String) {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {

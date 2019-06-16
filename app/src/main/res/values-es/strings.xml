@@ -99,6 +99,7 @@
     <string name="email_sent_error">Este e-mail no es válido</string>
     <string name="location_updated">Localización actualizada</string>
     <string name="location_404">Aún no tenemos esa ciudad en nuestra base de datos, prueba con otro destino</string>
+    <string name="age_example">00</string>
 
 
 </resources>

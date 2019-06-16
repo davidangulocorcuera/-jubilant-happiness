@@ -78,17 +78,16 @@ class MapFragment : BaseFragment(), OnMapReadyCallback, ApiEventsListeners.Locat
 
     }
 
+    /** Need to be move to mvvm */
     override fun isLocationUpdated(success: Boolean) {
+        showProgress(false, false)
         if (success) {
-            showProgress(false, false)
             view?.let {
                 Navigation.findNavController(it).navigate(R.id.goToHomeFragment)
                 Toasty.success(context!!, getString(R.string.location_updated), 2000, true).show()
-
             }
         } else {
-            showProgress(false, false)
-            Toasty.error(context!!, getString(R.string.location_404), 2000, true).show()
+            /** ERROR*/
         }
     }
 

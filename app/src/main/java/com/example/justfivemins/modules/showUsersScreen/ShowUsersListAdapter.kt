@@ -33,8 +33,6 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
         private lateinit var current: User
 
 
-
-
         override fun bind(position: Int) {
             current = getItem(position)
             setValues()
@@ -49,7 +47,6 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
             view.tvAge.text = current.age.toString()
             view.tvLocation.text = current.currentLocation?.country
 
-
             if (current.profileImageUrl.isNotEmpty()) {
                 Glide
                     .with(activity)
@@ -60,14 +57,16 @@ class ShowUsersListAdapter(var items: ArrayList<User> = ArrayList(), val activit
             } else {
                 view.ivProfileImage.setImageResource(R.drawable.no_profile_image)
             }
+
+            /** black and white filter */
             val matrix = ColorMatrix()
             matrix.setSaturation(0f)
             val filter = ColorMatrixColorFilter(matrix)
+
+
             view.ivProfileImage.colorFilter = filter
 
-
         }
-
 
     }
 }

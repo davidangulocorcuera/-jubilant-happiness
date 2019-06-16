@@ -53,7 +53,6 @@ dependencies {
     // Maps
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-places:16.1.0'
-
     // Firebase
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-firestore:19.0.2'
@@ -74,19 +73,17 @@ dependencies {
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0"
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    // anko
+    // Anko
     implementation "org.jetbrains.anko:anko-design:0.10.8"
     implementation "org.jetbrains.anko:anko-design-coroutines:0.10.8"
     implementation "org.jetbrains.anko:anko:0.10.8"
-    // groupie
+    // Groupie
     implementation 'com.xwray:groupie:2.3.0'
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
-
-    // simply dialogs
+    // Simply dialogs
     implementation 'com.afollestad.material-dialogs:core:3.0.0-rc3'
     implementation 'com.afollestad.material-dialogs:input:3.0.0-rc3'
-
-    // toasts
+    // Toasts
     implementation 'com.github.GrenderG:Toasty:1.4.2'
 
 

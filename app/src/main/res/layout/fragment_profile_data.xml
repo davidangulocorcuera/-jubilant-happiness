@@ -7,8 +7,6 @@
         android:background="@color/white"
         android:orientation="vertical"
 >
-
-
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scrollView2"
@@ -16,7 +14,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
         <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="match_parent"
+                      android:layout_height="wrap_content"
                       android:orientation="vertical"
                       android:layout_margin="@dimen/space_medium"
         >
@@ -169,7 +167,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabCustomSize="40dp"
-
             android:id="@+id/btnNext"
             android:src="@drawable/ic_save"
             app:backgroundTint="@color/colorPrimary"
@@ -178,6 +175,7 @@
             android:layout_marginEnd="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="40dp"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -186,7 +184,6 @@
             android:src="@drawable/ic_back"
             app:backgroundTint="@color/materialRed800"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnNext"

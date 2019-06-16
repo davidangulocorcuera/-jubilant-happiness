@@ -19,7 +19,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MainViewModel : ViewModel(),
-    ApiEventsListeners.OnUserDataChangedListener,ApiEventsListeners.OnDataChangedListener, ApiEventsListeners.OnUserRemovedListener,
+    ApiEventsListeners.OnUserDataChangedListener, ApiEventsListeners.OnDataChangedListener,
+    ApiEventsListeners.OnUserRemovedListener,
     ApiEventsListeners.ReAuthUserListener {
 
 
@@ -39,6 +40,7 @@ class MainViewModel : ViewModel(),
             reAuthUserListener = this
         )
     }
+
     val locationMutable: MutableLiveData<LocationRequest> by lazy {
         MutableLiveData<LocationRequest>().also {
             locationRequest
@@ -59,7 +61,7 @@ class MainViewModel : ViewModel(),
             isUserRemoved
         }
     }
-    val userReauth: MutableLiveData<Boolean> by lazy {
+    val userReAuth: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>().also {
             isUserReAuth
         }
@@ -95,19 +97,24 @@ class MainViewModel : ViewModel(),
 
     }
 
-    fun getAddressFromCoordinates(lat: Double, lon: Double,context: Context) {
+    fun getAddressFromCoordinates(lat: Double, lon: Double, context: Context) {
         val location: LocationRequest = LocationRequest()
         val geocoder = Geocoder(context, Locale.ENGLISH)
         val addresses: List<Address>
 
-        addresses = geocoder.getFromLocation(lat, lon, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        addresses = geocoder.getFromLocation(
+            lat,
+            lon,
+            1
+        ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
         if (addresses != null
             && addresses.isNotEmpty()
             && addresses[0].locality != null
             && addresses[0].postalCode != null
             && addresses[0].countryCode != null
-            && addresses[0].countryName != null) {
+            && addresses[0].countryName != null
+        ) {
 
             location.city = addresses[0].locality
             location.country = addresses[0].countryName
@@ -125,23 +132,23 @@ class MainViewModel : ViewModel(),
     fun updateLocation(data: LocationRequest, activity: Activity, listener: ApiEventsListeners.LocationDataListener) {
         val firebaseApiManager: FirebaseApiManager by lazy {
             FirebaseApiManager(
-                locationUpdateListener = listener ,
+                locationUpdateListener = listener,
                 activity = activity
             )
         }
         firebaseApiManager.updateLocation(data, CurrentUser.firebaseUser!!.uid)
     }
 
-     fun uploadProfileImage(img: Bitmap , listener: FilesEventsListeners.UploadProfileImageListener) {
+    fun uploadProfileImage(img: Bitmap, listener: FilesEventsListeners.UploadProfileImageListener) {
         val firebaseFilesManager = FirebaseFilesManager(listener)
-        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid,"justFiveMinsProfileImage")
+        firebaseFilesManager.uploadProfileImage(img, CurrentUser.firebaseUser!!.uid, "justFiveMinsProfileImage")
     }
 
-    fun removeUser(){
+    fun removeUser() {
         firebaseApiManager.removeUser()
     }
 
-    fun reAuthUser(request: String){
+    fun reAuthUser(request: String) {
         firebaseApiManager.reAuthUser(request)
     }
 
@@ -177,7 +184,7 @@ class MainViewModel : ViewModel(),
      * post true or false if user is reauth
      * */
     override fun isUserReAuth(success: Boolean) {
-        this.userReauth.postValue(success)
+        this.userReAuth.postValue(success)
     }
 
     private fun setUsersList(response: ArrayList<UserResponse>): ArrayList<User> {
@@ -196,7 +203,7 @@ class MainViewModel : ViewModel(),
             unknownUser.profileImageUrl = userResponse.profileImageUrl
             unknownUser.id = userResponse.id
 
-            if(userResponse.id != CurrentUser.firebaseUser?.uid){
+            if (userResponse.id != CurrentUser.firebaseUser?.uid) {
                 usersList.add(unknownUser)
             }
             unknownUser = User()

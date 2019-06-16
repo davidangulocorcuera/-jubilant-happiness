@@ -16,9 +16,11 @@ class ProfileDataPresenter(private val view: View) {
             view.showNameError(!Valid.isNotNullOrEmpty(updateUserRequest.name))
         return error
     }
+
     fun isValidName(text: String) {
         view.showNameError(!Valid.isNotNullOrEmpty(text))
     }
+
     fun onChange(updateUserRequest: UpdateUserRequest) {
         val error = validate(false, updateUserRequest)
         if (!error) {
@@ -27,6 +29,7 @@ class ProfileDataPresenter(private val view: View) {
             view.enableEdit(false)
         }
     }
+
     interface View : MainMVP.View {
         fun showNameError(error: Boolean)
         fun enableEdit(enable: Boolean)

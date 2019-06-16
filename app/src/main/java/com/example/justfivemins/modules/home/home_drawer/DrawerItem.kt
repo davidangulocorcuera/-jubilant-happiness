@@ -7,6 +7,7 @@ class DrawerItem(var icon: Int = 0, var text: String? = "",
                  var isClickable: Boolean = false,
                  var isSeparator: Boolean = false, var type: DrawerViewModel.MenuItemType =  DrawerViewModel.MenuItemType.HOME) {
 
+    /** Add new menu items here! */
     companion object {
         fun addMenuOptions(menuOptions: ArrayList<DrawerItem>,context: Context): ArrayList<DrawerItem> {
             menuOptions.add(DrawerItem(R.drawable.ic_home,  context.getString(R.string.home), isClickable = true, type = DrawerViewModel.MenuItemType.HOME))

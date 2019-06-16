@@ -140,6 +140,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             toolbar_title?.text = title
         }
     }
+
     fun showProgress(show: Boolean, hasShade: Boolean) {
         val progress = findViewById<ProgressBar>(R.id.progress)
         val progressContainer = findViewById<View>(R.id.progressContainer)
@@ -161,6 +162,7 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
         (this as? DrawerLocker)?.setDrawerEnabled(enable)
         addMarginToToolbarTitle(enable)
     }
+
     private fun addMarginToToolbarTitle(enable: Boolean) {
         val params = toolbar_title?.layoutParams as? RelativeLayout.LayoutParams
         if (enable) {
@@ -176,7 +178,6 @@ abstract class BaseActivity : AppCompatActivity(), MainMVP.View {
             params?.marginStart = 0
         }
     }
-
 
 
 }
