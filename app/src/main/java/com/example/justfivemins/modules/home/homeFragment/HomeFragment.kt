@@ -44,9 +44,6 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
 
     private var currentUser = User()
-    private lateinit var toggleHome: ActionBarDrawerToggle
-    private var menuOptions: ArrayList<DrawerItem> = ArrayList()
-    private lateinit var drawerListAdapter: DrawerListAdapter
     private var users: ArrayList<User> = ArrayList()
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(activity!!).get(MainViewModel()::class.java)
@@ -62,49 +59,10 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
     override fun viewCreated(view: View?) {
         setHasOptionsMenu(true)
-        setObservers()
-        setDrawerMenu()
-        menuOptions.clear()
-        context?.let {
-            menuOptions = DrawerItem.addMenuOptions(menuOptions, it)
-        }
-        initList()
-        menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
-            this.findNavController().navigate(R.id.goToProfileData)
-        }
-        setToolbarTitle(getString(R.string.home).toUpperCase())
-
-        menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {
-            this.findNavController().navigate(R.id.goToMapFragment)
-        }
-        setMenuData()
         setCardsOnClickListeners()
 
     }
 
-    private fun setObservers() {
-        mainViewModel.response.observe(this, Observer { response ->
-            response?.let {
-                setNewData(it)
-                showProgress(false)
-
-            }
-        })
-        mainViewModel.users.observe(this, Observer { usersResponse ->
-            usersResponse?.let {
-                users = it
-                showProgress(false)
-            }
-        })
-        mainViewModel.usersUpdatedResponse.observe(this, Observer { usersResponse ->
-            usersResponse?.let {
-                users = it
-                Log.v("taag", users.size.toString())
-                showProgress(false)
-            }
-        })
-
-    }
 
     private fun setCardsOnClickListeners() {
 
@@ -194,82 +152,11 @@ class HomeFragment : BaseFragment(), DrawerLocker {
 
     }
 
-    private fun setDrawerMenu() {
-        toggleHome = object : ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close) {
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                toggleHome.syncState()
-            }
 
-            override fun onDrawerClosed(drawerView: View) {
-                super.onDrawerClosed(drawerView)
-                toggleHome.syncState()
-            }
-        }
-        drawerLayout.setDrawerListener(toggleHome)
-        toggleHome.syncState()
-    }
 
-    private fun initList() {
-        val layoutManager = LinearLayoutManager(activity?.applicationContext)
-        recyclerViewDrawerMenu.layoutManager = layoutManager as RecyclerView.LayoutManager?
-        setMenuListener()
-        recyclerViewDrawerMenu.adapter = drawerListAdapter
-    }
 
-    private fun setMenuListener() {
-        drawerListAdapter = DrawerListAdapter(menuOptions) { menuItem ->
-            when (menuItem.type) {
-                DrawerViewModel.MenuItemType.MESSAGE -> {
-                }
-                DrawerViewModel.MenuItemType.MAP -> {
-                    this.findNavController().navigate(R.id.goToMapFragment)
-                }
-                DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
-                    this.findNavController().navigate(R.id.goToProfileData)
-                }
-                DrawerViewModel.MenuItemType.HOME -> {
-                    drawerLayout.closeDrawer(GravityCompat.START)
-                }
-                DrawerViewModel.MenuItemType.LOG_OUT -> {
-                    FirebaseAuth.getInstance().signOut()
-                    this.findNavController().popBackStack()
 
-                }
-                DrawerViewModel.MenuItemType.FRIENDS -> {
-                    this.findNavController().navigate(R.id.goToFriends)
 
-                }
-                DrawerViewModel.MenuItemType.MY_PICTURES -> {
-                }
-                DrawerViewModel.MenuItemType.CONTACT -> {
-                }
-
-            }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun setMenuData() {
-        menuNavigation.getHeaderView(0).tvMenuUsername.text = CurrentUser.user?.name!!.capitalize()
-        if (CurrentUser.user?.currentLocation?.city == "") {
-            menuNavigation.getHeaderView(0).tvLocation.text = getString(R.string.add_address).capitalize()
-        } else {
-            menuNavigation.getHeaderView(0).tvLocation.text =
-                CurrentUser.user?.currentLocation?.country?.capitalize() + "," + CurrentUser.user?.currentLocation?.city?.capitalize()
-
-        }
-        if (CurrentUser.user?.profileImageUrl!!.isNotEmpty()) {
-            Glide
-                .with(this)
-                .load(CurrentUser.user?.profileImageUrl)
-                .centerCrop()
-                .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
-
-        } else {
-            menuNavigation.getHeaderView(0).ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
-        }
-    }
 
 
     fun showProgress(enable: Boolean) {
@@ -290,14 +177,13 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         currentUser.id = userResponse.id
 
         CurrentUser.user = currentUser
-        setMenuData()
+        //setMenuData()
     }
 
 
     override fun onResume() {
         super.onResume()
         showProgress(false,false)
-        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun setDrawerEnabled(enabled: Boolean) {
@@ -305,9 +191,9 @@ class HomeFragment : BaseFragment(), DrawerLocker {
             DrawerLayout.LOCK_MODE_UNLOCKED
         else
             DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        drawerLayout.setDrawerLockMode(lockMode)
+        //drawerLayout.setDrawerLockMode(lockMode)
 
-        toggleHome.isDrawerIndicatorEnabled = enabled
+       // toggleHome.isDrawerIndicatorEnabled = enabled
     }
 
 
@@ -315,17 +201,6 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         super.onStart()
         mainViewModel.listenUserData()
         mainViewModel.listenUsersData()
-    }
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.navigation, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.english -> Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
-            R.id.spanish -> Toast.makeText(context, "2", Toast.LENGTH_SHORT).show()
-        }
-        return super.onOptionsItemSelected(item)
     }
 
 }

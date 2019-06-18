@@ -1,6 +1,7 @@
 package com.example.justfivemins.modules.home
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -13,14 +14,31 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.justfivemins.R
 import com.example.justfivemins.modules.base.BaseActivity
 import android.provider.MediaStore
-import android.view.Menu
+import android.util.Log
+import android.view.View
 import java.io.File
 import java.io.IOException
-import java.util.*
-import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.justfivemins.api.responses.UserResponse
+import com.example.justfivemins.model.CurrentUser
+import com.example.justfivemins.model.User
+import com.example.justfivemins.modules.home.home_drawer.DrawerItem
+import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
+import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.menuNavigation
+import kotlinx.android.synthetic.main.fragment_home.recyclerViewDrawerMenu
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
 class MainActivity : BaseActivity() {
@@ -28,17 +46,36 @@ class MainActivity : BaseActivity() {
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel()::class.java)
     }
-    lateinit var myLocale: Locale
-    var currentLanguage = "es"
-    lateinit var currentLang: String
-
+    private lateinit var navController: NavController
     override fun onCreateViewId(): Int {
         return R.layout.activity_main
     }
+    private lateinit var toggleHome: ActionBarDrawerToggle
+    private var menuOptions: ArrayList<DrawerItem> = ArrayList()
+    private lateinit var drawerListAdapter: DrawerListAdapter
+    private var currentUser = User()
+    private var users: ArrayList<User> = ArrayList()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+        navController = findNavController(R.id.navHostActivity)
+        setObservers()
+        setDrawerMenu()
+        menuOptions.clear()
+        applicationContext.let {
+            menuOptions = DrawerItem.addMenuOptions(menuOptions, it)
+        }
+        initList()
+        menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
+            navController.navigate(R.id.goToProfileData)
+        }
+        menuNavigation.getHeaderView(0).tvLocation.setOnClickListener {
+           navController.navigate(R.id.goToMapFragment)
+        }
+        setMenuData()
 
     }
 
@@ -104,25 +141,128 @@ class MainActivity : BaseActivity() {
     }
 
 
-    /**this function will be implemented for change language, need to be implemented, at the moment the app begin with the base mobile language,
-     *  is translated in english and spanish*/
 
-    private fun setLocale(localeName: String) {
-        if (localeName != currentLanguage) {
-            myLocale = Locale(localeName)
-            val res = resources
-            val dm = res.displayMetrics
-            val conf = res.configuration
-            conf.locale = myLocale
-            res.updateConfiguration(conf, dm)
-            val refresh = Intent(this, MainActivity::class.java)
-            refresh.putExtra(currentLang, localeName)
-            startActivity(refresh)
-        } else {
-            Toast.makeText(this@MainActivity, "Language already selected!", Toast.LENGTH_SHORT).show()
-        }
+    private fun setNewData(userResponse: UserResponse) {
+        currentUser.name = userResponse.name
+        currentUser.email = userResponse.email
+        currentUser.birthday = userResponse.birthday
+        currentUser.currentLocation = userResponse.location
+        currentUser.age = userResponse.age
+        currentUser.surname = userResponse.surname
+        currentUser.jobName = userResponse.job
+        currentUser.universityName = userResponse.university
+        currentUser.description = userResponse.description
+        currentUser.profileImageUrl = userResponse.profileImageUrl
+        currentUser.id = userResponse.id
+
+        CurrentUser.user = currentUser
+        setMenuData()
+    }
+
+    private fun setObservers() {
+        mainViewModel.response.observe(this, Observer { response ->
+            response?.let {
+                setNewData(it)
+                showProgress(false,false)
+
+            }
+        })
+        mainViewModel.users.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
+                users = it
+                showProgress(false,false)
+            }
+        })
+        mainViewModel.usersUpdatedResponse.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
+                users = it
+                Log.v("taag", users.size.toString())
+                showProgress(false,false)
+            }
+        })
+
     }
 
 
+    @SuppressLint("SetTextI18n")
+    fun setMenuData() {
+        CurrentUser.user?.let {
+            menuNavigation.getHeaderView(0).tvMenuUsername.text = it.name.capitalize()
+            if (CurrentUser.user?.currentLocation?.city == "") {
+                menuNavigation.getHeaderView(0).tvLocation.text = getString(R.string.add_address).capitalize()
+            } else {
+                menuNavigation.getHeaderView(0).tvLocation.text =
+                    CurrentUser.user?.currentLocation?.country?.capitalize() + "," + it.currentLocation?.city?.capitalize()
+
+            }
+            if (it.profileImageUrl.isNotEmpty()) {
+                Glide
+                    .with(this)
+                    .load(CurrentUser.user?.profileImageUrl)
+                    .centerCrop()
+                    .into(menuNavigation.getHeaderView(0).ivDrawerProfileImage)
+
+            } else {
+                menuNavigation.getHeaderView(0).ivDrawerProfileImage.setImageResource(R.drawable.no_profile_image)
+            }
+        }
+
+
+    }
+
+    private fun setDrawerMenu() {
+        toggleHome = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close) {
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                toggleHome.syncState()
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+                toggleHome.syncState()
+            }
+        }
+        drawerLayout.setDrawerListener(toggleHome)
+        toggleHome.syncState()
+    }
+
+    private fun initList() {
+        val layoutManager = LinearLayoutManager(applicationContext)
+        recyclerViewDrawerMenu.layoutManager = layoutManager as RecyclerView.LayoutManager?
+        setMenuListener()
+        recyclerViewDrawerMenu.adapter = drawerListAdapter
+    }
+
+    private fun setMenuListener() {
+        drawerListAdapter = DrawerListAdapter(menuOptions) { menuItem ->
+            when (menuItem.type) {
+                DrawerViewModel.MenuItemType.MESSAGE -> {
+                }
+                DrawerViewModel.MenuItemType.MAP -> {
+                    navController.navigate(R.id.goToMapFragment)
+                }
+                DrawerViewModel.MenuItemType.PERSONAL_DATA -> {
+                    navController.navigate(R.id.goToProfileData)
+                }
+                DrawerViewModel.MenuItemType.HOME -> {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+                DrawerViewModel.MenuItemType.LOG_OUT -> {
+                    FirebaseAuth.getInstance().signOut()
+                    navController.popBackStack()
+
+                }
+                DrawerViewModel.MenuItemType.FRIENDS -> {
+                    navController.navigate(R.id.goToFriends)
+
+                }
+                DrawerViewModel.MenuItemType.MY_PICTURES -> {
+                }
+                DrawerViewModel.MenuItemType.CONTACT -> {
+                }
+
+            }
+        }
+    }
 
 }
