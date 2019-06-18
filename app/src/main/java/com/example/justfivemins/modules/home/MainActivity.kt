@@ -20,6 +20,7 @@ import java.io.File
 import java.io.IOException
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -31,17 +32,17 @@ import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.home.home_drawer.DrawerItem
 import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
+import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
 import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.menuNavigation
 import kotlinx.android.synthetic.main.fragment_home.recyclerViewDrawerMenu
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), DrawerLocker {
 
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel()::class.java)
@@ -65,9 +66,7 @@ class MainActivity : BaseActivity() {
         setObservers()
         setDrawerMenu()
         menuOptions.clear()
-        applicationContext.let {
-            menuOptions = DrawerItem.addMenuOptions(menuOptions, it)
-        }
+        menuOptions = DrawerItem.addMenuOptions(menuOptions, applicationContext)
         initList()
         menuNavigation.getHeaderView(0).ivDrawerProfileImage.setOnClickListener {
             navController.navigate(R.id.goToProfileData)
@@ -135,7 +134,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun rotateBitmap(bitmap: Bitmap, degrees: Int): Bitmap {
-        val matrix: Matrix = Matrix()
+        val matrix = Matrix()
         matrix.postRotate(degrees.toFloat())
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
     }
@@ -163,24 +162,9 @@ class MainActivity : BaseActivity() {
         mainViewModel.response.observe(this, Observer { response ->
             response?.let {
                 setNewData(it)
-                showProgress(false,false)
-
+                showProgress(show = false, hasShade = false)
             }
         })
-        mainViewModel.users.observe(this, Observer { usersResponse ->
-            usersResponse?.let {
-                users = it
-                showProgress(false,false)
-            }
-        })
-        mainViewModel.usersUpdatedResponse.observe(this, Observer { usersResponse ->
-            usersResponse?.let {
-                users = it
-                Log.v("taag", users.size.toString())
-                showProgress(false,false)
-            }
-        })
-
     }
 
 
@@ -263,6 +247,15 @@ class MainActivity : BaseActivity() {
 
             }
         }
+    }
+
+    override fun setDrawerEnabled(enabled: Boolean) {
+        val lockMode = if (enabled)
+            DrawerLayout.LOCK_MODE_UNLOCKED
+        else
+            DrawerLayout.LOCK_MODE_LOCKED_CLOSED
+        drawerLayout.setDrawerLockMode(lockMode)
+        toggleHome.isDrawerIndicatorEnabled = enabled
     }
 
 }

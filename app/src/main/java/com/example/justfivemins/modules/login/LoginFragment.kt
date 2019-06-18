@@ -35,6 +35,7 @@ class LoginFragment : BaseFragment(), LoginPresenter.View, ApiEventsListeners.Lo
         return R.layout.fragment_login
     }
     override fun viewCreated(view: View?) {
+        enableDrawerMenu(false)
         checkUserAuthState()
         etEmail.setOnLongClickListener {
             autofill()

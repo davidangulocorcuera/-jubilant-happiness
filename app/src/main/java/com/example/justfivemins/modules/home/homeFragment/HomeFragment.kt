@@ -1,46 +1,21 @@
 package com.example.justfivemins.modules.home.homeFragment
 
 
-import android.annotation.SuppressLint
-import android.text.InputType
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.justfivemins.R
 import com.example.justfivemins.api.responses.UserResponse
 import com.example.justfivemins.model.CurrentUser
 import com.example.justfivemins.model.User
 import com.example.justfivemins.modules.base.BaseFragment
 import com.example.justfivemins.modules.home.MainViewModel
-import com.example.justfivemins.modules.home.home_drawer.DrawerItem
-import com.example.justfivemins.modules.home.home_drawer.DrawerListAdapter
-import com.example.justfivemins.modules.home.home_drawer.DrawerLocker
-import com.example.justfivemins.modules.home.home_drawer.DrawerViewModel
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_drawer_menu_header.view.*
-import android.widget.Toast
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
-import com.example.justfivemins.utils.Valid
 
 
-class HomeFragment : BaseFragment(), DrawerLocker {
+class HomeFragment : BaseFragment(){
 
 
     private var currentUser = User()
@@ -60,9 +35,26 @@ class HomeFragment : BaseFragment(), DrawerLocker {
     override fun viewCreated(view: View?) {
         setHasOptionsMenu(true)
         setCardsOnClickListeners()
+        enableDrawerMenu(true)
+        setObservers()
 
     }
+    private fun setObservers() {
+        mainViewModel.users.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
+                users = it
+                showProgress(show = false, hasShade = false)
+            }
+        })
+        mainViewModel.usersUpdatedResponse.observe(this, Observer { usersResponse ->
+            usersResponse?.let {
+                users = it
+                Log.v("taag", users.size.toString())
+                showProgress(show = false, hasShade = false)
+            }
+        })
 
+    }
 
     private fun setCardsOnClickListeners() {
 
@@ -186,15 +178,7 @@ class HomeFragment : BaseFragment(), DrawerLocker {
         showProgress(false,false)
     }
 
-    override fun setDrawerEnabled(enabled: Boolean) {
-        val lockMode = if (enabled)
-            DrawerLayout.LOCK_MODE_UNLOCKED
-        else
-            DrawerLayout.LOCK_MODE_LOCKED_CLOSED
-        //drawerLayout.setDrawerLockMode(lockMode)
 
-       // toggleHome.isDrawerIndicatorEnabled = enabled
-    }
 
 
     override fun onStart() {
