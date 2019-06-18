@@ -259,9 +259,6 @@ class RegisterFragment : BaseFragment(), RegisterPresenter.View, ApiEventsListen
 
     }
 
-    override fun hasToolbar(): Boolean {
-        return false
-    }
 
     override fun onDestroy() {
         super.onDestroy()
